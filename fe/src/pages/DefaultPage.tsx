@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import FilterBar from '@/components/FilterBar';
 import Header from '@/components/Header';
+import IssueTable from '@/components/IssueTable';
 
 const Body = styled.div`
   width: 1440px;
@@ -14,6 +15,7 @@ export default function DefaultPage() {
       <Header />
       <Body>
         <FilterBar />
+        <IssueTable />
       </Body>
     </>
   );
