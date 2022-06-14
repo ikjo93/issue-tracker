@@ -19,7 +19,8 @@
       "@constants/*": ["src/constants/*"],
       "@style/*": ["src/style/*"],
       "@pages/*": ["src/pages/*"],
-      "@contexts/*": ["src/contexts/*"]
+      "@contexts/*": ["src/contexts/*"],
+      "@server/*": ["src/server/*"]
     }
   },
   "include": ["src", "config"]
