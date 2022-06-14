@@ -1,8 +1,9 @@
 const fontSize = {
   xLarge: '3em',
-  large: '2em',
-  medium: '1.5em',
-  small: '1em',
+  large: '1.5em',
+  medium: '1.125rem',
+  small: '1rem',
+  xsmall: '0.75rem',
 };
 
 const fontWeight = {

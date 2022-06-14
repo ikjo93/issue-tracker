@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --config config/webpack.dev.js",
-    "build": "webpack --config config/webpack.prod.js"
+    "build:dev": "webpack --config config/webpack.dev.js",
+    "build": "webpack --config config/webpack.prod.js",
+    "deploy:dev": "npm run build:dev && netlify deploy"
   },
   "repository": {
     "type": "git",
@@ -46,7 +48,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
-    "styled-components": "^5.3.5",
+    "styled-components": "^5.1.25",
     "styled-reset": "^4.4.1"
   }
 }

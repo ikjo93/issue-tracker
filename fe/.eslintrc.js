@@ -12,6 +12,7 @@ module.exports = {
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
     'linebreak-style': 0,
     'import/order': [
       'error',
