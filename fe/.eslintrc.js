@@ -13,6 +13,17 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'linebreak-style': 0,
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'index'],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        'newlines-between': 'always',
+      },
+    ],
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -22,6 +33,10 @@ module.exports = {
         ts: 'never',
         tsx: 'never',
       },
+    ],
+    'no-use-before-define': [
+      'error',
+      { functions: false, classes: true, variables: false },
     ],
   },
   settings: {
