@@ -1,3 +1,7 @@
+/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-extraneous-dependencies */
+
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -18,10 +22,17 @@ const getPublicUrl = () => {
   return '/';
 };
 
-const env = { ...process.env, PUBLIC_URL: getPublicUrl() };
+process.env = { ...process.env, PUBLIC_URL: getPublicUrl() };
+
 module.exports = {
   entry: {
-    app: `${path.join(__dirname, '../src', 'index.tsx')}`,
+    app: path.join(__dirname, '..', 'src', 'index.tsx'),
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      '@': path.resolve(__dirname, '../src/'),
+    },
   },
   module: {
     rules: [
@@ -37,21 +48,14 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.EnvironmentPlugin(Object.keys(process.env)),
     new HtmlWebpackPlugin({
-      template: `${path.resolve(__dirname, '../public')}/index.html`,
+      template: path.resolve(__dirname, '..', 'public', 'index.html'),
     }),
-    new InterpolateHtmlPlugin(env),
+    new InterpolateHtmlPlugin(process.env),
   ],
-  resolve: {
-    modules: [path.resolve(__dirname, '../src'), 'node_modules'],
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    alias: {
-      '@': path.resolve(__dirname, '../src/'),
-    },
-  },
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/',
   },
 };

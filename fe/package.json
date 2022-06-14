@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --config config/webpack.dev.js",
-    "build": "webpack --config config/webpack.prod.js"
+    "build": "webpack --config config/webpack.prod.js",
+    "build:watch": "webpack -w --config config/webpack.dev.js",
+    "build:dev": "webpack --config config/webpack.dev.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-webpack-plugin": "^3.1.1",
     "html-webpack-plugin": "^5.5.0",
     "interpolate-html-plugin": "^4.0.0",
     "style-loader": "^3.3.1",
