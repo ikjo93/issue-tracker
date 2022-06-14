@@ -3,6 +3,9 @@ import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+  *{
+    box-sizing: border-box;
+  }
   button{
     margin:0;
     padding:0;
@@ -10,6 +13,15 @@ const GlobalStyle = createGlobalStyle`
     background-color:inherit;
     border-radius: inherit;
     cursor:pointer;
+  }
+  input{
+    border:none;
+    border-radius:inherit;
+    margin:0;
+    padding:0;
+    :focus-visible{
+      outline:none;
+    }
   }
 `;
 

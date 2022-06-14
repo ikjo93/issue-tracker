@@ -1,3 +1,4 @@
+import { FormEvent } from 'react';
 import styled, { css } from 'styled-components';
 
 import Squircle from '@components/Squircle';
@@ -11,10 +12,18 @@ interface ILoginButton {
 }
 
 export default function LoginPage() {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <Wrapper>
-      <Squircle />
-      <Squircle />
+    <Wrapper onSubmit={handleSubmit}>
+      <Squircle>
+        <InputBox placeholder="아이디" />
+      </Squircle>
+      <Squircle>
+        <InputBox type="password" placeholder="비밀번호" />
+      </Squircle>
       <Squircle>
         <LoginButton>아이디로 로그인</LoginButton>
       </Squircle>
@@ -25,7 +34,7 @@ export default function LoginPage() {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   width: 100%;
   height: 100vh;
   gap: 0.5rem;
@@ -44,6 +53,13 @@ const getLoginButtonBg = (theme, loginType) => {
       `;
   }
 };
+
+const InputBox = styled.input`
+  width: 100%;
+  height: 100%;
+  background-color: ${colors.inputBg};
+  padding: 0rem 1rem;
+`;
 
 const LoginButton = styled.button<ILoginButton>`
   color: ${colors.offWhite};
