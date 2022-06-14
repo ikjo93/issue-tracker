@@ -7,7 +7,6 @@ import Container from './Container';
 
 const DropdownIcon = styled(KeyboardArrowDownIcon)`
   color: ${colors.label};
-  margin-right: 12px;
 
   :hover {
     color: ${colors.body};

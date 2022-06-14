@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import colors from '@/constants/colors';
 import { fontWeight, fontSize } from '@/constants/fonts';
 
-import UserIcon from './UserIcon';
+import UserIcon from '../UserIcon';
 
 const HeaderContainer = styled.div`
   height: 94px;
