@@ -18,8 +18,8 @@
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@style/*": ["src/style/*"],
-      "@pages/*": ["src/pages/*"]
-      
+      "@pages/*": ["src/pages/*"],
+      "@contexts/*": ["src/contexts/*"]
     }
   },
   "include": ["src", "config"]
