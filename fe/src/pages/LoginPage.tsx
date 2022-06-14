@@ -1,4 +1,5 @@
 import { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import Squircle from '@components/Squircle';
@@ -19,17 +20,22 @@ export default function LoginPage() {
   return (
     <Wrapper onSubmit={handleSubmit}>
       <Squircle>
-        <InputBox placeholder="아이디" />
+        <InputBox placeholder="아이디(이메일)" />
       </Squircle>
       <Squircle>
         <InputBox type="password" placeholder="비밀번호" />
       </Squircle>
       <Squircle>
-        <LoginButton>아이디로 로그인</LoginButton>
+        <LoginButton type="submit">아이디로 로그인</LoginButton>
       </Squircle>
       <Squircle>
-        <LoginButton loginType="github">GitHub 계정으로 로그인</LoginButton>
+        <LoginButton type="button" loginType="github">
+          GitHub 계정으로 로그인
+        </LoginButton>
       </Squircle>
+      <span>
+        아직 회원이 아니신가요? <Link to="/join">회원가입</Link>
+      </span>
     </Wrapper>
   );
 }

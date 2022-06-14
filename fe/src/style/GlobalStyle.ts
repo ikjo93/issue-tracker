@@ -23,6 +23,9 @@ const GlobalStyle = createGlobalStyle`
       outline:none;
     }
   }
+  a{
+    text-decoration:none;
+  }
 `;
 
 export default GlobalStyle;
