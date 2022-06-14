@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-extraneous-dependencies */
 
-const webpack = require('webpack');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const dotenv = require('dotenv');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('interpolate-html-plugin');
+const webpack = require('webpack');
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ module.exports = {
       '@constants': path.resolve(__dirname, '..', 'src/constants'),
       '@style': path.resolve(__dirname, '..', 'src/style'),
       '@pages': path.resolve(__dirname, '..', 'src/pages'),
+      '@contexts': path.resolve(__dirname, '..', 'src/contexts'),
     },
   },
   module: {
