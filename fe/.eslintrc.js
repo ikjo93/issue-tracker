@@ -35,6 +35,12 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'react/require-default-props': [
+      1,
+      {
+        function: 'ignore',
+      },
+    ],
   },
   settings: {
     'import/resolver': {

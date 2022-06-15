@@ -39,10 +39,4 @@ export default function IconTextBox({
   );
 }
 
-IconTextBox.defaultProps = {
-  Icon: null,
-  text: null,
-  color: colors.label,
-  spacing: '0px',
-  margin: '0px',
-};
+
