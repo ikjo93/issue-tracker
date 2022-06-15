@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { useHeaderDispatch } from '@/contexts/HeaderProvider';
+import Logo from '@components/Header/Logo';
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
@@ -39,6 +40,7 @@ export default function LoginPage() {
 
   return (
     <Wrapper onSubmit={handleSubmit}>
+      <Logo page="login" />
       <Squircle>
         <InputBox name="email" placeholder="아이디(이메일)" />
       </Squircle>

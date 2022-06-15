@@ -1,6 +1,7 @@
 const fontSize = {
-  xLarge: '3em',
-  large: '1.5em',
+  title: '4.5rem',
+  xLarge: '3rem',
+  large: '1.5rem',
   medium: '1.125rem',
   small: '1rem',
   xsmall: '0.75rem',
