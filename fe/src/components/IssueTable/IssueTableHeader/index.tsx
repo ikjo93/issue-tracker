@@ -14,12 +14,20 @@ const IssueTableHeaderContainer = styled.div`
   background: ${colors.bg};
 `;
 
-export default function IssueTableHeader() {
+interface IIssueTableHeaderProps {
+  openedIssuesCnt: number;
+}
+export default function IssueTableHeader({
+  openedIssuesCnt,
+}: IIssueTableHeaderProps) {
   return (
     <IssueTableHeaderContainer>
       <Container flexInfo={['row', 'center', 'flex-start', 'no-wrap']}>
         <Checkbox />
-        <OpenAndCloseFilter openedIssuesCnt={3} closedIssuesCnt={0} />
+        <OpenAndCloseFilter
+          openedIssuesCnt={openedIssuesCnt}
+          closedIssuesCnt={0}
+        />
       </Container>
       <Container
         width="400px"
