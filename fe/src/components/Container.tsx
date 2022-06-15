@@ -13,12 +13,14 @@ const Container = styled.div<{
   margin?: string;
   padding?: string;
   flexInfo?: FlexTypes;
+  gap?: number;
 }>`
-  ${({ width, height, margin, padding }) => css`
+  ${({ width, height, margin, padding, gap }) => css`
     width: ${width};
     height: ${height};
     margin: ${margin};
     padding: ${padding};
+    gap: ${gap}rem;
   `}
 
   ${({ flexInfo, theme }) => flexInfo && theme.mixin.flexMixin(...flexInfo)}

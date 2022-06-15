@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import colors from '@/constants/colors';
-
-import FilterDropDown from '../FilterDropDown';
+import FilterDropDown from '@components/FilterDropDown';
+import colors from '@constants/colors';
 
 const SelectMenuContainer = styled.div`
   width: 128px;
