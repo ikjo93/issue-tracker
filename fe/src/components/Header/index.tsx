@@ -16,7 +16,8 @@ export default function Header() {
 const HeaderContainer = styled.div`
   height: 6rem;
   padding: 0 5rem;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
 `;
 
 const Logo = styled.h1`

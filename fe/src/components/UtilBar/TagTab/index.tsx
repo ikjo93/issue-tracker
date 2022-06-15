@@ -24,7 +24,8 @@ export default function TagTab() {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-around')};
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'space-around' })};
   width: 20rem;
   height: 2.5rem;
   border: 1px solid ${colors.line};

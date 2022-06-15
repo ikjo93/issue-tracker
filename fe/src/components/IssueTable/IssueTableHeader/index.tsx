@@ -10,13 +10,13 @@ import OpenAndCloseFilter from './OpenAndCloseFilter';
 export default function IssueTableHeader() {
   return (
     <IssueTableHeaderContainer>
-      <Container flexInfo={['row', 'center', 'flex-start', 'no-wrap']}>
+      <Container flexInfo={{ align: 'center' }}>
         <Checkbox />
         <OpenAndCloseFilter openedIssuesCnt={3} closedIssuesCnt={0} />
       </Container>
       <Container
         width="400px"
-        flexInfo={['row', 'center', 'space-around', 'no-wrap']}
+        flexInfo={{ align: 'center', justify: 'space-around' }}
       >
         <FilterDropDown title="담당자" />
         <FilterDropDown title="레이블" />
@@ -28,7 +28,8 @@ export default function IssueTableHeader() {
 }
 
 const IssueTableHeaderContainer = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   height: 4rem;
   padding: 0 2rem;
   background: ${colors.bg};

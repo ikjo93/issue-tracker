@@ -42,7 +42,8 @@ const CheckboxContainer = styled.div`
 `;
 
 const IssueInfoContainer = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('column', 'flex-start', 'center')}
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ direction: 'column', justify: 'center' })}
   position: absolute;
   top: 1rem;
   left: 5rem;

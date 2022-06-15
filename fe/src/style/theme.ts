@@ -3,7 +3,7 @@ import { css, FlattenSimpleInterpolation } from 'styled-components';
 import colors from '@constants/colors';
 
 interface IMixin {
-  flexMixin: () => FlattenSimpleInterpolation;
+  flexMixin: (object) => FlattenSimpleInterpolation;
 }
 
 interface IPalette {
@@ -17,12 +17,12 @@ export interface ITheme {
 }
 
 const mixin: IMixin = {
-  flexMixin: (
+  flexMixin: ({
     direction = 'row',
-    align = 'center',
-    justify = 'center',
+    align = 'flex-start',
+    justify = 'flex-start',
     wrap = 'no-wrap',
-  ) => css`
+  }) => css`
     display: flex;
     flex-direction: ${direction};
     align-items: ${align};

@@ -13,7 +13,8 @@ export default function NewIssueButton() {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')}
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'center' })}
   width: 7.5rem;
   height: 2.5rem;
   color: ${colors.offWhite};

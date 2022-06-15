@@ -30,7 +30,7 @@ const BoxContainer = styled.div<{
   spacing?: number;
   fontSize?: number;
 }>`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
+  ${({ theme }) => theme.mixin.flexMixin({ align: 'center' })}
   color: ${({ color }) => color};
   gap: ${({ spacing }) => spacing}rem;
   font-size: ${({ fontSize }) => fontSize}rem;

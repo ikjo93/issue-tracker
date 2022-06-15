@@ -12,7 +12,8 @@ export default function FilterBarSelectMenu() {
 }
 
 const SelectMenuContainer = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')};
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'center' })};
   width: 8rem;
   height: 100%;
   background: ${colors.bg};

@@ -26,7 +26,7 @@ export default function IssueDescription({
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
+  ${({ theme }) => theme.mixin.flexMixin({ align: 'center' })}
   height: 1.75rem;
   gap: 1rem;
   color: ${colors.label};

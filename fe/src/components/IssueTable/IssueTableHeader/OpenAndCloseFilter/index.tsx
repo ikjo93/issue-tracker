@@ -18,7 +18,7 @@ export default function OpenAndCloseFilter({
     <Container
       width="260px"
       margin="0 30px"
-      flexInfo={['row', 'center', 'space-between', 'no-wrap']}
+      flexInfo={{ align: 'center', justify: 'space-between' }}
     >
       <IconTextBox
         Icon={<ErrorOutlineIcon fontSize="small" />}

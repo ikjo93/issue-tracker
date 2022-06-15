@@ -24,12 +24,13 @@ export default function IssueTitle({ title, labels }: any) {
 }
 
 const IssueTitleContainer = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
+  ${({ theme }) => theme.mixin.flexMixin({ align: 'center' })}
   height: 2rem;
 `;
 
 const LabelContainer = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   margin-left: 0.5rem;
   gap: 0.5rem;
 `;

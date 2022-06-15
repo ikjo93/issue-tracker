@@ -13,7 +13,8 @@ export default function FilterBarForm() {
 }
 
 const FilterBarFormContainer = styled.form`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'flex-start' })};
   background: ${colors.inputBg};
   width: 30rem;
   height: 100%;
