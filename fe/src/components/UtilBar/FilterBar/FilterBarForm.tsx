@@ -1,30 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import styled from 'styled-components';
 
-import colors from '@/constants/colors';
-
-const FilterBarFormContainer = styled.form`
-  background: ${colors.inputBg};
-  width: 472px;
-  height: 100%;
-  padding: 6px 24px;
-  border-left: 1px solid ${colors.line};
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
-`;
-
-const FilterBarFormIcon = styled(SearchIcon)`
-  color: ${colors.placeholder};
-`;
-
-const FilterBarInput = styled.input`
-  margin-left: 10px;
-  width: 100%;
-  height: 28px;
-  outline: none;
-  border: 0;
-  color: ${colors.placeholder};
-  background: ${colors.inputBg};
-`;
+import colors from '@constants/colors';
 
 export default function FilterBarForm() {
   return (
@@ -34,3 +11,24 @@ export default function FilterBarForm() {
     </FilterBarFormContainer>
   );
 }
+
+const FilterBarFormContainer = styled.form`
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
+  background: ${colors.inputBg};
+  width: 30rem;
+  height: 100%;
+  padding: 0.5rem 1.5rem;
+  border-left: 1px solid ${colors.line};
+`;
+
+const FilterBarFormIcon = styled(SearchIcon)`
+  color: ${colors.placeholder};
+`;
+
+const FilterBarInput = styled.input`
+  width: 100%;
+  height: 1.75rem;
+  margin-left: 0.625rem;
+  color: ${colors.placeholder};
+  background: ${colors.inputBg};
+`;

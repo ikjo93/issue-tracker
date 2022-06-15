@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import IconTextBox from '@/components/IconTextBox';
-import colors from '@/constants/colors';
+import IconTextBox from '@components/IconTextBox';
+import colors from '@constants/colors';
 
 interface IIssueDescriptionProps {
   issueNum: number;

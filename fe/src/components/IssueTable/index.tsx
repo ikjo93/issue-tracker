@@ -5,11 +5,20 @@ import colors from '@/constants/colors';
 import IssueTableBody from './IssueTableBody';
 import IssueTableHeader from './IssueTableHeader';
 
+export default function IssueTable() {
+  return (
+    <IssueTableContainer>
+      <IssueTableHeader />
+      <IssueTableBody issues={issues} />
+    </IssueTableContainer>
+  );
+}
+
 const IssueTableContainer = styled.div`
   border: 1px solid ${colors.line};
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
-  margin-top: 24px;
+  margin-top: 1.5rem;
 `;
 
 const issues = [
@@ -62,12 +71,3 @@ const issues = [
     ],
   },
 ];
-
-export default function IssueTable() {
-  return (
-    <IssueTableContainer>
-      <IssueTableHeader />
-      <IssueTableBody issues={issues} />
-    </IssueTableContainer>
-  );
-}

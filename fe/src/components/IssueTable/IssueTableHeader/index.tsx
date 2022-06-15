@@ -7,13 +7,6 @@ import colors from '@/constants/colors';
 
 import OpenAndCloseFilter from './OpenAndCloseFilter';
 
-const IssueTableHeaderContainer = styled.div`
-  height: 64px;
-  padding: 0 30px;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
-  background: ${colors.bg};
-`;
-
 export default function IssueTableHeader() {
   return (
     <IssueTableHeaderContainer>
@@ -33,3 +26,10 @@ export default function IssueTableHeader() {
     </IssueTableHeaderContainer>
   );
 }
+
+const IssueTableHeaderContainer = styled.div`
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
+  height: 4rem;
+  padding: 0 2rem;
+  background: ${colors.bg};
+`;

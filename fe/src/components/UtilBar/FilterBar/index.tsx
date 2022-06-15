@@ -1,19 +1,9 @@
 import styled from 'styled-components';
 
-import colors from '@/constants/colors';
+import colors from '@constants/colors';
 
 import FilterBarForm from './FilterBarForm';
 import FilterBarSelectMenu from './FilterBarSelectMenu';
-
-const FilterBarContainer = styled.div`
-  width: 600px;
-  height: 40px;
-  border-radius: 11px;
-  border: 1px solid ${colors.line};
-  overflow: hidden;
-  margin-top: 2rem;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
-`;
 
 export default function FilterBar() {
   return (
@@ -23,3 +13,13 @@ export default function FilterBar() {
     </FilterBarContainer>
   );
 }
+
+const FilterBarContainer = styled.div`
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
+  width: 37.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid ${colors.line};
+  overflow: hidden;
+  margin-top: 2rem;
+`;

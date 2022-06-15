@@ -3,13 +3,6 @@ import styled from 'styled-components';
 import FilterDropDown from '@components/FilterDropDown';
 import colors from '@constants/colors';
 
-const SelectMenuContainer = styled.div`
-  width: 128px;
-  height: 100%;
-  background: ${colors.bg};
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')};
-`;
-
 export default function FilterBarSelectMenu() {
   return (
     <SelectMenuContainer>
@@ -17,3 +10,11 @@ export default function FilterBarSelectMenu() {
     </SelectMenuContainer>
   );
 }
+
+const SelectMenuContainer = styled.div`
+  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'center')};
+  width: 8rem;
+  height: 100%;
+  background: ${colors.bg};
+`;
+

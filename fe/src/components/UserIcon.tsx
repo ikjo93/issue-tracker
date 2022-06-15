@@ -13,7 +13,7 @@ const UserIconImg = styled.img<{ imgSrc: string }>`
   width: 100%;
   height: 100%;
   border: 1px solid ${colors.line};
-  border-radius: 100%;
+  border-radius: 50%;
   content: ${({ imgSrc }) => `url(${imgSrc})`};
 `;
 
