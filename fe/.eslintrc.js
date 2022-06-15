@@ -35,9 +35,11 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'no-use-before-define': [
-      'error',
-      { functions: false, classes: true, variables: false },
+    'react/require-default-props': [
+      1,
+      {
+        function: 'ignore',
+      },
     ],
   },
   settings: {

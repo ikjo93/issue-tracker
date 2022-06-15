@@ -5,6 +5,8 @@ import Routes from '@pages/Routes';
 import GlobalStyle from '@style/GlobalStyle';
 import theme from '@style/theme';
 
+import DefaultPage from './pages/DefaultPage';
+
 export default function App() {
   return (
     <>
