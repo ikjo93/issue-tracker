@@ -38,7 +38,7 @@ module.exports = {
     'react/require-default-props': [
       1,
       {
-        function: 'ignore',
+        functions: 'ignore',
       },
     ],
   },
