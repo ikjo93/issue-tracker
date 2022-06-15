@@ -66,7 +66,12 @@ const Wrapper = styled.form`
   width: 100%;
   height: 100vh;
   gap: 0.5rem;
-  ${({ theme }) => theme.mixin.flexMixin('column', 'center', 'center')}
+  ${({ theme }) =>
+    theme.mixin.flexMixin({
+      direction: 'column',
+      align: 'center',
+      justify: 'center',
+    })}
 `;
 
 const getLoginButtonBg = (theme, loginType) => {

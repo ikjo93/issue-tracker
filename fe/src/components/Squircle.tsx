@@ -8,6 +8,7 @@ interface ISquircleProps {
   height?: number;
   opacity?: number;
   backgroundColor?: string;
+  borderLineColor?: string;
   theme: ITheme;
 }
 
@@ -19,6 +20,8 @@ const Squircle = styled.div<ISquircleProps>`
   opacity: ${({ opacity }) => opacity || 1};
   background-color: ${({ backgroundColor, theme }) =>
     backgroundColor || theme.palette.default};
+  ${({ borderLineColor }) =>
+    borderLineColor && `border: 1px solid ${borderLineColor}`}
 `;
 
 export default Squircle;

@@ -6,13 +6,6 @@ import useAxios from '@hooks/useAxios';
 import IssueTableBody from './IssueTableBody';
 import IssueTableHeader from './IssueTableHeader';
 
-const IssueTableContainer = styled.div`
-  border: 1px solid ${colors.line};
-  border-radius: 16px;
-  overflow: hidden;
-  margin-top: 24px;
-`;
-
 export default function IssueTable() {
   const { data: issues } = useAxios('/api/issues', 'get');
 
@@ -23,3 +16,10 @@ export default function IssueTable() {
     </IssueTableContainer>
   );
 }
+
+const IssueTableContainer = styled.div`
+  border: 1px solid ${colors.line};
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-top: 1.5rem;
+`;

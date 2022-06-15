@@ -7,13 +7,6 @@ import colors from '@/constants/colors';
 
 import OpenAndCloseFilter from './OpenAndCloseFilter';
 
-const IssueTableHeaderContainer = styled.div`
-  height: 64px;
-  padding: 0 30px;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
-  background: ${colors.bg};
-`;
-
 interface IIssueTableHeaderProps {
   openedIssuesCnt: number;
 }
@@ -22,7 +15,7 @@ export default function IssueTableHeader({
 }: IIssueTableHeaderProps) {
   return (
     <IssueTableHeaderContainer>
-      <Container flexInfo={['row', 'center', 'flex-start', 'no-wrap']}>
+      <Container flexInfo={{ align: 'center' }}>
         <Checkbox />
         <OpenAndCloseFilter
           openedIssuesCnt={openedIssuesCnt}
@@ -31,7 +24,7 @@ export default function IssueTableHeader({
       </Container>
       <Container
         width="400px"
-        flexInfo={['row', 'center', 'space-around', 'no-wrap']}
+        flexInfo={{ align: 'center', justify: 'space-around' }}
       >
         <FilterDropDown title="담당자" />
         <FilterDropDown title="레이블" />
@@ -41,3 +34,11 @@ export default function IssueTableHeader({
     </IssueTableHeaderContainer>
   );
 }
+
+const IssueTableHeaderContainer = styled.div`
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
+  height: 4rem;
+  padding: 0 2rem;
+  background: ${colors.bg};
+`;

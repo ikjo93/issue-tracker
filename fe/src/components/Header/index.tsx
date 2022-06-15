@@ -1,14 +1,7 @@
 import styled from 'styled-components';
 
 import Logo from '@components/Header/Logo';
-
-import UserIcon from '../UserIcon';
-
-const HeaderContainer = styled.div`
-  height: 94px;
-  padding: 0 80px;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
-`;
+import UserIcon from '@components/UserIcon';
 
 export default function Header() {
   return (
@@ -18,3 +11,10 @@ export default function Header() {
     </HeaderContainer>
   );
 }
+
+const HeaderContainer = styled.div`
+  height: 6rem;
+  padding: 0 5rem;
+  ${({ theme }) =>
+    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
+`;

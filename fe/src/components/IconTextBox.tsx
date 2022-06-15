@@ -1,42 +1,38 @@
 import styled from 'styled-components';
 
-import colors from '@/constants/colors';
-
-const BoxContainer = styled.div<{
-  color?: string;
-  spacing?: string;
-  margin?: string;
-}>`
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
-  color: ${({ color }) => color};
-  margin: ${({ margin }) => margin};
-
-  span {
-    margin-left: ${({ spacing }) => spacing};
-  }
-`;
-
-type TIconTextBoxProps = {
+interface IIconTextBoxProps {
   Icon?: React.ReactNode;
-  text?: string;
+  texts?: string[];
   color?: string;
-  spacing?: string;
-  margin?: string;
-};
+  spacing?: number;
+  fontSize?: number;
+}
 
 export default function IconTextBox({
   Icon,
-  text,
+  texts,
   color,
   spacing,
-  margin,
-}: TIconTextBoxProps) {
+  fontSize,
+}: IIconTextBoxProps) {
   return (
-    <BoxContainer color={color} spacing={spacing} margin={margin}>
+    <BoxContainer color={color} spacing={spacing} fontSize={fontSize}>
       {Icon}
-      <span>{text}</span>
+      {texts?.map((text) => (
+        <span>{text}</span>
+      ))}
     </BoxContainer>
   );
 }
 
+const BoxContainer = styled.div<{
+  color?: string;
+  spacing?: number;
+  fontSize?: number;
+}>`
+  ${({ theme }) => theme.mixin.flexMixin({ align: 'center' })}
+  color: ${({ color }) => color};
+  gap: ${({ spacing }) => spacing}rem;
+  font-size: ${({ fontSize }) => fontSize}rem;
+`;
 

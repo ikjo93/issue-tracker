@@ -9,7 +9,7 @@ export default function Routes() {
   const { isLogin } = useHeaderState();
   return (
     <RouterRoutes>
-      <Route path="/" element={isLogin ? <DefaultPage /> : <LoginPage />} />
+      <Route path="/" element={true ? <DefaultPage /> : <LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/join" element={<JoinPage />} />
     </RouterRoutes>

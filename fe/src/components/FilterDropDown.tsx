@@ -25,7 +25,7 @@ type PropsType = {
 // Todo: 누르면 펼쳐질 드롭다운에 대한 정보를 props로 받아서 그리기
 export default function FilterDropDown({ title, spacing }: PropsType) {
   return (
-    <Container flexInfo={['row', 'center', 'space-between', 'no-wrap']}>
+    <Container flexInfo={{ align: 'center', justify: 'space-between' }}>
       <DropDownTitle spacing={spacing}>{title}</DropDownTitle>
       <DropdownIcon fontSize="small" />
     </Container>
