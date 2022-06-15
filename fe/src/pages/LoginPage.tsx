@@ -1,7 +1,10 @@
+import axios from 'axios';
 import { FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+import { useHeaderDispatch } from '@/contexts/HeaderProvider';
+import Logo from '@components/Header/Logo';
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
@@ -12,18 +15,37 @@ interface ILoginButton {
   loginType?: LoginType;
 }
 
+interface IFormEventTarget extends EventTarget {
+  email?: HTMLInputElement;
+  password?: HTMLInputElement;
+}
 export default function LoginPage() {
-  const handleSubmit = (e: FormEvent) => {
+  const navigate = useNavigate();
+  const headerDispatch = useHeaderDispatch();
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const formData: IFormEventTarget = e.target;
+    const email = formData.email?.value;
+    const password = formData.password?.value;
+    const {
+      data: { profileUrl },
+    } = await axios.post('/api/login', {
+      email,
+      password,
+    });
+    headerDispatch({ type: 'LOGIN', profileUrl });
+    navigate('/');
   };
 
   return (
     <Wrapper onSubmit={handleSubmit}>
+      <Logo page="login" />
       <Squircle>
-        <InputBox placeholder="아이디(이메일)" />
+        <InputBox name="email" placeholder="아이디(이메일)" />
       </Squircle>
       <Squircle>
-        <InputBox type="password" placeholder="비밀번호" />
+        <InputBox name="password" type="password" placeholder="비밀번호" />
       </Squircle>
       <Squircle>
         <LoginButton type="submit">아이디로 로그인</LoginButton>

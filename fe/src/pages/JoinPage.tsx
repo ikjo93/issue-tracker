@@ -1,26 +1,50 @@
+import axios from 'axios';
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
 
+interface IFormEventTarget extends EventTarget {
+  email?: HTMLInputElement;
+  password?: HTMLInputElement;
+  name?: HTMLInputElement;
+}
+
 export default function JoinPage() {
-  const handleSubmit = (e: FormEvent) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const formData: IFormEventTarget = e.target;
+    const email = formData.email?.value;
+    const password = formData.password?.value;
+    const name = formData.name?.value;
+    await axios.post('/api/join', {
+      email,
+      password,
+      name,
+    });
+    navigate('/login');
   };
 
   return (
     // TODO: custom required UX
     <Wrapper onSubmit={handleSubmit}>
       <Squircle>
-        <InputBox placeholder="아이디(이메일)" required />
+        <InputBox name="email" placeholder="아이디(이메일)" required />
       </Squircle>
       <Squircle>
-        <InputBox placeholder="닉네임" required />
+        <InputBox name="name" placeholder="닉네임" required />
       </Squircle>
       <Squircle>
-        <InputBox type="password" placeholder="비밀번호" required />
+        <InputBox
+          name="password"
+          type="password"
+          placeholder="비밀번호"
+          required
+        />
       </Squircle>
       <Squircle>
         <JoinButton type="submit">회원 가입</JoinButton>

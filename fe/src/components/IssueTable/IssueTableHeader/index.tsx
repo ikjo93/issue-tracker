@@ -7,12 +7,20 @@ import colors from '@/constants/colors';
 
 import OpenAndCloseFilter from './OpenAndCloseFilter';
 
-export default function IssueTableHeader() {
+interface IIssueTableHeaderProps {
+  openedIssuesCnt: number;
+}
+export default function IssueTableHeader({
+  openedIssuesCnt,
+}: IIssueTableHeaderProps) {
   return (
     <IssueTableHeaderContainer>
       <Container flexInfo={{ align: 'center' }}>
         <Checkbox />
-        <OpenAndCloseFilter openedIssuesCnt={3} closedIssuesCnt={0} />
+        <OpenAndCloseFilter
+          openedIssuesCnt={openedIssuesCnt}
+          closedIssuesCnt={0}
+        />
       </Container>
       <Container
         width="400px"

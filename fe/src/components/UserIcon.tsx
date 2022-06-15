@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import colors from '@/constants/colors';
 import UserIconSize from '@/constants/sizes';
+import { useHeaderState } from '@/contexts/HeaderProvider';
 import { UserIconSizeType } from '@/types/types';
 
 const UserIconContainer = styled.div<{ size: UserIconSizeType }>`
@@ -18,8 +19,7 @@ const UserIconImg = styled.img<{ imgSrc: string }>`
 `;
 
 export default function UserIcon({ size }: { size: UserIconSizeType }) {
-  //    todo: userProvider에서 profileUrl 받아오기
-  const profileUrl = 'https://avatars.githubusercontent.com/u/95538993?v=4';
+  const { profileUrl } = useHeaderState();
 
   return (
     <UserIconContainer size={size}>
