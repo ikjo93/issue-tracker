@@ -1,28 +1,11 @@
 import { Checkbox } from '@mui/material';
 import styled from 'styled-components';
 
-import colors from '@/constants/colors';
+import UserIcon from '@components/UserIcon';
+import colors from '@constants/colors';
 
 import IssueDescription from './IssueDescription';
 import IssueTitle from './IssueTitle';
-
-const CellContainer = styled.div`
-  position: relative;
-  height: 100px;
-  border-top: 1px solid ${colors.line};
-`;
-
-const CheckboxContainer = styled.div`
-  position: absolute;
-  top: 12px;
-  left: 23px;
-`;
-
-const IssueTitleContainer = styled.div`
-  position: absolute;
-  top: 16px;
-  left: 80px;
-`;
 
 export default function IssueTableCell({ issue }: { issue: any }) {
   return (
@@ -30,15 +13,44 @@ export default function IssueTableCell({ issue }: { issue: any }) {
       <CheckboxContainer>
         <Checkbox />
       </CheckboxContainer>
-      <IssueTitleContainer>
+      <IssueInfoContainer>
         <IssueTitle title={issue.subject} labels={issue.labels} />
-        {/* <IssueDescription
+        <IssueDescription
           issueNum={issue.number}
           writer={issue.writer}
           milestones={issue.milestones}
           createdDatetime={issue.createdDatetime}
-        /> */}
-      </IssueTitleContainer>
+        />
+      </IssueInfoContainer>
+      <UserIconContainer>
+        <UserIcon size="SMALL" />
+      </UserIconContainer>
     </CellContainer>
   );
 }
+
+const CellContainer = styled.div`
+  position: relative;
+  height: 6.25rem;
+  border-top: 1px solid ${colors.line};
+`;
+
+const CheckboxContainer = styled.div`
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+`;
+
+const IssueInfoContainer = styled.div`
+  ${({ theme }) => theme.mixin.flexMixin('column', 'flex-start', 'center')}
+  position: absolute;
+  top: 1rem;
+  left: 5rem;
+  gap: 0.5rem;
+`;
+
+const UserIconContainer = styled.div`
+  position: absolute;
+  top: 2.5rem;
+  right: 2.5rem;
+`;

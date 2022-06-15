@@ -1,9 +1,9 @@
 import ErrorIcon from '@mui/icons-material/Error';
 import styled from 'styled-components';
 
-import IconTextBox from '@/components/IconTextBox';
-import Label from '@/components/Label';
-import colors from '@/constants/colors';
+import IconTextBox from '@components/IconTextBox';
+import Label from '@components/Label';
+import colors from '@constants/colors';
 
 export default function IssueTitle({ title, labels }: any) {
   return (
@@ -25,9 +25,11 @@ export default function IssueTitle({ title, labels }: any) {
 
 const IssueTitleContainer = styled.div`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center')}
+  height: 2rem;
 `;
 
 const LabelContainer = styled.div`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'space-between')}
-  margin-left: 8px;
+  margin-left: 0.5rem;
+  gap: 0.5rem;
 `;
