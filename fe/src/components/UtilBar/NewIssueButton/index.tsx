@@ -7,7 +7,7 @@ import colors from '@constants/colors';
 export default function NewIssueButton() {
   return (
     <Wrapper>
-      <IconTextBox Icon={<AddIcon />} text="이슈 작성" />
+      <IconTextBox Icon={<AddIcon />} texts={['이슈 작성']} fontSize={0.75} />
     </Wrapper>
   );
 }
