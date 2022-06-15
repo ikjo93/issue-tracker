@@ -6,14 +6,12 @@ import colors from '@constants/colors';
 interface IIssueDescriptionProps {
   issueNum: number;
   writer: string;
-  milestones: object;
   createdDatetime: string;
 }
 
 export default function IssueDescription({
   issueNum,
   writer,
-  milestones,
   createdDatetime,
 }: IIssueDescriptionProps) {
   return (

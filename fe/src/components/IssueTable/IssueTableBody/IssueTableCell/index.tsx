@@ -18,7 +18,6 @@ export default function IssueTableCell({ issue }: { issue: any }) {
         <IssueDescription
           issueNum={issue.number}
           writer={issue.writer}
-          milestones={issue.milestones}
           createdDatetime={issue.createdDatetime}
         />
       </IssueInfoContainer>

@@ -5,18 +5,6 @@ import colors from '@/constants/colors';
 
 import Container from './Container';
 
-const DropdownIcon = styled(KeyboardArrowDownIcon)`
-  color: ${colors.label};
-
-  :hover {
-    color: ${colors.body};
-  }
-`;
-
-const DropDownTitle = styled.span<{ spacing: string | undefined }>`
-  margin-right: ${({ spacing }) => spacing};
-`;
-
 type PropsType = {
   title: string;
   spacing?: string;
@@ -32,6 +20,14 @@ export default function FilterDropDown({ title, spacing }: PropsType) {
   );
 }
 
-FilterDropDown.defaultProps = {
-  spacing: '0px',
-};
+const DropdownIcon = styled(KeyboardArrowDownIcon)`
+  color: ${colors.label};
+
+  :hover {
+    color: ${colors.body};
+  }
+`;
+
+const DropDownTitle = styled.span<{ spacing: string | undefined }>`
+  margin-right: ${({ spacing }) => spacing};
+`;
