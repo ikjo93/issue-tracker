@@ -14,6 +14,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
     'linebreak-style': 0,
     'import/order': [
       'error',

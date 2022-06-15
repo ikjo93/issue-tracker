@@ -12,18 +12,34 @@ interface ILoginButton {
   loginType?: LoginType;
 }
 
+interface IFormEventTarget extends EventTarget {
+  email?: HTMLInputElement;
+  password?: HTMLInputElement;
+}
 export default function LoginPage() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const formData: IFormEventTarget = e.target;
+    const email = formData.email?.value;
+    const password = formData.password?.value;
+    fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
   };
 
   return (
     <Wrapper onSubmit={handleSubmit}>
       <Squircle>
-        <InputBox placeholder="아이디(이메일)" />
+        <InputBox name="email" placeholder="아이디(이메일)" />
       </Squircle>
       <Squircle>
-        <InputBox type="password" placeholder="비밀번호" />
+        <InputBox name="password" type="password" placeholder="비밀번호" />
       </Squircle>
       <Squircle>
         <LoginButton type="submit">아이디로 로그인</LoginButton>

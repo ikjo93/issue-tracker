@@ -29,7 +29,7 @@ const postJoin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
 
 const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   const { email, password } = req.body;
-  const user = fakeUsers.find((user) => user.email === email);
+  const user = fakeUsers.find((fUser) => fUser.email === email);
   if (!user) {
     return res(ctx.status(401));
   }
@@ -40,5 +40,5 @@ const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
 };
 
 export default function handlers() {
-  return [rest.post('/api/join', postJoin), rest.get('/api/login', postLogin)];
+  return [rest.post('/api/join', postJoin), rest.post('/api/login', postLogin)];
 }
