@@ -34,7 +34,11 @@ const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
     return res(ctx.status(401));
   }
   if (user.password === password) {
-    return res(ctx.status(201), ctx.json({ token: user.member_id }));
+    return res(
+      ctx.status(201),
+      ctx.cookie('refreshToken', `${user.member_id}`),
+      ctx.json({ profileUrl: user.profile_url }),
+    );
   }
   return res(ctx.status(401));
 };

@@ -20,7 +20,8 @@
       "@style/*": ["src/style/*"],
       "@pages/*": ["src/pages/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@server/*": ["src/server/*"]
+      "@server/*": ["src/server/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   },
   "include": ["src", "config"]

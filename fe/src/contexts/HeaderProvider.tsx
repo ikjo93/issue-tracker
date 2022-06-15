@@ -2,14 +2,16 @@ import React, { useReducer, useContext, createContext, Dispatch } from 'react';
 
 interface IHeaderState {
   isLogin: boolean;
+  profileUrl: string;
 }
 
-type Action = { type: 'LOGIN' } | { type: 'LOGOUT' };
+type Action = { type: 'LOGIN'; profileUrl: string } | { type: 'LOGOUT' };
 
 type HeaderDispatch = Dispatch<Action>;
 
 const initHeaderState: IHeaderState = {
   isLogin: false,
+  profileUrl: '',
 };
 
 const HeaderStateContext = createContext<IHeaderState | null>(null);
@@ -21,11 +23,13 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
       return {
         ...state,
         isLogin: true,
+        profileUrl: action.profileUrl,
       };
     case 'LOGOUT':
       return {
         ...state,
         isLogin: false,
+        profileUrl: '',
       };
     default:
       throw new Error('Unhandled action');

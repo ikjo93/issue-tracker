@@ -1,7 +1,9 @@
+import axios from 'axios';
 import { FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+import { useHeaderDispatch } from '@/contexts/HeaderProvider';
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
@@ -17,20 +19,22 @@ interface IFormEventTarget extends EventTarget {
   password?: HTMLInputElement;
 }
 export default function LoginPage() {
-  const handleSubmit = (e: FormEvent) => {
+  const navigate = useNavigate();
+  const headerDispatch = useHeaderDispatch();
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
     const email = formData.email?.value;
     const password = formData.password?.value;
-    fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json));
+    const {
+      data: { profileUrl },
+    } = await axios.post('/api/login', {
+      email,
+      password,
+    });
+    headerDispatch({ type: 'LOGIN', profileUrl });
+    navigate('/');
   };
 
   return (

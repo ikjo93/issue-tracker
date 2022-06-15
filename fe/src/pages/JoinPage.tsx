@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -14,21 +15,18 @@ interface IFormEventTarget extends EventTarget {
 
 export default function JoinPage() {
   const navigate = useNavigate();
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
     const email = formData.email?.value;
     const password = formData.password?.value;
     const name = formData.name?.value;
-    fetch('/api/join', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-        name,
-      }),
-    })
-      .then(() => navigate('/login'))
+    await axios.post('/api/join', {
+      email,
+      password,
+      name,
+    });
+    navigate('/login');
   };
 
   return (
