@@ -1,5 +1,7 @@
 import { rest } from 'msw';
 
+import issues from '@server/dummyData/issues';
+
 interface IUser {
   member_id: number;
   name: string;
@@ -43,6 +45,13 @@ const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   return res(ctx.status(401));
 };
 
+const getIssues: Parameters<typeof rest.get>[1] = (_, res, ctx) =>
+  res(ctx.status(200), ctx.json(issues));
+
 export default function handlers() {
-  return [rest.post('/api/join', postJoin), rest.post('/api/login', postLogin)];
+  return [
+    rest.post('/api/join', postJoin),
+    rest.post('/api/login', postLogin),
+    rest.get('/api/issues', getIssues),
+  ];
 }

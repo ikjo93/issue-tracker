@@ -12,8 +12,11 @@ type Action<T> =
   | { type: 'FETCHED'; payload: T }
   | { type: 'ERROR'; payload: Error };
 
+type MethodType = 'get' | 'post';
+
 export default function useAxios<T>(
   url: string,
+  method: MethodType,
   options?: AxiosRequestConfig,
 ): ResponseState<T> {
   const initState: ResponseState<T> = {
@@ -54,7 +57,7 @@ export default function useAxios<T>(
     const fetchData = async () => {
       dispatch({ type: 'LOADING' });
       try {
-        const response = await axios(url, options);
+        const response = await axios[method](url, options);
         dispatch({ type: 'FETCHED', payload: response.data });
       } catch (error) {
         dispatch({ type: 'ERROR', payload: error as Error });
@@ -62,7 +65,7 @@ export default function useAxios<T>(
     };
 
     fetchData();
-  }, [options, url]);
+  }, [options, url, method]);
 
   return state;
 }

@@ -25,7 +25,12 @@ export default function IssueTitle({ title, labels }: any) {
       />
       <LabelContainer>
         {labels.map((label) => (
-          <Label text={label.name} color="white" bgColor="blue" />
+          <Label
+            key={label.id}
+            text={label.name}
+            color="white"
+            bgColor="blue"
+          />
         ))}
       </LabelContainer>
     </IssueTitleContainer>

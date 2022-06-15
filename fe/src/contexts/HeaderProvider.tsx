@@ -14,6 +14,15 @@ const initHeaderState: IHeaderState = {
   profileUrl: '',
 };
 
+/*
+  Default Page 작업용 init state
+*/
+const initHeaderStateForDefaultPage: IHeaderState = {
+  isLogin: true,
+  profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
+};
+//
+
 const HeaderStateContext = createContext<IHeaderState | null>(null);
 const HeaderDispatchContext = createContext<HeaderDispatch | null>(null);
 
@@ -37,6 +46,7 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
 }
 
 export function HeaderProvider({ children }: { children: React.ReactNode }) {
+  // TODO: init state 작업에 따라 바꿔서 사용하세요
   const [state, dispatch] = useReducer(reducer, initHeaderState);
 
   return (
