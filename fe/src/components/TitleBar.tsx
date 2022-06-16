@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import Container from '@components/Container';
-import Divider from '@components/Divider';
 import { fontSize } from '@constants/fonts';
 
 const Title = styled.h1`
@@ -12,7 +11,6 @@ export default function TitleBar({ title }) {
   return (
     <Container mt="3rem">
       <Title>{title}</Title>
-      <Divider length="100%" />
     </Container>
   );
 }

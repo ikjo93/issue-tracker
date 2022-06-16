@@ -4,19 +4,25 @@ const Divider = styled.div<{
   length?: string;
   isVertical?: boolean;
   color?: string;
+  margin?: string;
 }>`
   opacity: 0.3;
-  ${({ isVertical = false, color = 'grey', length = '20px' }) =>
+  ${({
+    isVertical = false,
+    color = 'grey',
+    length = '20px',
+    margin = '0.7rem',
+  }) =>
     isVertical
       ? css`
           height: ${length};
           border-left: 1px solid ${color};
-          margin: 0 0.7rem;
+          margin: 0 ${margin};
         `
       : css`
           width: ${length};
           border-bottom: 1px solid ${color};
-          margin: 0.7rem 0;
+          margin: ${margin} 0;
         `}
 `;
 

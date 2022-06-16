@@ -30,17 +30,42 @@ const Container = styled.div<{
   padding?: string;
   flexInfo?: FlexTypes;
   gap?: number;
+  position?: string;
+  left?: string;
+  right?: string;
+  top?: string;
+  bottom?: string;
 }>`
-  ${({ width, height, margin, mt, mb, ml, mr, padding, gap }) => css`
-    width: ${width};
-    height: ${height};
-    margin: ${margin};
-    ${mt && `margin-top: ${mt}`};
-    ${mb && `margin-bottom: ${mb}`};
-    ${ml && `margin-left: ${ml}`};
-    ${mr && `margin-right: ${mr}`};
-    padding: ${padding};
-    gap: ${gap}rem;
+  ${({
+    width,
+    height,
+    margin,
+    mt,
+    mb,
+    ml,
+    mr,
+    padding,
+    gap,
+    position,
+    left,
+    right,
+    top,
+    bottom,
+  }) => css`
+    ${width && `width: ${width};`}
+    ${height && `height: ${height};`}
+    ${margin && `margin: ${margin};`}
+    ${mt && `margin-top: ${mt};`}
+    ${mb && `margin-bottom: ${mb};`}
+    ${ml && `margin-left: ${ml};`}
+    ${mr && `margin-right: ${mr};`}
+    ${padding && `padding: ${padding};`}
+    ${gap && `gap : ${gap}rem;`}
+    ${position && `position : ${position};`}
+    ${left && `left : ${left};`}
+    ${right && `right : ${right};`}
+    ${top && `top : ${top};`}
+    ${bottom && `bottom : ${bottom};`}
   `}
 
   ${({ flexInfo }) => flexInfo && mixin.flexMixin(flexInfo)}
