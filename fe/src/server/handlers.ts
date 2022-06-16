@@ -12,6 +12,7 @@ interface IUser {
 
 let lastUserId = 1;
 const fakeUsers: IUser[] = [];
+const fakeIssues = [...issues];
 
 const postJoin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   const { email, name, password } = req.body;
@@ -46,12 +47,42 @@ const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
 };
 
 const getIssues: Parameters<typeof rest.get>[1] = (_, res, ctx) =>
-  res(ctx.status(200), ctx.json(issues));
+  res(ctx.status(200), ctx.json(fakeIssues));
 
+const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const { subject, description } = req.body;
+  const newIssueId = fakeIssues[fakeIssues.length - 1].id + 1;
+  const newIssueNumber = fakeIssues[fakeIssues.length - 1].number + 1;
+  const newIssue = {
+    id: newIssueId,
+    number: newIssueNumber,
+    subject,
+    description,
+    writer: 'happyGyu',
+    profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
+    status: 'open',
+    createdDatetime: new Date().toISOString(),
+    labels: [
+      {
+        id: 124123,
+        name: '임시라벨',
+      },
+    ],
+    milestones: [
+      {
+        id: 123214,
+        name: '임시마일',
+      },
+    ],
+  };
+  fakeIssues.push(newIssue);
+  return res(ctx.status(201));
+};
 export default function handlers() {
   return [
     rest.post('/api/join', postJoin),
     rest.post('/api/login', postLogin),
     rest.get('/api/issues', getIssues),
+    rest.post('/api/createIssue', postCreateIssue),
   ];
 }

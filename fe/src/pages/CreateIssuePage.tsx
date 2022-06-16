@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 
 import Container from '@components/Container';
@@ -10,13 +13,35 @@ import UserIcon from '@components/UserIcon';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
 
+interface IFormEventTarget extends EventTarget {
+  subject?: HTMLInputElement;
+  description?: HTMLTextAreaElement;
+}
+
 export default function CreateIssuePage() {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const formData: IFormEventTarget = e.target;
+    const subject = formData.subject?.value;
+    const description = formData.description?.value;
+    await axios.post('/api/createIssue', {
+      subject,
+      description,
+    });
+    navigate('/');
+  };
+
+  const handleClickCancleButton = () => {
+    navigate('/');
+  };
 
   return (
     <>
       <Header />
-      <Body>
+      <Body onSubmit={handleSubmit}>
         <TitleBar title="새로운 이슈 작성" />
         <Divider length="100%" margin="2rem" />
         <GridContainer>
@@ -27,7 +52,7 @@ export default function CreateIssuePage() {
               width={100}
               unit="%"
             >
-              <InputBox name="title" placeholder="제목" />
+              <InputBox name="subject" placeholder="제목" />
             </Squircle>
             <Squircle
               backgroundColor={theme.palette.darkerBgColor}
@@ -35,7 +60,7 @@ export default function CreateIssuePage() {
               height="30rem"
               unit="%"
             >
-              <TextAreaBox placeholder="본문" />
+              <TextAreaBox name="description" placeholder="본문" />
             </Squircle>
           </Container>
           <Squircle
@@ -57,7 +82,9 @@ export default function CreateIssuePage() {
           gap={1}
         >
           <Squircle>
-            <CancleButton type="button">작성 취소</CancleButton>
+            <CancleButton type="button" onClick={handleClickCancleButton}>
+              작성 취소
+            </CancleButton>
           </Squircle>
           <Squircle>
             <SubmitButton type="submit">완료</SubmitButton>
