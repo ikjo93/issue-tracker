@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import colors from '@constants/colors';
@@ -7,12 +8,13 @@ import IssueTableBody from './IssueTableBody';
 import IssueTableHeader from './IssueTableHeader';
 
 export default function IssueTable() {
-  const { data: issues } = useAxios('/api/issues', 'get');
+  const fetchUrl = `/api/issues/${useLocation().search}`;
+  const { data: issues } = useAxios(fetchUrl, 'get');
 
   return (
     <IssueTableContainer>
       <IssueTableHeader openedIssuesCnt={issues?.length || 0} />
-      <IssueTableBody issues={issues} />
+      <IssueTableBody issues={issues?.issue} />
     </IssueTableContainer>
   );
 }
