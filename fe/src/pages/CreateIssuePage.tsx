@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 import Header from '@components/Header';
-import IssueTable from '@components/IssueTable';
-import UtilBar from '@components/UtilBar';
+import TitleBar from '@components/TitleBar';
 
 const Body = styled.div`
   max-width: 1440px;
@@ -14,8 +13,7 @@ export default function CreateIssuePage() {
     <>
       <Header />
       <Body>
-        <UtilBar />
-        <IssueTable />
+        <TitleBar title="새로운 이슈 작성" />
       </Body>
     </>
   );

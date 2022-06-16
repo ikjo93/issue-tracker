@@ -23,14 +23,22 @@ const Container = styled.div<{
   width?: string;
   height?: string;
   margin?: string;
+  mt?: string;
+  mb?: string;
+  ml?: string;
+  mr?: string;
   padding?: string;
   flexInfo?: FlexTypes;
   gap?: number;
 }>`
-  ${({ width, height, margin, padding, gap }) => css`
+  ${({ width, height, margin, mt, mb, ml, mr, padding, gap }) => css`
     width: ${width};
     height: ${height};
     margin: ${margin};
+    ${mt && `margin-top: ${mt}`};
+    ${mb && `margin-bottom: ${mb}`};
+    ${ml && `margin-left: ${ml}`};
+    ${mr && `margin-right: ${mr}`};
     padding: ${padding};
     gap: ${gap}rem;
   `}

@@ -18,8 +18,8 @@ const Squircle = styled.div<ISquircleProps>`
   height: ${({ height }) =>
     height ? `${height}rem` : heights.squircle.default};
   opacity: ${({ opacity }) => opacity || 1};
-  background-color: ${({ backgroundColor, theme }) =>
-    backgroundColor || theme.palette.default};
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor && `background-color: ${backgroundColor}`};
   ${({ borderLineColor }) =>
     borderLineColor && `border: 1px solid ${borderLineColor}`}
 `;

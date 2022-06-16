@@ -24,7 +24,7 @@ const initHeaderState: IHeaderState = {
 */
 const initHeaderStateForDefaultPage: IHeaderState = {
   isLogin: true,
-  isDark: Boolean(localStorage.getItem('isDark')) || false,
+  isDark: JSON.parse(localStorage.getItem('isDark') || 'false'),
   profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
 };
 //
