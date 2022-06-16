@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import mixin from '@style/mixin';
-import { checkIfUrlHasQuery, handleUrlQuery } from '@util/urlParser';
+import { checkIfUrlHasQuery, handleUrlQuery } from '@util/queryParser';
 
 export default function ModalMenu({ modalContent }) {
   const { method, queryKey, queryValue, name } = modalContent;

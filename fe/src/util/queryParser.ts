@@ -29,3 +29,14 @@ export const handleUrlQuery = (
 
   return searchParams.toString();
 };
+
+export const convertInputValueToQuery = (inputValue: string) => {
+  const queryString = inputValue.replace(':', '=').replace(' ', '&');
+  return queryString;
+};
+
+export const convertUrlToInputValue = () => {
+  const queryString = window.location.search;
+  const inputValue = queryString.slice(1).replace('=', ':').replace('&', ' ');
+  return inputValue;
+};

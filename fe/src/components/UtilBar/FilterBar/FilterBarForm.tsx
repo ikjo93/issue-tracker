@@ -1,14 +1,32 @@
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
+import {
+  convertInputValueToQuery,
+  convertUrlToInputValue,
+} from '@util/queryParser';
 
 export default function FilterBarForm() {
+  const initialInputValue = convertUrlToInputValue();
+  const [inputValue, setInputValue] = useState(initialInputValue);
+  const navigate = useNavigate();
+  const handleFilterSubmit = (e) => {
+    e.preventDefault();
+    const queryString = convertInputValueToQuery(inputValue);
+    navigate(`/?${queryString}`);
+  };
+
   return (
-    <FilterBarFormContainer>
+    <FilterBarFormContainer onSubmit={handleFilterSubmit}>
       <FilterBarFormIcon />
-      <FilterBarInput />
+      <FilterBarInput
+        onChange={(event) => setInputValue(event.target.value)}
+        value={inputValue}
+      />
     </FilterBarFormContainer>
   );
 }

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Container from '@components/Container';
 import IconTextBox from '@components/IconTextBox';
 import { fontWeight } from '@constants/fonts';
-import { handleUrlQuery } from '@util/urlParser';
+import { handleUrlQuery } from '@util/queryParser';
 
 export default function OpenAndCloseFilter({
   clickedStatusCnt,
