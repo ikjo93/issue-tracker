@@ -8,19 +8,23 @@ import IssueTableHeader from './IssueTableHeader';
 
 export default function IssueTable() {
   const fetchUrl = `/api/issues/${useLocation().search}`;
-  const { data: issues } = useAxios(fetchUrl, 'get');
+  const { data: issueTableData } = useAxios(fetchUrl, 'get');
 
   return (
-    <IssueTableContainer>
-      <IssueTableHeader openedIssuesCnt={issues?.length || 0} />
-      <IssueTableBody issues={issues?.issue} />
-    </IssueTableContainer>
+    issueTableData && (
+      <IssueTableContainer>
+        <IssueTableHeader
+          clickedStatusCnt={issueTableData.issues.length}
+          oppositeStatusCnt={issueTableData.oppositeStatusCnt}
+        />
+        <IssueTableBody issues={issueTableData.issues} />
+      </IssueTableContainer>
+    )
   );
 }
 
 const IssueTableContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 1rem;
-  overflow: hidden;
   margin-top: 1.5rem;
 `;

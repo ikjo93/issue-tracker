@@ -18,7 +18,6 @@ const FilterBarContainer = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'flex-start' })};
   width: 37.5rem;
   height: 2.5rem;
-  border-radius: 0.75rem;
   border: 1px solid ${({ theme }) => theme.palette.borderColor};
-  overflow: hidden;
+  border-radius: 0.75rem;
 `;

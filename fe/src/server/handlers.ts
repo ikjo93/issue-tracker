@@ -100,7 +100,7 @@ const filterByStatus = (
 ) => {
   const filtered = originalIssues.filter((issue) => issue.status === target);
   return {
-    issue: filtered,
+    issues: filtered,
     oppositeStatusCnt: originalIssues.length - filtered.length,
   };
 };

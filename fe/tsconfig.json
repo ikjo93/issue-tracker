@@ -22,7 +22,8 @@
       "@server/*": ["src/server/*"],
       "@types/*": ["src/types/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@type/*": ["src/type/*"]
+      "@type/*": ["src/type/*"],
+      "@util/*": ["src/util/*"]
     }
   },
   "include": ["src", "config"]

@@ -20,6 +20,7 @@ const FilterBarFormContainer = styled.form`
   height: 100%;
   padding: 0.5rem 1.5rem;
   border-left: 1px solid ${({ theme }) => theme.palette.borderColor};
+  border-radius: 0 0.75rem 0.75rem 0;
 `;
 
 const FilterBarFormIcon = styled(SearchIcon)`

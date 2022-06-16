@@ -40,6 +40,7 @@ module.exports = {
       '@server': path.resolve(__dirname, '..', 'src/server'),
       '@hooks': path.resolve(__dirname, '..', 'src/hooks'),
       '@type': path.resolve(__dirname, '..', 'src/type'),
+      '@util': path.resolve(__dirname, '..', 'src/util'),
     },
   },
   module: {
