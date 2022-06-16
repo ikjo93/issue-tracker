@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import FilterDropDown from '@components/FilterDropDown';
-import colors from '@constants/colors';
 import mixin from '@style/mixin';
 
 export default function FilterBarSelectMenu() {
@@ -16,5 +15,5 @@ const SelectMenuContainer = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'center' })};
   width: 8rem;
   height: 100%;
-  background: ${colors.bg};
+  background-color: ${({ theme }) => theme.palette.bgColor};
 `;

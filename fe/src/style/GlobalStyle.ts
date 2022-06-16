@@ -27,7 +27,8 @@ const GlobalStyle = createGlobalStyle`
     text-decoration:none;
   }
   body{
-    background-color: ${({ theme }) => theme.palette.bgColor}
+    background-color: ${({ theme }) => theme.palette.bgColor};
+    color: ${({ theme }) => theme.palette.fontColor};
   }
 `;
 

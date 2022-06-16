@@ -12,7 +12,7 @@ export default function IssueTableCell({ issue }: { issue: any }) {
   return (
     <CellContainer>
       <CheckboxContainer>
-        <Checkbox />
+        <Checkbox sx={{ color: colors.grey }} />
       </CheckboxContainer>
       <IssueInfoContainer>
         <IssueTitle title={issue.subject} labels={issue.labels} />
@@ -32,7 +32,11 @@ export default function IssueTableCell({ issue }: { issue: any }) {
 const CellContainer = styled.div`
   position: relative;
   height: 6.25rem;
-  border-top: 1px solid ${colors.line};
+  border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
+  background-color: ${({ theme }) => theme.palette.contentColor};
+  :hover {
+    background-color: ${({ theme }) => theme.palette.lighterBgColor};
+  }
 `;
 
 const CheckboxContainer = styled.div`

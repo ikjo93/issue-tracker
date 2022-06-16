@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import colors from '@constants/colors';
 import useAxios from '@hooks/useAxios';
 
 import IssueTableBody from './IssueTableBody';
@@ -20,7 +19,7 @@ export default function IssueTable() {
 }
 
 const IssueTableContainer = styled.div`
-  border: 1px solid ${colors.line};
+  border: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 1rem;
   overflow: hidden;
   margin-top: 1.5rem;

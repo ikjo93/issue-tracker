@@ -68,7 +68,7 @@ const Wrapper = styled.form`
 const InputBox = styled.input`
   width: 100%;
   height: 100%;
-  background-color: ${colors.inputBg};
+  background-color: ${({ theme }) => theme.palette.darkerBgColor};
   padding: 0rem 1rem;
 `;
 
