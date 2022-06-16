@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import Container from '@components/Container';
+import mixin from '@style/mixin';
 
 import FilterBar from './FilterBar';
 import NewIssueButton from './NewIssueButton';
@@ -22,7 +23,6 @@ export default function UtilBar() {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
+  ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   margin-top: 2rem;
 `;

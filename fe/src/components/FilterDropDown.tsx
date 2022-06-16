@@ -1,7 +1,7 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import styled from 'styled-components';
 
-import colors from '@/constants/colors';
+import colors from '@constants/colors';
 
 import Container from './Container';
 

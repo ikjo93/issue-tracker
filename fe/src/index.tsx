@@ -2,8 +2,9 @@ import axios from 'axios';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import App from '@/App';
 import { serviceWorker } from '@server/browser';
+
+import App from './App';
 
 axios.defaults.withCredentials = true;
 

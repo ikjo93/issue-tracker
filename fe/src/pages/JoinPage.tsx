@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
+import mixin from '@style/mixin';
 
 interface IFormEventTarget extends EventTarget {
   email?: HTMLInputElement;
@@ -57,12 +58,11 @@ const Wrapper = styled.form`
   width: 100%;
   height: 100vh;
   gap: 0.5rem;
-  ${({ theme }) =>
-    theme.mixin.flexMixin({
-      direction: 'column',
-      align: 'center',
-      justify: 'center',
-    })}
+  ${mixin.flexMixin({
+    direction: 'column',
+    align: 'center',
+    justify: 'center',
+  })}
 `;
 
 const InputBox = styled.input`

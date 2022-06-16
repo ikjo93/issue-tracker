@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import mixin from '@style/mixin';
+
 type FlexTypes = {
   direction?: 'row' | 'column';
   align?:
@@ -33,7 +35,7 @@ const Container = styled.div<{
     gap: ${gap}rem;
   `}
 
-  ${({ flexInfo, theme }) => flexInfo && theme.mixin.flexMixin(flexInfo)}
+  ${({ flexInfo }) => flexInfo && mixin.flexMixin(flexInfo)}
 `;
 
 export default Container;

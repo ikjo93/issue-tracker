@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import IconTextBox from '@components/IconTextBox';
 import colors from '@constants/colors';
+import mixin from '@style/mixin';
 
 export default function TagTab() {
   return (
@@ -24,8 +25,7 @@ export default function TagTab() {
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ align: 'center', justify: 'space-around' })};
+  ${mixin.flexMixin({ align: 'center', justify: 'space-around' })};
   width: 20rem;
   height: 2.5rem;
   border: 1px solid ${colors.line};

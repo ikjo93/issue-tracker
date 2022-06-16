@@ -1,9 +1,10 @@
 import { Checkbox } from '@mui/material';
 import styled from 'styled-components';
 
-import Container from '@/components/Container';
-import FilterDropDown from '@/components/FilterDropDown';
-import colors from '@/constants/colors';
+import Container from '@components/Container';
+import FilterDropDown from '@components/FilterDropDown';
+import colors from '@constants/colors';
+import mixin from '@style/mixin';
 
 import OpenAndCloseFilter from './OpenAndCloseFilter';
 
@@ -36,8 +37,7 @@ export default function IssueTableHeader({
 }
 
 const IssueTableHeaderContainer = styled.div`
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
+  ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   height: 4rem;
   padding: 0 2rem;
   background: ${colors.bg};
