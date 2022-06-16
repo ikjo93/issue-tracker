@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import FilterDropDown from '@components/FilterDropDown';
-import colors from '@constants/colors';
 import mixin from '@style/mixin';
 
 export default function FilterBarSelectMenu() {

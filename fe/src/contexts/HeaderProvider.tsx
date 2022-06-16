@@ -15,7 +15,7 @@ type HeaderDispatch = Dispatch<Action>;
 
 const initHeaderState: IHeaderState = {
   isLogin: false,
-  isDark: false,
+  isDark: Boolean(localStorage.getItem('isDark')) || false,
   profileUrl: '',
 };
 
@@ -24,7 +24,7 @@ const initHeaderState: IHeaderState = {
 */
 const initHeaderStateForDefaultPage: IHeaderState = {
   isLogin: true,
-  isDark: true,
+  isDark: Boolean(localStorage.getItem('isDark')) || false,
   profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
 };
 //
@@ -46,11 +46,14 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
         isLogin: false,
         profileUrl: '',
       };
-    case 'THEME_TOGGLE':
+    case 'THEME_TOGGLE': {
+      const toggleData = !state.isDark;
+      localStorage.setItem('isDark', JSON.stringify(toggleData));
       return {
         ...state,
-        isDark: !state.isDark,
+        isDark: toggleData,
       };
+    }
     default:
       throw new Error('Unhandled action');
   }

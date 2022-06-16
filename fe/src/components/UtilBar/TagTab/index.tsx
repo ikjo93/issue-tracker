@@ -3,7 +3,6 @@ import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
 import styled from 'styled-components';
 
 import IconTextBox from '@components/IconTextBox';
-import colors from '@constants/colors';
 import mixin from '@style/mixin';
 
 export default function TagTab() {

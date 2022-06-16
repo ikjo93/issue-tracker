@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import colors from '@constants/colors';
 import mixin from '@style/mixin';
 
 import FilterBarForm from './FilterBarForm';
