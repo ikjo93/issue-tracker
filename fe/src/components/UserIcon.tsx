@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import colors from '@constants/colors';
 import UserIconSize from '@constants/sizes';
 import { useHeaderState } from '@contexts/HeaderProvider';
 import { UserIconSizeType } from '@type/types';

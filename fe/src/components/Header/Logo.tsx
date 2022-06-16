@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import colors from '@constants/colors';
 import { fontWeight, fontSize } from '@constants/fonts';
 
 interface ILogoProps {
