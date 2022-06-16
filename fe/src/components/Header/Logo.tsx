@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import colors from '@constants/colors';
 import { fontWeight, fontSize } from '@constants/fonts';
 
 interface ILogoProps {
@@ -18,7 +17,6 @@ export default function Logo({ page }: ILogoProps) {
 
 const LogoTitle = styled.h1<ILogoTitle>`
   font-style: italic;
-  color: ${colors.titleActive};
   font-weight: ${fontWeight.sBold};
   font-size: ${({ logoSize }) => logoSize};
 `;

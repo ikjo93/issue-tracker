@@ -1,17 +1,17 @@
 import { ThemeProvider } from 'styled-components';
 
-import { HeaderProvider } from '@contexts/HeaderProvider';
+import { useHeaderState } from '@contexts/HeaderProvider';
 import Routes from '@pages/Routes';
 import GlobalStyle from '@style/GlobalStyle';
-import theme from '@style/theme';
+import { darkTheme, lightTheme } from '@style/theme';
 
 export default function App() {
+  const { isDark } = useHeaderState();
+
   return (
-    <HeaderProvider>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Routes />
-      </ThemeProvider>
-    </HeaderProvider>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <GlobalStyle />
+      <Routes />
+    </ThemeProvider>
   );
 }
