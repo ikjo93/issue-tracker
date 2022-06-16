@@ -17,7 +17,7 @@ export default function IssueTableHeader({
   return (
     <IssueTableHeaderContainer>
       <Container flexInfo={{ align: 'center' }}>
-        <Checkbox />
+        <Checkbox sx={{ color: colors.grey }} />
         <OpenAndCloseFilter
           openedIssuesCnt={openedIssuesCnt}
           closedIssuesCnt={0}
@@ -40,5 +40,5 @@ const IssueTableHeaderContainer = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   height: 4rem;
   padding: 0 2rem;
-  background: ${colors.bg};
+  background-color: ${({ theme }) => theme.palette.lighterBgColor};
 `;

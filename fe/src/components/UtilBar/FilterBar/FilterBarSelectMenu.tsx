@@ -16,5 +16,5 @@ const SelectMenuContainer = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'center' })};
   width: 8rem;
   height: 100%;
-  background: ${colors.bg};
+  background-color: ${({ theme }) => theme.palette.bgColor};
 `;

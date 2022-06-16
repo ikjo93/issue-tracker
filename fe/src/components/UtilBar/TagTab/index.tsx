@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-around' })};
   width: 20rem;
   height: 2.5rem;
-  border: 1px solid ${colors.line};
+  border: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 0.75rem;
   padding: 0 0.5rem;
 `;
@@ -36,5 +36,5 @@ const Wrapper = styled.div`
 const BorderLine = styled.div`
   width: 1px;
   height: 100%;
-  background: ${colors.line};
+  background: ${({ theme }) => theme.palette.borderColor};
 `;
