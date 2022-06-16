@@ -2,6 +2,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import styled from 'styled-components';
 
 import colors from '@constants/colors';
+import mixin from '@style/mixin';
 
 export default function FilterBarForm() {
   return (
@@ -13,8 +14,7 @@ export default function FilterBarForm() {
 }
 
 const FilterBarFormContainer = styled.form`
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ align: 'center', justify: 'flex-start' })};
+  ${mixin.flexMixin({ align: 'center', justify: 'flex-start' })};
   background: ${colors.inputBg};
   width: 30rem;
   height: 100%;

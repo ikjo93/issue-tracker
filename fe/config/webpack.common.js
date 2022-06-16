@@ -32,7 +32,6 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
-      '@': path.resolve(__dirname, '..', 'src'),
       '@components': path.resolve(__dirname, '..', 'src/components'),
       '@constants': path.resolve(__dirname, '..', 'src/constants'),
       '@style': path.resolve(__dirname, '..', 'src/style'),
@@ -40,6 +39,7 @@ module.exports = {
       '@contexts': path.resolve(__dirname, '..', 'src/contexts'),
       '@server': path.resolve(__dirname, '..', 'src/server'),
       '@hooks': path.resolve(__dirname, '..', 'src/hooks'),
+      '@type': path.resolve(__dirname, '..', 'src/type'),
     },
   },
   module: {

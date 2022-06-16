@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Logo from '@components/Header/Logo';
 import UserIcon from '@components/UserIcon';
+import mixin from '@style/mixin';
 
 export default function Header() {
   return (
@@ -15,6 +16,5 @@ export default function Header() {
 const HeaderContainer = styled.div`
   height: 6rem;
   padding: 0 5rem;
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ align: 'center', justify: 'space-between' })}
+  ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
 `;

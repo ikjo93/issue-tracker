@@ -3,11 +3,12 @@ import { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { useHeaderDispatch } from '@/contexts/HeaderProvider';
 import Logo from '@components/Header/Logo';
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
+import { useHeaderDispatch } from '@contexts/HeaderProvider';
+import mixin from '@style/mixin';
 
 type LoginType = 'github' | 'default';
 
@@ -66,12 +67,11 @@ const Wrapper = styled.form`
   width: 100%;
   height: 100vh;
   gap: 0.5rem;
-  ${({ theme }) =>
-    theme.mixin.flexMixin({
-      direction: 'column',
-      align: 'center',
-      justify: 'center',
-    })}
+  ${mixin.flexMixin({
+    direction: 'column',
+    align: 'center',
+    justify: 'center',
+  })}
 `;
 
 const getLoginButtonBg = (theme, loginType) => {
