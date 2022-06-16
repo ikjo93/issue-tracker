@@ -46,30 +46,47 @@ const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   return res(ctx.status(401));
 };
 
+
 const getIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
-  const filters = parseQuery(req.url.search);
-  const filteredIssues = filters.reduce(
-    (tempIssues, filter) => filterIssues(filter, tempIssues),
+  const filteredIssues = filterIssues(req.url.search);
+  return res(ctx.status(200), ctx.json(filteredIssues));
+};
+
+const filterIssues = (queryString) => {
+  const searchParams = new URLSearchParams(queryString);
+  const queryKeyList = ['writer', 'label', 'milestone', 'assignee'];
+  const filteredByQueries = queryKeyList.reduce(
+    (tempIssues, queryKey) =>
+      filterByQuery(queryKey, searchParams.get(queryKey), tempIssues),
     issues,
   );
-  const filteredByStatus = filters.includes('is%3Aclosed')
-    ? filterByStatus('closed', filteredIssues)
-    : filterByStatus('open', filteredIssues);
-  return res(ctx.status(200), ctx.json(filteredByStatus));
+  const filteredByStatus =
+    searchParams.get('status') === 'closed'
+      ? filterByStatus('closed', filteredByQueries)
+      : filterByStatus('open', filteredByQueries);
+  return filteredByStatus;
 };
 
-const parseQuery = (query: string) => {
-  if (query.slice(0, 3) !== '?q=') return [];
-  const filters = query.slice(3).split('+');
-  return filters;
-};
-
-const filterIssues = (target: string, originalIssues: IssueType[]) => {
-  if (target.startsWith('label')) {
-    const labelId = Number(target.replace('label', ''));
-    return filterByLabel(labelId, originalIssues);
+const filterByQuery = (
+  queryKey: string,
+  queryValue: string,
+  originalIssues: IssueType[],
+) => {
+  if (queryValue === null) return originalIssues;
+  switch (queryKey) {
+    case 'writer':
+      return originalIssues.filter((issue) => issue.writer === queryValue);
+    case 'label':
+      return filterByLabel(queryValue, originalIssues);
+    case 'milestone':
+      return originalIssues.filter(
+        (issue) => issue.milestone.id === queryValue,
+      );
+    case 'assignee':
+      return originalIssues.filter((issue) => issue.assignee === queryValue);
+    default:
+      return originalIssues;
   }
-  return originalIssues;
 };
 
 const filterByLabel = (targetLabelId: number, originalIssues: IssueType[]) =>
@@ -87,7 +104,6 @@ const filterByStatus = (
     oppositeStatusCnt: originalIssues.length - filtered.length,
   };
 };
-
 
 export default function handlers() {
   return [

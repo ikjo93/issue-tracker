@@ -21,7 +21,7 @@ export default function OpenAndCloseFilter({
       margin="0 30px"
       flexInfo={{ align: 'center', justify: 'space-between' }}
     >
-      <Link to="?q=is%3Aopen">
+      <Link to="?status=open">
         <IconTextBox
           Icon={<ErrorOutlineIcon fontSize="small" />}
           texts={['열린 이슈', String(openedIssuesCnt)]}
@@ -29,7 +29,7 @@ export default function OpenAndCloseFilter({
           spacing={0.375}
         />
       </Link>
-      <Link to="?q=is%3Aclosed">
+      <Link to="?status=closed">
         <IconTextBox
           Icon={<Inventory2OutlinedIcon fontSize="small" />}
           texts={['닫힌 이슈', String(closedIssuesCnt)]}
