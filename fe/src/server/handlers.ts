@@ -52,12 +52,9 @@ const getIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
     (tempIssues, filter) => filterIssues(filter, tempIssues),
     issues,
   );
-  console.log(filters);
   const filteredByStatus = filters.includes('is%3Aclosed')
     ? filterByStatus('closed', filteredIssues)
     : filterByStatus('open', filteredIssues);
-
-  console.log(filteredByStatus);
   return res(ctx.status(200), ctx.json(filteredByStatus));
 };
 

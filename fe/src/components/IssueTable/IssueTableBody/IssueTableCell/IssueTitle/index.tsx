@@ -21,7 +21,7 @@ export default function IssueTitle({ title, labels }: any) {
             key={label.id}
             text={label.name}
             color="white"
-            bgColor="blue"
+            bgColor={label.color}
           />
         ))}
       </LabelContainer>

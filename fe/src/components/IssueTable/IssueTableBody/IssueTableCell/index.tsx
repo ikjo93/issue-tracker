@@ -23,7 +23,7 @@ export default function IssueTableCell({ issue }: { issue: any }) {
         />
       </IssueInfoContainer>
       <UserIconContainer>
-        <UserIcon size="SMALL" />
+        <UserIcon size="SMALL" imgUrl={issue.profileUrl} />
       </UserIconContainer>
     </CellContainer>
   );
