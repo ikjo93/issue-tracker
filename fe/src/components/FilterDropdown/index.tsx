@@ -7,7 +7,6 @@ import colors from '@constants/colors';
 import dropDownInfo from '@constants/temp';
 import mixin from '@style/mixin';
 
-import Container from '../Container';
 import DropdownModal from './DropdownModal';
 
 type PropsType = {

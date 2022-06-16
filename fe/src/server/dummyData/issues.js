@@ -8,6 +8,7 @@ const issues = [
     profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
     status: 'open',
     createdDatetime: '2022-06-14T18:00:00',
+    assignee: ['happyGyu'],
     labels: [
       {
         id: 124123,
@@ -29,6 +30,7 @@ const issues = [
     profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
     status: 'closed',
     createdDatetime: '2022-06-14T19:00:00',
+    assignee: ['happyGyu', 'healtheloper'],
     labels: [
       {
         id: 124123,
@@ -55,6 +57,7 @@ const issues = [
     profileUrl: 'https://avatars.githubusercontent.com/u/58503584?v=4',
     status: 'open',
     createdDatetime: '2022-06-14T19:01:00',
+    assignee: ['happyGyu', 'healtheloper'],
     labels: [
       {
         id: 1241233345,
@@ -76,6 +79,7 @@ const issues = [
     profileUrl: 'https://avatars.githubusercontent.com/u/58503584?v=4',
     status: 'closed',
     createdDatetime: '2022-06-14T19:02:00',
+    assignee: ['healtheloper'],
     labels: [
       {
         id: 124123,
@@ -97,6 +101,7 @@ const issues = [
     profileUrl: 'https://avatars.githubusercontent.com/u/82401504?v=4',
     status: 'open',
     createdDatetime: '2022-06-14T19:03:00',
+    assignee: ['ikjo93'],
     labels: [
       {
         id: 12412312,

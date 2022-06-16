@@ -77,13 +77,15 @@ const filterByQuery = (
     case 'writer':
       return originalIssues.filter((issue) => issue.writer === queryValue);
     case 'label':
-      return filterByLabel(queryValue, originalIssues);
+      return filterByLabel(Number(queryValue), originalIssues);
     case 'milestone':
       return originalIssues.filter(
-        (issue) => issue.milestone.id === queryValue,
+        (issue) => issue.milestone.id === Number(queryValue),
       );
     case 'assignee':
-      return originalIssues.filter((issue) => issue.assignee === queryValue);
+      return originalIssues.filter((issue) =>
+        issue.assignee.includes(queryValue),
+      );
     default:
       return originalIssues;
   }

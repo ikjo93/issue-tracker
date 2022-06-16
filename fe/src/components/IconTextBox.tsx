@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 
 import mixin from '@style/mixin';
 
@@ -31,7 +32,7 @@ export default function IconTextBox({
     >
       {Icon}
       {texts?.map((text) => (
-        <span>{text}</span>
+        <span key={uuid()}>{text}</span>
       ))}
     </BoxContainer>
   );

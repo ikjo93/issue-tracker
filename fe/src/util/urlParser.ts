@@ -1,6 +1,9 @@
-export const checkIfUrlHasQuery = (queryKey: string, queryValue: string) => {
+export const checkIfUrlHasQuery = (
+  queryKey: string,
+  queryValue: string | number,
+) => {
   const searchParams = new URLSearchParams(window.location.search);
-  return searchParams.getAll(queryKey).includes(queryValue);
+  return searchParams.getAll(queryKey).includes(String(queryValue));
 };
 
 export const handleUrlQuery = (

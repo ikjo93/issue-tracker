@@ -12,7 +12,9 @@ export default function ModalMenu({ modalContent }) {
 
   const navigate = useNavigate();
   const handleMenuClick = () => {
-    const queryString = handleUrlQuery(method, queryKey, queryValue);
+    const queryString = isSelectedFilter
+      ? handleUrlQuery('delete', queryKey)
+      : handleUrlQuery(method, queryKey, queryValue);
     navigate(`/?${queryString}`);
   };
 
