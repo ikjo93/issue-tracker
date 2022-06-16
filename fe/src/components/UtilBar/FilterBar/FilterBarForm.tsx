@@ -15,11 +15,11 @@ export default function FilterBarForm() {
 
 const FilterBarFormContainer = styled.form`
   ${mixin.flexMixin({ align: 'center', justify: 'flex-start' })};
-  background: ${colors.inputBg};
+  background-color: ${({ theme }) => theme.palette.darkerBgColor};
   width: 30rem;
   height: 100%;
   padding: 0.5rem 1.5rem;
-  border-left: 1px solid ${colors.line};
+  border-left: 1px solid ${({ theme }) => theme.palette.borderColor};
 `;
 
 const FilterBarFormIcon = styled(SearchIcon)`
@@ -31,5 +31,5 @@ const FilterBarInput = styled.input`
   height: 1.75rem;
   margin-left: 0.625rem;
   color: ${colors.placeholder};
-  background: ${colors.inputBg};
+  background-color: ${({ theme }) => theme.palette.darkerBgColor};
 `;

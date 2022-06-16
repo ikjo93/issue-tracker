@@ -18,7 +18,7 @@ export default function IssueTable() {
 }
 
 const IssueTableContainer = styled.div`
-  border: 1px solid ${colors.line};
+  border: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 1rem;
   overflow: hidden;
   margin-top: 1.5rem;

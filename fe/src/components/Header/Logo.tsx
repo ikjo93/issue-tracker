@@ -18,7 +18,6 @@ export default function Logo({ page }: ILogoProps) {
 
 const LogoTitle = styled.h1<ILogoTitle>`
   font-style: italic;
-  color: ${colors.titleActive};
   font-weight: ${fontWeight.sBold};
   font-size: ${({ logoSize }) => logoSize};
 `;

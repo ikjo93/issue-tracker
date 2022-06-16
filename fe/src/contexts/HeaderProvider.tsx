@@ -2,15 +2,20 @@ import React, { useReducer, useContext, createContext, Dispatch } from 'react';
 
 interface IHeaderState {
   isLogin: boolean;
+  isDark: boolean;
   profileUrl: string;
 }
 
-type Action = { type: 'LOGIN'; profileUrl: string } | { type: 'LOGOUT' };
+type Action =
+  | { type: 'LOGIN'; profileUrl: string }
+  | { type: 'LOGOUT' }
+  | { type: 'THEME_TOGGLE' };
 
 type HeaderDispatch = Dispatch<Action>;
 
 const initHeaderState: IHeaderState = {
   isLogin: false,
+  isDark: false,
   profileUrl: '',
 };
 
@@ -19,6 +24,7 @@ const initHeaderState: IHeaderState = {
 */
 const initHeaderStateForDefaultPage: IHeaderState = {
   isLogin: true,
+  isDark: true,
   profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
 };
 //
@@ -39,6 +45,11 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
         ...state,
         isLogin: false,
         profileUrl: '',
+      };
+    case 'THEME_TOGGLE':
+      return {
+        ...state,
+        isDark: !state.isDark,
       };
     default:
       throw new Error('Unhandled action');
