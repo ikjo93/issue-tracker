@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import IconTextBox from '@components/IconTextBox';
 import colors from '@constants/colors';
+import mixin from '@style/mixin';
 
 interface IIssueDescriptionProps {
   issueNum: number;
@@ -24,7 +25,7 @@ export default function IssueDescription({
 }
 
 const Wrapper = styled.div`
-  ${({ theme }) => theme.mixin.flexMixin({ align: 'center' })}
+  ${mixin.flexMixin({ align: 'center' })}
   height: 1.75rem;
   gap: 1rem;
   color: ${colors.label};

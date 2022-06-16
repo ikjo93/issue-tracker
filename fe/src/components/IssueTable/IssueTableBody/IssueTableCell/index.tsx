@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import UserIcon from '@components/UserIcon';
 import colors from '@constants/colors';
+import mixin from '@style/mixin';
 
 import IssueDescription from './IssueDescription';
 import IssueTitle from './IssueTitle';
@@ -41,8 +42,7 @@ const CheckboxContainer = styled.div`
 `;
 
 const IssueInfoContainer = styled.div`
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ direction: 'column', justify: 'center' })}
+  ${mixin.flexMixin({ direction: 'column', justify: 'center' })}
   position: absolute;
   top: 1rem;
   left: 5rem;

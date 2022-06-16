@@ -1,4 +1,5 @@
 const colors = {
+  white2: '#E5E5E5',
   offWhite: '#FEFEFE',
   bg: '#F7F7FC',
   inputBg: '#EFF0F6',

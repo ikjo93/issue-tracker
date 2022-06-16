@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import useAxios from '@/hooks/useAxios';
 import colors from '@constants/colors';
+import useAxios from '@hooks/useAxios';
 
 import IssueTableBody from './IssueTableBody';
 import IssueTableHeader from './IssueTableHeader';

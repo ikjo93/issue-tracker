@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import colors from '@/constants/colors';
-import UserIconSize from '@/constants/sizes';
-import { useHeaderState } from '@/contexts/HeaderProvider';
-import { UserIconSizeType } from '@/types/types';
+import colors from '@constants/colors';
+import UserIconSize from '@constants/sizes';
+import { useHeaderState } from '@contexts/HeaderProvider';
+import { UserIconSizeType } from '@type/types';
 
 export default function UserIcon({ size }: { size: UserIconSizeType }) {
   const { profileUrl } = useHeaderState();

@@ -26,6 +26,9 @@ const GlobalStyle = createGlobalStyle`
   a{
     text-decoration:none;
   }
+  body{
+    background-color: ${({ theme }) => theme.palette.bgColor}
+  }
 `;
 
 export default GlobalStyle;

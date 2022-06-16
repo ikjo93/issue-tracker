@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import colors from '@constants/colors';
+import mixin from '@style/mixin';
 
 import FilterBarForm from './FilterBarForm';
 import FilterBarSelectMenu from './FilterBarSelectMenu';
@@ -15,8 +16,7 @@ export default function FilterBar() {
 }
 
 const FilterBarContainer = styled.div`
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ align: 'center', justify: 'flex-start' })};
+  ${mixin.flexMixin({ align: 'center', justify: 'flex-start' })};
   width: 37.5rem;
   height: 2.5rem;
   border-radius: 0.75rem;

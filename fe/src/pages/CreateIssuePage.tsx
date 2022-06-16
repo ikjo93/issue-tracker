@@ -9,7 +9,7 @@ const Body = styled.div`
   margin: 0 auto;
 `;
 
-export default function DefaultPage() {
+export default function CreateIssuePage() {
   return (
     <>
       <Header />

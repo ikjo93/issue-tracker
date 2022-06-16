@@ -7,13 +7,11 @@ import theme from '@style/theme';
 
 export default function App() {
   return (
-    <>
-      <GlobalStyle />
-      <HeaderProvider>
-        <ThemeProvider theme={theme}>
-          <Routes />
-        </ThemeProvider>
-      </HeaderProvider>
-    </>
+    <HeaderProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Routes />
+      </ThemeProvider>
+    </HeaderProvider>
   );
 }
