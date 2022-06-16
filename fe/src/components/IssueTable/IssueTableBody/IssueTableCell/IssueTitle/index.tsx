@@ -3,17 +3,22 @@ import styled from 'styled-components';
 
 import IconTextBox from '@components/IconTextBox';
 import Label from '@components/Label';
-import colors from '@constants/colors';
 import mixin from '@style/mixin';
+import { LabelType } from '@type/types';
 
-export default function IssueTitle({ title, labels }: any) {
+export default function IssueTitle({
+  title,
+  labels,
+}: {
+  title: string;
+  labels: LabelType[];
+}) {
   return (
     <IssueTitleContainer>
       <IconTextBox
         Icon={<ErrorIcon color="primary" fontSize="small" />}
         texts={[title]}
         spacing={0.75}
-        color={colors.titleActive}
       />
       <LabelContainer>
         {labels.map((label) => (

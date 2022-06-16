@@ -2,7 +2,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import colors from '@constants/colors';
 //  dropDownInfo는 임시. 나중에는 API서버에서 정보를 받아와 구성해야 함.
 import dropDownInfo from '@constants/temp';
 import mixin from '@style/mixin';
@@ -37,9 +36,5 @@ const DropdownTitle = styled.span<{ spacing: string | undefined }>`
 `;
 
 const DropdownIcon = styled(KeyboardArrowDownIcon)`
-  color: ${colors.label};
-
-  :hover {
-    color: ${colors.body};
-  }
+  color: ${({ theme }) => theme.palette.fontColor};
 `;

@@ -39,7 +39,7 @@ const dropDownInfo = {
         imgUrl: 'https://avatars.githubusercontent.com/u/82401504?v=4',
         queryKey: 'assignee',
         method: 'set',
-        queryValue: 'closeikjo93d',
+        queryValue: 'ikjo93',
       },
     ],
   },

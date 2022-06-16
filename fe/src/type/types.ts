@@ -2,7 +2,7 @@ import { IPalette } from '@style/theme';
 
 export type UserIconSizeType = 'BIG' | 'SMALL';
 
-type LabelType = {
+export type LabelType = {
   id: number;
   name: string;
   color: string;

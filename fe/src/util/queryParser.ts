@@ -31,12 +31,15 @@ export const handleUrlQuery = (
 };
 
 export const convertInputValueToQuery = (inputValue: string) => {
-  const queryString = inputValue.replace(':', '=').replace(' ', '&');
+  const queryString = inputValue.replaceAll(':', '=').replaceAll(' ', '&');
   return queryString;
 };
 
 export const convertUrlToInputValue = () => {
   const queryString = window.location.search;
-  const inputValue = queryString.slice(1).replace('=', ':').replace('&', ' ');
+  const inputValue = queryString
+    .slice(1)
+    .replaceAll('=', ':')
+    .replaceAll('&', ' ');
   return inputValue;
 };

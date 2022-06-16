@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 
 import mixin from '@style/mixin';
 
@@ -14,7 +15,7 @@ export default function DropdownModal({ info }: { info: IModalInfo }) {
     <ModalContainer>
       <ModalHeader>{info.title}</ModalHeader>
       {info.menus.map((menu) => (
-        <ModalMenu modalContent={menu} />
+        <ModalMenu key={uuid()} modalContent={menu} />
       ))}
     </ModalContainer>
   );

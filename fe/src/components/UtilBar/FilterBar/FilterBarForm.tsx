@@ -1,9 +1,8 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import {
   convertInputValueToQuery,
@@ -13,6 +12,12 @@ import {
 export default function FilterBarForm() {
   const initialInputValue = convertUrlToInputValue();
   const [inputValue, setInputValue] = useState(initialInputValue);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setInputValue(convertUrlToInputValue());
+  }, [searchParams]);
+
   const navigate = useNavigate();
   const handleFilterSubmit = (e) => {
     e.preventDefault();
@@ -42,13 +47,13 @@ const FilterBarFormContainer = styled.form`
 `;
 
 const FilterBarFormIcon = styled(SearchIcon)`
-  color: ${colors.placeholder};
+  color: ${({ theme }) => theme.palette.placeholder};
 `;
 
 const FilterBarInput = styled.input`
   width: 100%;
   height: 1.75rem;
   margin-left: 0.625rem;
-  color: ${colors.placeholder};
+  color: ${({ theme }) => theme.palette.placeholder};
   background-color: ${({ theme }) => theme.palette.darkerBgColor};
 `;
