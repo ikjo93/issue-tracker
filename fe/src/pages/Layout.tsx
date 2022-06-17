@@ -3,6 +3,7 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Container from '@components/Container';
 import { useHeaderDispatch, useHeaderState } from '@contexts/HeaderProvider';
 
 const ThemeToggleButton = styled.button`
@@ -32,11 +33,11 @@ export default function Layout() {
   };
 
   return (
-    <>
+    <Container padding="0 2rem">
       <Outlet />
       <ThemeToggleButton onClick={handleClickToggleButton}>
         {isDark ? <WbSunnyIcon /> : <NightlightIcon />}
       </ThemeToggleButton>
-    </>
+    </Container>
   );
 }

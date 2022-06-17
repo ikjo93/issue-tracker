@@ -43,7 +43,7 @@ const issues = [
         color: 'blue',
       },
     ],
-    milestones: {
+    milestone: {
       id: 123214,
       name: '마일스톤1',
     },
@@ -65,7 +65,7 @@ const issues = [
         color: 'green',
       },
     ],
-    milestones: {
+    milestone: {
       id: 1232145,
       name: '마일스톤2',
     },
@@ -87,7 +87,7 @@ const issues = [
         color: 'red',
       },
     ],
-    milestones: {
+    milestone: {
       id: 1232145,
       name: '마일스톤2',
     },
@@ -109,7 +109,7 @@ const issues = [
         color: 'blue',
       },
     ],
-    milestones: {
+    milestone: {
       id: 123214,
       name: '마일스톤1',
     },

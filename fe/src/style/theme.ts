@@ -5,6 +5,7 @@ import colors from '@constants/colors';
 export interface IPalette {
   default: string;
   primary: string;
+  warning: string;
   bgColor: string;
   fontColor: string;
   borderColor: string;
@@ -22,6 +23,7 @@ export interface ITheme extends DefaultTheme {
 const darkPalette: IPalette = {
   default: colors.offWhite,
   primary: colors.blue,
+  warning: colors.red,
   bgColor: colors.black,
   fontColor: colors.white1,
   borderColor: colors.grey2,
@@ -35,6 +37,7 @@ const darkPalette: IPalette = {
 const lightPalette: IPalette = {
   default: colors.offWhite,
   primary: colors.blue,
+  warning: colors.red,
   bgColor: colors.white1,
   fontColor: colors.black,
   borderColor: colors.grey1,

@@ -14,6 +14,7 @@ const colors = {
   grey3: '#A0A3BD',
   label: '#6E7191',
   blue: '#007AFF',
+  red: '#d63031',
 };
 
 export default colors;

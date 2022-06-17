@@ -21,7 +21,7 @@ export type IssueType = {
   description: string;
   writer: string;
   profileUrl: string;
-  status: 'open' | 'closed';
+  status: string;
   createdDatetime: string;
   labels: LabelType[];
   milestone: MilestoneType;
