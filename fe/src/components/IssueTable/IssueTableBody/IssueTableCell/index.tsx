@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import UserIcon from '@components/UserIcon';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
+import { IssueType } from '@type/types';
 
 import IssueDescription from './IssueDescription';
 import IssueTitle from './IssueTitle';
 
-export default function IssueTableCell({ issue }: { issue: any }) {
+export default function IssueTableCell({ issue }: { issue: IssueType }) {
   return (
     <CellContainer>
       <CheckboxContainer>
@@ -23,7 +24,7 @@ export default function IssueTableCell({ issue }: { issue: any }) {
         />
       </IssueInfoContainer>
       <UserIconContainer>
-        <UserIcon size="SMALL" />
+        <UserIcon size="SMALL" imgUrl={issue.profileUrl} />
       </UserIconContainer>
     </CellContainer>
   );

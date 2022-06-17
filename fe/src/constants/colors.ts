@@ -11,7 +11,7 @@ const colors = {
   grey: '#c9d1d9',
   grey1: '#D9DBE9',
   grey2: '#30363d',
-  placeholder: '#A0A3BD',
+  grey3: '#A0A3BD',
   label: '#6E7191',
   blue: '#007AFF',
   red: '#d63031',

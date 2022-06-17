@@ -13,6 +13,7 @@ export interface IPalette {
   reverseBgColor: string;
   lighterBgColor: string;
   darkerBgColor: string;
+  placeholder: string;
 }
 
 export interface ITheme extends DefaultTheme {
@@ -30,6 +31,7 @@ const darkPalette: IPalette = {
   contentColor: colors.black,
   lighterBgColor: colors.black3,
   darkerBgColor: colors.black2,
+  placeholder: colors.grey1,
 };
 
 const lightPalette: IPalette = {
@@ -43,6 +45,7 @@ const lightPalette: IPalette = {
   contentColor: colors.white,
   lighterBgColor: colors.white1,
   darkerBgColor: colors.white3,
+  placeholder: colors.grey3,
 };
 
 const darkTheme: ITheme = {

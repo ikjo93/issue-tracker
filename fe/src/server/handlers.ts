@@ -1,6 +1,8 @@
 import { rest } from 'msw';
 
 import issues from '@server/dummyData/issues';
+import { filterIssues } from '@server/filterUtil';
+import { IssueType } from '@type/types';
 
 interface IUser {
   member_id: number;
@@ -12,7 +14,7 @@ interface IUser {
 
 let lastUserId = 1;
 const fakeUsers: IUser[] = [];
-const fakeIssues = [...issues];
+const fakeIssues: IssueType[] = [...issues];
 
 const postJoin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   const { email, name, password } = req.body;
@@ -46,8 +48,10 @@ const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   return res(ctx.status(401));
 };
 
-const getIssues: Parameters<typeof rest.get>[1] = (_, res, ctx) =>
-  res(ctx.status(200), ctx.json(fakeIssues));
+const getIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const filteredIssues = filterIssues(req.url.search, fakeIssues);
+  return res(ctx.status(200), ctx.json(filteredIssues));
+};
 
 const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   const { subject, description } = req.body;
@@ -66,14 +70,12 @@ const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
       {
         id: 124123,
         name: '임시라벨',
+        color: 'red',
       },
     ],
-    milestones: [
-      {
-        id: 123214,
-        name: '임시마일',
-      },
-    ],
+    milestone: {id: 123214,
+      name: '마일스톤1'},
+    assignee: ['happyGyu']
   };
   fakeIssues.push(newIssue);
   return res(ctx.status(201));
