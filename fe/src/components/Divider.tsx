@@ -5,8 +5,9 @@ const Divider = styled.div<{
   isVertical?: boolean;
   color?: string;
   margin?: string;
+  opacity?: number;
 }>`
-  opacity: 0.3;
+  opacity: ${({ opacity }) => opacity || 0.3};
   ${({
     isVertical = false,
     color = 'grey',

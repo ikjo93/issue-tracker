@@ -9,7 +9,7 @@ export default function SideMenuItem({
 }): React.ReactElement<{ type: string }> {
   return (
     <Container
-      flexInfo={{ direction: 'row', align: 'center', justify: 'space-between' }}
+      flexInfo={{ align: 'center', justify: 'space-between' }}
       padding="3rem 2rem"
     >
       <TypeTitle>{type}</TypeTitle>
