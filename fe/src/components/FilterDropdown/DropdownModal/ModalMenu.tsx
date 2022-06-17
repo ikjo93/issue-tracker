@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import mixin from '@style/mixin';
-import { checkIfUrlHasQuery, handleUrlQuery } from '@util/queryParser';
+import { checkIfUrlHasQuery, makeUrlQuery } from '@util/queryParser';
 
 export default function ModalMenu({ modalContent }) {
   const { method, queryKey, queryValue, name } = modalContent;
@@ -13,8 +13,8 @@ export default function ModalMenu({ modalContent }) {
   const navigate = useNavigate();
   const handleMenuClick = () => {
     const queryString = isSelectedFilter
-      ? handleUrlQuery('delete', queryKey)
-      : handleUrlQuery(method, queryKey, queryValue);
+      ? makeUrlQuery('delete', queryKey)
+      : makeUrlQuery(method, queryKey, queryValue);
     navigate(`/?${queryString}`);
   };
 

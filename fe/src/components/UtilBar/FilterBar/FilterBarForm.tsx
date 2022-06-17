@@ -9,21 +9,21 @@ import {
   convertUrlToInputValue,
 } from '@util/queryParser';
 
+const initialInputValue = convertUrlToInputValue();
 export default function FilterBarForm() {
-  const initialInputValue = convertUrlToInputValue();
   const [inputValue, setInputValue] = useState(initialInputValue);
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    setInputValue(convertUrlToInputValue());
-  }, [searchParams]);
-
   const navigate = useNavigate();
+
   const handleFilterSubmit = (e) => {
     e.preventDefault();
     const queryString = convertInputValueToQuery(inputValue);
     navigate(`/?${queryString}`);
   };
+
+  useEffect(() => {
+    setInputValue(convertUrlToInputValue());
+  }, [searchParams]);
 
   return (
     <FilterBarFormContainer onSubmit={handleFilterSubmit}>

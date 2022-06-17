@@ -6,7 +6,7 @@ export const checkIfUrlHasQuery = (
   return searchParams.getAll(queryKey).includes(String(queryValue));
 };
 
-export const handleUrlQuery = (
+export const makeUrlQuery = (
   method: 'delete' | 'set' | 'append',
   queryKey: string,
   queryValue?: string,
