@@ -23,6 +23,19 @@ const GlobalStyle = createGlobalStyle`
       outline:none;
     }
   }
+  textarea{
+    margin:0;
+    padding:0;
+    border:none;
+    height:auto;
+    max-width:100%;
+    background-color:inherit;
+    border-radius:inherit;
+    color:inherit;
+    :focus-visible{
+      outline:none;
+    }
+  }
   a{
     text-decoration:none;
   }

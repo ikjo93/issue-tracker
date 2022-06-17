@@ -78,7 +78,7 @@ const getLoginButtonBg = (theme, loginType) => {
   switch (loginType) {
     case 'github':
       return css`
-        background-color: ${colors.titleActive};
+        background-color: ${colors.black2};
       `;
     default:
       return css`
@@ -90,7 +90,8 @@ const getLoginButtonBg = (theme, loginType) => {
 const InputBox = styled.input`
   width: 100%;
   height: 100%;
-  background-color: ${colors.inputBg};
+  color: ${({ theme }) => theme.palette.fontColor};
+  background-color: ${({ theme }) => theme.palette.darkerBgColor};
   padding: 0rem 1rem;
 `;
 
