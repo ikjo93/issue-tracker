@@ -1,18 +1,15 @@
 package codesquad.issuetracker.domain;
 
-import codesquad.issuetracker.domain.enumtype.MemberType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -32,9 +29,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberType type;
 
-    private String email;
+    private String identity;
     private String password;
-    private String name;
+    private String email;
+    private String nickname;
     private String profileUrl;
 
     @OneToMany(mappedBy = "member")
@@ -43,7 +41,7 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
-    private IssueAssignee issueAssignee;
+    @OneToMany(mappedBy = "member")
+    private List<Assignee> assignees = new ArrayList<>();
 
 }

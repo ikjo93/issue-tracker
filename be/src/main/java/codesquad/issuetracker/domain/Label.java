@@ -30,4 +30,5 @@ public class Label {
 
     private String name;
     private String description;
+    private String color;
 }

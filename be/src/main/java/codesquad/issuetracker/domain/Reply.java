@@ -1,6 +1,6 @@
 package codesquad.issuetracker.domain;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +37,10 @@ public class Reply {
     private Member member;
 
     private String content;
+
+    @Column(name = "created_datetime")
     private LocalDateTime createdDateTime;
+    @Column(name = "updated_datetime")
+    private LocalDateTime updatedDateTime;
 
 }

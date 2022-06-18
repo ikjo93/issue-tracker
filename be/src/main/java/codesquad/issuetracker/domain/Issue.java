@@ -1,11 +1,12 @@
 package codesquad.issuetracker.domain;
 
-import codesquad.issuetracker.domain.enumtype.IssueStatus;
-import com.sun.istack.NotNull;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -38,25 +39,31 @@ public class Issue {
     @NotNull
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "milestone_id")
+    private MileStone mileStone;
+
+    @OneToMany(mappedBy = "issue")
+    private List<Image> images = new ArrayList<>();
+
     @OneToMany(mappedBy = "issue")
     private List<Reply> replies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "issue")
+    private List<Assignee> assignees = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
-    private List<IssueMilestone> issueMilestones = new ArrayList<>();
-
-    private Integer issueNumber;
     private String subject;
     private String description;
-    private String writer;
-    private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private IssueStatus status;
 
     @Column(name = "created_datetime")
     private LocalDateTime createdDateTime;
+    @Column(name = "updated_datetime")
+    private LocalDateTime updatedDateTime;
 
 }
