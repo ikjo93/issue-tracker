@@ -16,10 +16,10 @@ export default function FileInputBox() {
 
   return (
     <FileBox>
-      <label htmlFor="input-file">
+      <InputLabel htmlFor="input-file">
         <AttachFileIcon fontSize="inherit" />
         {fileName === '' && <span>파일 첨부하기</span>}
-      </label>
+      </InputLabel>
       <input
         ref={fileInputRef}
         type="file"
@@ -30,6 +30,10 @@ export default function FileInputBox() {
     </FileBox>
   );
 }
+
+const InputLabel = styled.label`
+  display: flex;
+`;
 
 const FileBox = styled.div`
   padding: 1rem;
