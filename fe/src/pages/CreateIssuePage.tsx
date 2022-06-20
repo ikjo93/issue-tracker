@@ -7,6 +7,7 @@ import Button from '@components/Button';
 import Container from '@components/Container';
 import Divider from '@components/Divider';
 import Header from '@components/Header';
+import FileInputBox from '@components/inputs/FileInputBox';
 import SideMenu from '@components/SideMenu';
 import Squircle from '@components/Squircle';
 import TitleBar from '@components/TitleBar';
@@ -59,6 +60,8 @@ export default function CreateIssuePage() {
               unit="%"
             >
               <TextAreaBox name="description" placeholder="본문" />
+              <Divider length="100%" margin="" lineStyle="dashed" />
+              <FileInputBox />
             </Squircle>
           </Container>
           <SideMenu />
