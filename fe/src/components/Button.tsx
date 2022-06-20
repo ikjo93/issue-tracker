@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
@@ -13,6 +13,7 @@ interface ButtonProps {
   type?: ButtonTypes;
   onClick?: () => void;
   children: React.ReactNode;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -22,10 +23,16 @@ export default function Button({
   type = 'button',
   onClick,
   children,
+  disabled = false,
 }: ButtonProps) {
   return (
     <Squircle width={width} height={height}>
-      <MyButton type={type} variant={variant} onClick={onClick}>
+      <MyButton
+        type={type}
+        variant={variant}
+        onClick={onClick}
+        disabled={disabled}
+      >
         {children}
       </MyButton>
     </Squircle>
@@ -37,10 +44,14 @@ const MyButton = styled.button<{ variant: string; type: ButtonTypes }>`
   font-size: ${fontSize.medium};
   width: 100%;
   height: 100%;
-  opacity: 0.5;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 0.8)};
   transition: opacity 0.2s;
   background-color: ${({ theme, variant }) => theme.palette[variant]};
-  :hover {
-    opacity: 1;
-  }
+  ${({ disabled }) =>
+    !disabled &&
+    css`
+      :hover {
+        opacity: 1;
+      }
+    `}
 `;

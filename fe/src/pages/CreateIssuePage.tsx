@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,6 +19,7 @@ interface IFormEventTarget extends EventTarget {
 }
 
 export default function CreateIssuePage() {
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -37,6 +38,14 @@ export default function CreateIssuePage() {
     navigate('/');
   };
 
+  const handleChangeTitleInput = ({ target }) => {
+    if (target.value === '') {
+      setIsSubmitButtonDisabled(true);
+    } else if (target.value !== '' && isSubmitButtonDisabled) {
+      setIsSubmitButtonDisabled(false);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -45,7 +54,7 @@ export default function CreateIssuePage() {
         <GridContainer>
           <UserIcon size="BIG" />
           <Container flexInfo={{ direction: 'column' }} gap={1}>
-            <InputBox />
+            <InputBox onChangeInput={handleChangeTitleInput} />
             <TextAreaBox />
           </Container>
           <SideMenu />
@@ -60,7 +69,9 @@ export default function CreateIssuePage() {
           <Button variant="warning" onClick={handleClickCancleButton}>
             작성 취소
           </Button>
-          <Button type="submit">완료</Button>
+          <Button type="submit" disabled={isSubmitButtonDisabled}>
+            완료
+          </Button>
         </Container>
       </Body>
     </>

@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 import Squircle from '@components/Squircle';
 
-export default function InputBox() {
+export default function InputBox({ onChangeInput }) {
   return (
     <Squircle width={100} unit="%">
-      <MyInput name="subject" placeholder="제목" />
+      <MyInput onChange={onChangeInput} name="subject" placeholder="제목" />
     </Squircle>
   );
 }
