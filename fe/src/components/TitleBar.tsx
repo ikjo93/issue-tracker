@@ -14,7 +14,7 @@ export default function TitleBar({ title }) {
       <Container mt="3rem">
         <Title>{title}</Title>
       </Container>
-      <Divider length="100%" margin="2rem" />
+      <Divider margin="2rem" />
     </>
   );
 }

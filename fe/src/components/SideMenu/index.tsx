@@ -20,13 +20,13 @@ export default function SideMenu() {
         opendModalType={opendModalType}
         onClickMenuItem={handleClickSideMenuItem}
       />
-      <Divider length="100%" margin="" />
+      <Divider margin="" />
       <SideMenuItem
         type="LABEL"
         opendModalType={opendModalType}
         onClickMenuItem={handleClickSideMenuItem}
       />
-      <Divider length="100%" margin="" />
+      <Divider margin="" />
       <SideMenuItem
         type="MILESTONE"
         opendModalType={opendModalType}

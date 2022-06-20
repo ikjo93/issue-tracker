@@ -50,7 +50,7 @@ export default function CreateIssuePage() {
           </Container>
           <SideMenu />
         </GridContainer>
-        <Divider length="100%" margin="2rem" />
+        <Divider margin="2rem" />
         <Container
           flexInfo={{ direction: 'row' }}
           position="absolute"

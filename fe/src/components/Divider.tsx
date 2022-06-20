@@ -14,7 +14,7 @@ const Divider = styled.div<{
   ${({
     isVertical = false,
     color = 'grey',
-    length = '20px',
+    length = isVertical ? '1rem' : '100%',
     margin = '0.7rem',
     lineStyle = 'solid',
   }) =>

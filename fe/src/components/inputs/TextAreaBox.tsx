@@ -44,7 +44,7 @@ export default function TextAreaBox() {
       unit="%"
     >
       <MyTextArea name="description" placeholder="본문" />
-      <Divider length="100%" margin="" lineStyle="dashed" />
+      <Divider margin="" lineStyle="dashed" />
       <FileInputBox />
     </Squircle>
   );
