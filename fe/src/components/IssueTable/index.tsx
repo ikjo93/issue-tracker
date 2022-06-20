@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,17 +8,44 @@ import IssueTableBody from './IssueTableBody';
 import IssueTableHeader from './IssueTableHeader';
 
 export default function IssueTable() {
+  const [checkedIssueIndices, setCheckedIssueIndices] = useState<boolean[]>([]);
   const fetchUrl = `/api/issues/${useLocation().search}`;
   const { data: issueTableData } = useAxios(fetchUrl, 'get');
 
+  useEffect(() => {
+    if (!issueTableData) return;
+    const initCheckedIssueIndices = new Array(
+      issueTableData.issues.length,
+    ).fill(false);
+    setCheckedIssueIndices(initCheckedIssueIndices);
+  }, [issueTableData]);
+
+  const toggleAllIssues = (isChecked: boolean) => {
+    setCheckedIssueIndices((prev) => prev.map((_) => isChecked));
+  };
+
+  const toggleOneIssue = (issueIdx: number, isChecked: boolean) => {
+    setCheckedIssueIndices((prev) => {
+      const newState = [...prev];
+      newState[issueIdx] = !isChecked;
+      return newState;
+    });
+  };
+
   return (
-    issueTableData && (
+    issueTableData?.issues.length === checkedIssueIndices.length && (
       <IssueTableContainer>
         <IssueTableHeader
           clickedStatusCnt={issueTableData.issues.length}
           oppositeStatusCnt={issueTableData.oppositeStatusCnt}
+          checkedIssueIndices={checkedIssueIndices}
+          toggleAllIssues={toggleAllIssues}
         />
-        <IssueTableBody issues={issueTableData.issues} />
+        <IssueTableBody
+          issues={issueTableData.issues}
+          checkedIssueIndices={checkedIssueIndices}
+          toggleOneIssue={toggleOneIssue}
+        />
       </IssueTableContainer>
     )
   );
