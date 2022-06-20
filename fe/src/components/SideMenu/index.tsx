@@ -1,7 +1,7 @@
 import { useTheme } from 'styled-components';
 
 import Divider from '@components/Divider';
-import SideMenuItem from '@components/SideMenuItem';
+import SideMenuItem from '@components/SideMenu/SideMenuItem';
 import Squircle from '@components/Squircle';
 
 export default function SideMenu() {
