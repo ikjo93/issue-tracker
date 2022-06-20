@@ -9,11 +9,25 @@ import { IssueType } from '@type/types';
 import IssueDescription from './IssueDescription';
 import IssueTitle from './IssueTitle';
 
-export default function IssueTableCell({ issue }: { issue: IssueType }) {
+interface IIssueTableCell {
+  issue: IssueType;
+  isIssueChecked: boolean;
+  toggleIssueCheck: (isChecked: boolean) => void;
+}
+
+export default function IssueTableCell({
+  issue,
+  isIssueChecked,
+  toggleIssueCheck,
+}: IIssueTableCell) {
   return (
     <CellContainer>
       <CheckboxContainer>
-        <Checkbox sx={{ color: colors.grey }} />
+        <Checkbox
+          sx={{ color: colors.grey }}
+          checked={isIssueChecked}
+          onClick={() => toggleIssueCheck(isIssueChecked)}
+        />
       </CheckboxContainer>
       <IssueInfoContainer>
         <IssueTitle title={issue.subject} labels={issue.labels} />
@@ -21,6 +35,7 @@ export default function IssueTableCell({ issue }: { issue: IssueType }) {
           issueNum={issue.number}
           writer={issue.writer}
           createdDatetime={issue.createdDatetime}
+          milestone={issue.milestone}
         />
       </IssueInfoContainer>
       <UserIconContainer>
