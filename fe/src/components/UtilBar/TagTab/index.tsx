@@ -2,6 +2,7 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
 import styled from 'styled-components';
 
+import Divider from '@components/Divider';
 import IconTextBox from '@components/IconTextBox';
 import mixin from '@style/mixin';
 
@@ -13,7 +14,7 @@ export default function TagTab() {
         texts={['레이블', '(3)']}
         spacing={0.625}
       />
-      <BorderLine />
+      <Divider isVertical length="100%" margin="0" />
       <IconTextBox
         Icon={<SignpostOutlinedIcon />}
         texts={['마일스톤', '(2)']}
@@ -32,8 +33,3 @@ const Wrapper = styled.div`
   padding: 0 0.5rem;
 `;
 
-const BorderLine = styled.div`
-  width: 1px;
-  height: 100%;
-  background: ${({ theme }) => theme.palette.borderColor};
-`;

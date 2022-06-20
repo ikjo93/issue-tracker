@@ -1,7 +1,4 @@
-import styled from 'styled-components';
-
 import Container from '@components/Container';
-import mixin from '@style/mixin';
 
 import FilterBar from './FilterBar';
 import NewIssueButton from './NewIssueButton';
@@ -9,7 +6,10 @@ import TagTab from './TagTab';
 
 export default function UtilBar() {
   return (
-    <Wrapper>
+    <Container
+      flexInfo={{ align: 'center', justify: 'space-between' }}
+      mt="2rem"
+    >
       <FilterBar />
       <Container
         flexInfo={{ align: 'center', justify: 'space-between' }}
@@ -18,11 +18,6 @@ export default function UtilBar() {
         <TagTab />
         <NewIssueButton />
       </Container>
-    </Wrapper>
+    </Container>
   );
 }
-
-const Wrapper = styled.div`
-  ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
-  margin-top: 2rem;
-`;

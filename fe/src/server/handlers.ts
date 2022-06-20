@@ -80,6 +80,7 @@ const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   fakeIssues.push(newIssue);
   return res(ctx.status(201));
 };
+
 export default function handlers() {
   return [
     rest.post('/api/join', postJoin),
