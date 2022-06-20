@@ -1,44 +1,59 @@
-import { css, FlattenSimpleInterpolation } from 'styled-components';
+import { DefaultTheme } from 'styled-components';
 
 import colors from '@constants/colors';
 
-interface IMixin {
-  flexMixin: (object) => FlattenSimpleInterpolation;
-}
-
-interface IPalette {
+export interface IPalette {
   default: string;
   primary: string;
+  warning: string;
+  bgColor: string;
+  fontColor: string;
+  borderColor: string;
+  contentColor: string;
+  reverseBgColor: string;
+  lighterBgColor: string;
+  darkerBgColor: string;
+  placeholder: string;
 }
 
-export interface ITheme {
-  mixin: IMixin;
+export interface ITheme extends DefaultTheme {
   palette: IPalette;
 }
 
-const mixin: IMixin = {
-  flexMixin: ({
-    direction = 'row',
-    align = 'flex-start',
-    justify = 'flex-start',
-    wrap = 'no-wrap',
-  }) => css`
-    display: flex;
-    flex-direction: ${direction};
-    align-items: ${align};
-    justify-content: ${justify};
-    flex-wrap: ${wrap};
-  `,
-};
-
-const palette: IPalette = {
+const darkPalette: IPalette = {
   default: colors.offWhite,
   primary: colors.blue,
+  warning: colors.red,
+  bgColor: colors.black,
+  fontColor: colors.white1,
+  borderColor: colors.grey2,
+  reverseBgColor: colors.white1,
+  contentColor: colors.black,
+  lighterBgColor: colors.black3,
+  darkerBgColor: colors.black2,
+  placeholder: colors.grey1,
 };
 
-const theme: ITheme = {
-  mixin,
-  palette,
+const lightPalette: IPalette = {
+  default: colors.offWhite,
+  primary: colors.blue,
+  warning: colors.red,
+  bgColor: colors.white1,
+  fontColor: colors.black,
+  borderColor: colors.grey1,
+  reverseBgColor: colors.black,
+  contentColor: colors.white,
+  lighterBgColor: colors.white1,
+  darkerBgColor: colors.white3,
+  placeholder: colors.grey3,
 };
 
-export default theme;
+const darkTheme: ITheme = {
+  palette: darkPalette,
+};
+
+const lightTheme: ITheme = {
+  palette: lightPalette,
+};
+
+export { darkTheme, lightTheme };

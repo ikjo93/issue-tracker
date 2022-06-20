@@ -3,15 +3,17 @@ import styled from 'styled-components';
 
 import UserIcon from '@components/UserIcon';
 import colors from '@constants/colors';
+import mixin from '@style/mixin';
+import { IssueType } from '@type/types';
 
 import IssueDescription from './IssueDescription';
 import IssueTitle from './IssueTitle';
 
-export default function IssueTableCell({ issue }: { issue: any }) {
+export default function IssueTableCell({ issue }: { issue: IssueType }) {
   return (
     <CellContainer>
       <CheckboxContainer>
-        <Checkbox />
+        <Checkbox sx={{ color: colors.grey }} />
       </CheckboxContainer>
       <IssueInfoContainer>
         <IssueTitle title={issue.subject} labels={issue.labels} />
@@ -22,7 +24,7 @@ export default function IssueTableCell({ issue }: { issue: any }) {
         />
       </IssueInfoContainer>
       <UserIconContainer>
-        <UserIcon size="SMALL" />
+        <UserIcon size="SMALL" imgUrl={issue.profileUrl} />
       </UserIconContainer>
     </CellContainer>
   );
@@ -31,7 +33,11 @@ export default function IssueTableCell({ issue }: { issue: any }) {
 const CellContainer = styled.div`
   position: relative;
   height: 6.25rem;
-  border-top: 1px solid ${colors.line};
+  border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
+  background-color: ${({ theme }) => theme.palette.contentColor};
+  :hover {
+    background-color: ${({ theme }) => theme.palette.lighterBgColor};
+  }
 `;
 
 const CheckboxContainer = styled.div`
@@ -41,8 +47,7 @@ const CheckboxContainer = styled.div`
 `;
 
 const IssueInfoContainer = styled.div`
-  ${({ theme }) =>
-    theme.mixin.flexMixin({ direction: 'column', justify: 'center' })}
+  ${mixin.flexMixin({ direction: 'column', justify: 'center' })}
   position: absolute;
   top: 1rem;
   left: 5rem;

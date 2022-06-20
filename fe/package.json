@@ -55,7 +55,8 @@
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "styled-components": "^5.1.25",
-    "styled-reset": "^4.4.1"
+    "styled-reset": "^4.4.1",
+    "uuid": "^8.3.2"
   },
   "msw": {
     "workerDirectory": "public"

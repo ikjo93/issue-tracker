@@ -5,7 +5,7 @@ import IssueTable from '@components/IssueTable';
 import UtilBar from '@components/UtilBar';
 
 const Body = styled.div`
-  width: 1440px;
+  max-width: 1440px;
   margin: 0 auto;
 `;
 

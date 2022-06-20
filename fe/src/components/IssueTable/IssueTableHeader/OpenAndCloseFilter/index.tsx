@@ -1,19 +1,32 @@
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import { useNavigate } from 'react-router-dom';
 
 import Container from '@components/Container';
 import IconTextBox from '@components/IconTextBox';
-import colors from '@constants/colors';
-
-interface IOpenAndCloseFilterProps {
-  openedIssuesCnt: number;
-  closedIssuesCnt: number;
-}
+import { fontWeight } from '@constants/fonts';
+import { makeUrlQuery } from '@util/queryParser';
 
 export default function OpenAndCloseFilter({
-  openedIssuesCnt,
-  closedIssuesCnt,
-}: IOpenAndCloseFilterProps) {
+  clickedStatusCnt,
+  oppositeStatusCnt,
+}: {
+  clickedStatusCnt: number;
+  oppositeStatusCnt: number;
+}) {
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(window.location.search);
+  const clickedStatus = searchParams.get('status');
+  const handleClickStatusTab = (status) => {
+    const queryString = makeUrlQuery('set', 'status', status);
+    navigate(`/?${queryString}`);
+  };
+
+  const [openCnt, closedCnt] =
+    clickedStatus === 'open'
+      ? [clickedStatusCnt, oppositeStatusCnt]
+      : [oppositeStatusCnt, clickedStatusCnt];
+
   return (
     <Container
       width="260px"
@@ -22,15 +35,21 @@ export default function OpenAndCloseFilter({
     >
       <IconTextBox
         Icon={<ErrorOutlineIcon fontSize="small" />}
-        texts={['열린 이슈', String(openedIssuesCnt)]}
-        color={colors.titleActive}
+        texts={['열린 이슈', `(${openCnt})`]}
+        fontWeight={
+          clickedStatus === 'open' ? fontWeight.bold : fontWeight.regular
+        }
         spacing={0.375}
+        onClick={() => handleClickStatusTab('open')}
       />
       <IconTextBox
         Icon={<Inventory2OutlinedIcon fontSize="small" />}
-        texts={['닫힌 이슈', String(closedIssuesCnt)]}
-        color={colors.titleActive}
+        texts={['닫힌 이슈', `(${closedCnt})`]}
+        fontWeight={
+          clickedStatus === 'closed' ? fontWeight.bold : fontWeight.regular
+        }
         spacing={0.375}
+        onClick={() => handleClickStatusTab('closed')}
       />
     </Container>
   );

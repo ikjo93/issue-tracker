@@ -2,8 +2,10 @@ import axios from 'axios';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import App from '@/App';
+import { HeaderProvider } from '@contexts/HeaderProvider';
 import { serviceWorker } from '@server/browser';
+
+import App from './App';
 
 axios.defaults.withCredentials = true;
 
@@ -17,6 +19,8 @@ if (process.env.NODE_ENV === 'development') {
 
 root.render(
   <Router>
-    <App />
+    <HeaderProvider>
+      <App />
+    </HeaderProvider>
   </Router>,
 );

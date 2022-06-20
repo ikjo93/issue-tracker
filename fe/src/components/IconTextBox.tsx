@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
+
+import mixin from '@style/mixin';
 
 interface IIconTextBoxProps {
   Icon?: React.ReactNode;
@@ -6,6 +9,8 @@ interface IIconTextBoxProps {
   color?: string;
   spacing?: number;
   fontSize?: number;
+  fontWeight?: number;
+  onClick?: () => void;
 }
 
 export default function IconTextBox({
@@ -14,12 +19,20 @@ export default function IconTextBox({
   color,
   spacing,
   fontSize,
+  fontWeight,
+  onClick,
 }: IIconTextBoxProps) {
   return (
-    <BoxContainer color={color} spacing={spacing} fontSize={fontSize}>
+    <BoxContainer
+      color={color}
+      spacing={spacing}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      onClick={onClick}
+    >
       {Icon}
       {texts?.map((text) => (
-        <span>{text}</span>
+        <span key={uuid()}>{text}</span>
       ))}
     </BoxContainer>
   );
@@ -29,10 +42,11 @@ const BoxContainer = styled.div<{
   color?: string;
   spacing?: number;
   fontSize?: number;
+  fontWeight?: number;
 }>`
-  ${({ theme }) => theme.mixin.flexMixin({ align: 'center' })}
+  ${mixin.flexMixin({ align: 'center' })}
   color: ${({ color }) => color};
   gap: ${({ spacing }) => spacing}rem;
   font-size: ${({ fontSize }) => fontSize}rem;
+  font-weight: ${({ fontWeight }) => fontWeight};
 `;
-
