@@ -45,11 +45,11 @@ export default function IssueTableHeader({
         />
       </Container>
       <Container
-        width="400px"
+        gap={2}
         flexInfo={{ align: 'center', justify: 'space-around' }}
       >
         {isAnyIssueChecked ? (
-          <FilterDropDown title="상태수정" type="LABEL" />
+          <FilterDropDown title="상태수정" type="STATUS_CHANGE" />
         ) : (
           <>
             <FilterDropDown title="담당자" type="ASSIGNEE" />
