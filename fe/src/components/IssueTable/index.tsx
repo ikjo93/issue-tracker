@@ -1,25 +1,62 @@
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useAxios from '@hooks/useAxios';
+import { IssueType } from '@type/types';
 
 import IssueTableBody from './IssueTableBody';
 import IssueTableHeader from './IssueTableHeader';
 
-export default function IssueTable() {
-  const fetchUrl = `/api/issues/${useLocation().search}`;
-  const { data: issueTableData } = useAxios(fetchUrl, 'get');
+type IssueTableDataType = {
+  issues: IssueType[];
+  oppositeStatusCnt: number;
+};
 
-  return (
-    issueTableData && (
-      <IssueTableContainer>
-        <IssueTableHeader
-          clickedStatusCnt={issueTableData.issues.length}
-          oppositeStatusCnt={issueTableData.oppositeStatusCnt}
-        />
-        <IssueTableBody issues={issueTableData.issues} />
-      </IssueTableContainer>
-    )
+export default function IssueTable() {
+  const [checkedIssueIndices, setCheckedIssueIndices] = useState<boolean[]>([]);
+  const fetchUrl = `/api/issues/${useLocation().search}`;
+  const { data: issueTableData } = useAxios<IssueTableDataType>(
+    fetchUrl,
+    'get',
+  );
+
+  const toggleAllIssues = (isChecked: boolean) => {
+    setCheckedIssueIndices((prev) => prev.map(() => isChecked));
+  };
+
+  const toggleOneIssue = (issueIdx: number, isChecked: boolean) => {
+    setCheckedIssueIndices((prev) => {
+      const newState = [...prev];
+      newState[issueIdx] = !isChecked;
+      return newState;
+    });
+  };
+
+  useEffect(() => {
+    if (!issueTableData) return;
+    const initCheckedIssueIndices = new Array(
+      issueTableData.issues.length,
+    ).fill(false);
+    setCheckedIssueIndices(initCheckedIssueIndices);
+  }, [issueTableData]);
+
+  return issueTableData?.issues.length === checkedIssueIndices.length ? (
+    <IssueTableContainer>
+      <IssueTableHeader
+        clickedStatusCnt={issueTableData.issues.length}
+        oppositeStatusCnt={issueTableData.oppositeStatusCnt}
+        checkedIssueIndices={checkedIssueIndices}
+        toggleAllIssues={toggleAllIssues}
+      />
+      <IssueTableBody
+        issues={issueTableData.issues}
+        checkedIssueIndices={checkedIssueIndices}
+        toggleOneIssue={toggleOneIssue}
+      />
+    </IssueTableContainer>
+  ) : (
+    <div />
   );
 }
 

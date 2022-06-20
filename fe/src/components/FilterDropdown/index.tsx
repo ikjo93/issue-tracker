@@ -8,9 +8,18 @@ import mixin from '@style/mixin';
 
 import DropdownModal from './DropdownModal';
 
+//  type에 STATUS_CHANGE가 들어간 이상 컴포넌트 이름이 필터드롭다운이 아니라 그냥 드롭다운이 되어야할거 같음
+type FilterDropdownType =
+  | 'ISSUE'
+  | 'ASSIGNEE'
+  | 'LABEL'
+  | 'MILESTONE'
+  | 'WRITER'
+  | 'STATUS_CHANGE';
+
 type PropsType = {
   title: string;
-  type: 'ISSUE' | 'ASSIGNEE' | 'LABEL' | 'MILESTONE' | 'WRITER';
+  type: FilterDropdownType;
   spacing?: string;
 };
 
