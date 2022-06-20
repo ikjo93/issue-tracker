@@ -1,9 +1,10 @@
-import { useReducer, useRef } from 'react';
+import { EventHandler, useReducer, useRef } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 import Divider from '@components/Divider';
 import FileInputBox from '@components/inputs/FileInputBox';
 import Squircle from '@components/Squircle';
+import { debounce } from '@util/timeUtils';
 
 interface TextCountBoxProps {
   isVisible: boolean;
@@ -37,11 +38,15 @@ export default function TextAreaBox() {
     borderLineColor: theme.palette.darkerBgColor,
   });
 
-  const handleChangeTextArea = ({ target: { value } }) => {
-    if (textCountRef.current) {
-      textCountRef.current.textContent = `${value.length}`;
-    }
-  };
+  // 작성을 멈추면 현재 입력된 글자 수가 2초 간 나타났다가 사라지는 기능을 구현한다.
+  const handleChangeTextArea = debounce({
+    msTime: 100,
+    callback: ({ target: { value } }) => {
+      if (textCountRef.current) {
+        textCountRef.current.textContent = `${value.length}`;
+      }
+    },
+  });
 
   return (
     <TextAreaSquircle
