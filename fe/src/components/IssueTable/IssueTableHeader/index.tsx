@@ -1,4 +1,5 @@
 import { Checkbox } from '@mui/material';
+import { MouseEvent } from 'react';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
@@ -11,15 +12,33 @@ import OpenAndCloseFilter from './OpenAndCloseFilter';
 interface IIssueTableHeaderProps {
   clickedStatusCnt: number;
   oppositeStatusCnt: number;
+  toggleAllIssues: (boolean) => void;
+  checkedIssueIndices: boolean[];
 }
 export default function IssueTableHeader({
   clickedStatusCnt,
   oppositeStatusCnt,
+  toggleAllIssues,
+  checkedIssueIndices,
 }: IIssueTableHeaderProps) {
+  const handleCheckboxClick = (e: MouseEvent) => {
+    toggleAllIssues(e.target.checked);
+  };
+
+  const isAllIssueChecked = !checkedIssueIndices.some(
+    (isChecked) => !isChecked,
+  );
+
+  const isAnyIssueChecked = checkedIssueIndices.some((isChecked) => isChecked);
+
   return (
     <IssueTableHeaderContainer>
       <Container flexInfo={{ align: 'center' }}>
-        <Checkbox sx={{ color: colors.grey }} />
+        <Checkbox
+          checked={isAllIssueChecked}
+          sx={{ color: colors.grey }}
+          onClick={handleCheckboxClick}
+        />
         <OpenAndCloseFilter
           clickedStatusCnt={clickedStatusCnt}
           oppositeStatusCnt={oppositeStatusCnt}
@@ -29,10 +48,16 @@ export default function IssueTableHeader({
         width="400px"
         flexInfo={{ align: 'center', justify: 'space-around' }}
       >
-        <FilterDropDown title="담당자" type="ASSIGNEE" />
-        <FilterDropDown title="레이블" type="LABEL" />
-        <FilterDropDown title="마일스톤" type="MILESTONE" />
-        <FilterDropDown title="작성자" type="WRITER" />
+        {isAnyIssueChecked ? (
+          <FilterDropDown title="상태수정" type="LABEL" />
+        ) : (
+          <>
+            <FilterDropDown title="담당자" type="ASSIGNEE" />
+            <FilterDropDown title="레이블" type="LABEL" />
+            <FilterDropDown title="마일스톤" type="MILESTONE" />
+            <FilterDropDown title="작성자" type="WRITER" />
+          </>
+        )}
       </Container>
     </IssueTableHeaderContainer>
   );

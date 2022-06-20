@@ -1,12 +1,31 @@
+import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+
+import { IssueType } from '@type/types';
 
 import IssueTableCell from './IssueTableCell';
 
-export default function IssueTableBody({ issues }) {
+interface IIssueTableBodyProps {
+  issues: IssueType;
+  checkedIssueIndices: boolean[];
+  toggleOneIssue: (issueIdx: number, isChecked: number) => void;
+}
+
+export default function IssueTableBody({
+  issues,
+  checkedIssueIndices,
+  toggleOneIssue,
+}: IIssueTableBodyProps) {
+  console.log(checkedIssueIndices);
   return (
     <IssueTableBodyContainer>
-      {issues?.map((issue) => (
-        <IssueTableCell key={issue.id} issue={issue} />
+      {issues?.map((issue, idx) => (
+        <IssueTableCell
+          key={issue.id}
+          issue={issue}
+          isIssueChecked={checkedIssueIndices[idx]}
+          toggleIssueCheck={(isChecked) => toggleOneIssue(idx, isChecked)}
+        />
       ))}
     </IssueTableBodyContainer>
   );
