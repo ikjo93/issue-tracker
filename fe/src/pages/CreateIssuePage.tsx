@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import Button from '@components/Button';
 import Container from '@components/Container';
 import Divider from '@components/Divider';
 import Header from '@components/Header';
-import FileInputBox from '@components/inputs/FileInputBox';
+import InputBox from '@components/inputs/InputBox';
+import TextAreaBox from '@components/inputs/TextAreaBox';
 import SideMenu from '@components/SideMenu';
-import Squircle from '@components/Squircle';
 import TitleBar from '@components/TitleBar';
 import UserIcon from '@components/UserIcon';
 
@@ -19,7 +19,6 @@ interface IFormEventTarget extends EventTarget {
 }
 
 export default function CreateIssuePage() {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -46,23 +45,8 @@ export default function CreateIssuePage() {
         <GridContainer>
           <UserIcon size="BIG" />
           <Container flexInfo={{ direction: 'column' }} gap={1}>
-            <Squircle
-              backgroundColor={theme.palette.darkerBgColor}
-              width={100}
-              unit="%"
-            >
-              <InputBox name="subject" placeholder="제목" />
-            </Squircle>
-            <Squircle
-              backgroundColor={theme.palette.darkerBgColor}
-              width={100}
-              height="auto"
-              unit="%"
-            >
-              <TextAreaBox name="description" placeholder="본문" />
-              <Divider length="100%" margin="" lineStyle="dashed" />
-              <FileInputBox />
-            </Squircle>
+            <InputBox />
+            <TextAreaBox />
           </Container>
           <SideMenu />
         </GridContainer>
@@ -93,20 +77,4 @@ const Body = styled.form`
   position: relative;
   max-width: 1440px;
   margin: 0 auto;
-`;
-
-const InputBox = styled.input`
-  width: 100%;
-  height: 100%;
-  color: ${({ theme }) => theme.palette.fontColor};
-  background-color: ${({ theme }) => theme.palette.darkerBgColor};
-  padding: 0rem 1rem;
-`;
-
-const TextAreaBox = styled.textarea`
-  width: 100%;
-  min-height: 20rem;
-  resize: vertical;
-  padding: 1rem;
-  padding-top: 1.5rem;
 `;
