@@ -48,10 +48,13 @@ const MyButton = styled.button<{ variant: string; type: ButtonTypes }>`
   transition: opacity 0.2s;
   background-color: ${({ theme, variant }) => theme.palette[variant]};
   ${({ disabled }) =>
-    !disabled &&
-    css`
-      :hover {
-        opacity: 1;
-      }
-    `}
+    disabled
+      ? css`
+          cursor: default;
+        `
+      : css`
+          :hover {
+            opacity: 1;
+          }
+        `}
 `;
