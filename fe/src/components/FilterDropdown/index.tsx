@@ -1,5 +1,5 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 //  dropDownInfo는 임시. 나중에는 API서버에서 정보를 받아와 구성해야 함.
@@ -11,7 +11,13 @@ import DropdownModal from './DropdownModal';
 //  type에 STATUS_CHANGE가 들어간 이상 컴포넌트 이름이 필터드롭다운이 아니라 그냥 드롭다운이 되어야할거 같음
 type PropsType = {
   title: string;
-  type: 'ISSUE' | 'ASSIGNEE' | 'LABEL' | 'MILESTONE' | 'WRITER' | 'STATUS_CHANGE';
+  type:
+    | 'ISSUE'
+    | 'ASSIGNEE'
+    | 'LABEL'
+    | 'MILESTONE'
+    | 'WRITER'
+    | 'STATUS_CHANGE';
   spacing?: string;
 };
 

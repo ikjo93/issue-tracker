@@ -12,14 +12,26 @@ interface IModalInfo {
 
 export default function DropdownModal({ info }: { info: IModalInfo }) {
   return (
-    <ModalContainer>
-      <ModalHeader>{info.title}</ModalHeader>
-      {info.menus.map((menu) => (
-        <ModalMenu key={uuid()} modalContent={menu} />
-      ))}
-    </ModalContainer>
+    <>
+      <ModalContainer>
+        <ModalHeader>{info.title}</ModalHeader>
+        {info.menus.map((menu) => (
+          <ModalMenu key={uuid()} modalContent={menu} />
+        ))}
+      </ModalContainer>
+      <DropdownBackdrop />
+    </>
   );
 }
+
+const DropdownBackdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+`;
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -30,6 +42,7 @@ const ModalContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 1rem;
   overflow: hidden;
+  z-index: 2;
 `;
 
 const ModalHeader = styled.div`

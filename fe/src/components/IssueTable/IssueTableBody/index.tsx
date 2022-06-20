@@ -16,7 +16,6 @@ export default function IssueTableBody({
   checkedIssueIndices,
   toggleOneIssue,
 }: IIssueTableBodyProps) {
-  console.log(checkedIssueIndices);
   return (
     <IssueTableBodyContainer>
       {issues?.map((issue, idx) => (
