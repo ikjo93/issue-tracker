@@ -7,7 +7,7 @@ import DropdownModal from '@components/FilterDropdown/DropdownModal';
 //  dropDownInfo는 임시. 나중에는 API서버에서 정보를 받아와 구성해야 함.
 import Assignees from '@components/SideMenu/Assignees';
 import Labels from '@components/SideMenu/Labels';
-import Milestones from '@components/SideMenu/Milestones';
+import Milestone from '@components/SideMenu/Milestone';
 import dropDownInfo from '@constants/temp';
 
 type ModalTypes = 'ASSIGNEE' | 'LABEL' | 'MILESTONE';
@@ -25,7 +25,7 @@ const getSubBoxByType = (type) => {
     case 'LABEL':
       return <Labels />;
     case 'MILESTONE':
-      return <Milestones />;
+      return <Milestone />;
     default:
       throw Error("Side Menu item's subbox is something wrong");
   }
