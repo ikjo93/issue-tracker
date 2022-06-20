@@ -55,7 +55,7 @@ export default function CreateIssuePage() {
             <Squircle
               backgroundColor={theme.palette.darkerBgColor}
               width={100}
-              height="30rem"
+              height="auto"
               unit="%"
             >
               <TextAreaBox name="description" placeholder="본문" />
@@ -102,8 +102,8 @@ const InputBox = styled.input`
 
 const TextAreaBox = styled.textarea`
   width: 100%;
-  height: 100%;
-  resize: none;
+  min-height: 20rem;
+  resize: vertical;
   padding: 1rem;
   padding-top: 1.5rem;
 `;
