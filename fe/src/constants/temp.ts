@@ -111,6 +111,17 @@ const dropDownInfo = {
       },
     ],
   },
+  STATUS_CHANGE: {
+    title: '상태 변경',
+    menus: [
+      {
+        name: '선택한 이슈 열기',
+      },
+      {
+        name: '선택한 이슈 닫기',
+      },
+    ],
+  },
 };
 
 export default dropDownInfo;
