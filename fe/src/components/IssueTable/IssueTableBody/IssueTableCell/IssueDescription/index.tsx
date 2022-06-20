@@ -6,14 +6,16 @@ import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import { calTimePassed } from '@util/dateHandler';
 
+interface IMilestone {
+  id: number;
+  name: string;
+}
+
 interface IIssueDescriptionProps {
   issueNum: number;
   writer: string;
   createdDatetime: string;
-  milestone: {
-    id: number;
-    name: string;
-  };
+  milestone: IMilestone;
 }
 
 export default function IssueDescription({
@@ -23,7 +25,6 @@ export default function IssueDescription({
   milestone,
 }: IIssueDescriptionProps) {
   const writerAndTimeDescription = `이 이슈가 ${calTimePassed(
-    new Date(),
     new Date(createdDatetime),
   )} 전, ${writer}님에 의해 작성되었습니다.`;
 

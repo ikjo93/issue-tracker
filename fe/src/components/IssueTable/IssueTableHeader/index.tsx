@@ -27,7 +27,7 @@ export default function IssueTableHeader({
 
   const isAllIssueChecked =
     checkedIssueIndices.length !== 0 &&
-    !checkedIssueIndices.some((isChecked) => !isChecked);
+    checkedIssueIndices.every((isChecked) => isChecked);
 
   const isAnyIssueChecked = checkedIssueIndices.some((isChecked) => isChecked);
 

@@ -1,5 +1,7 @@
-const calTimePassed = (now: Date, target: Date) => {
-  const seconds = Math.ceil((now.getTime() - target.getTime()) / 1000);
+const calTimePassed = (target: Date) => {
+  const millisecond = new Date().getTime() - target.getTime();
+  if (millisecond < 1000) return '방금';
+  const seconds = Math.ceil(millisecond / 1000);
   if (seconds < 60) return `${seconds}초`;
   const minutes = Math.ceil(seconds / 60);
   if (minutes < 60) return `${minutes}분`;
