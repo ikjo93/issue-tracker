@@ -1,5 +1,5 @@
 import { Checkbox } from '@mui/material';
-import { MouseEvent } from 'react';
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
@@ -12,7 +12,7 @@ import OpenAndCloseFilter from './OpenAndCloseFilter';
 interface IIssueTableHeaderProps {
   clickedStatusCnt: number;
   oppositeStatusCnt: number;
-  toggleAllIssues: (boolean) => void;
+  toggleAllIssues: (isChecked: boolean) => void;
   checkedIssueIndices: boolean[];
 }
 export default function IssueTableHeader({
@@ -21,13 +21,13 @@ export default function IssueTableHeader({
   toggleAllIssues,
   checkedIssueIndices,
 }: IIssueTableHeaderProps) {
-  const handleCheckboxClick = (e: MouseEvent) => {
+  const handleCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
     toggleAllIssues(e.target.checked);
   };
 
-  const isAllIssueChecked = !checkedIssueIndices.some(
-    (isChecked) => !isChecked,
-  );
+  const isAllIssueChecked =
+    checkedIssueIndices.length !== 0 &&
+    !checkedIssueIndices.some((isChecked) => !isChecked);
 
   const isAnyIssueChecked = checkedIssueIndices.some((isChecked) => isChecked);
 
@@ -37,7 +37,7 @@ export default function IssueTableHeader({
         <Checkbox
           checked={isAllIssueChecked}
           sx={{ color: colors.grey }}
-          onClick={handleCheckboxClick}
+          onChange={handleCheckboxClick}
         />
         <OpenAndCloseFilter
           clickedStatusCnt={clickedStatusCnt}
@@ -66,7 +66,7 @@ export default function IssueTableHeader({
 const IssueTableHeaderContainer = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   height: 4rem;
-  padding: 0 2rem;
+  padding: 0 2rem 0 1.5rem;
   background-color: ${({ theme }) => theme.palette.lighterBgColor};
   border-radius: 1rem 1rem 0 0;
 `;
