@@ -1,4 +1,4 @@
-import { EventHandler, useReducer, useRef } from 'react';
+import { useReducer, useRef } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 import Divider from '@components/Divider';
@@ -10,22 +10,35 @@ interface TextCountBoxProps {
   isVisible: boolean;
 }
 
+const DEBOUNCE_CHECK_TIME_MS = 1000;
+
 export default function TextAreaBox() {
+  const timeRef = useRef<{ timeout: NodeJS.Timeout | null }>({ timeout: null });
   const textCountRef = useRef<HTMLSpanElement>(null);
   const theme = useTheme();
-  const reducer = (_, action) => {
+  const reducer = (state, action) => {
     switch (action.type) {
       case 'TEXT_AREA_FOCUS':
         return {
-          isTextCountVisible: true,
+          ...state,
           backgroundColor: theme.palette.bgColor,
           borderLineColor: theme.palette.borderColor,
         };
       case 'TEXT_AREA_FOCUS_OUT':
         return {
-          isTextCountVisible: false,
+          ...state,
           backgroundColor: theme.palette.darkerBgColor,
           borderLineColor: theme.palette.darkerBgColor,
+        };
+      case 'TEXT_COUNT_VISIBLE_ON':
+        return {
+          ...state,
+          isTextCountVisible: true,
+        };
+      case 'TEXT_COUNT_VISIBLE_OFF':
+        return {
+          ...state,
+          isTextCountVisible: false,
         };
       default:
         throw Error("Textarea box's action type is wrong something");
@@ -40,11 +53,19 @@ export default function TextAreaBox() {
 
   // 작성을 멈추면 현재 입력된 글자 수가 2초 간 나타났다가 사라지는 기능을 구현한다.
   const handleChangeTextArea = debounce({
-    msTime: 100,
+    msTime: DEBOUNCE_CHECK_TIME_MS,
     callback: ({ target: { value } }) => {
-      if (textCountRef.current) {
-        textCountRef.current.textContent = `${value.length}`;
+      if (!textCountRef.current) return;
+      if (timeRef.current.timeout) {
+        clearTimeout(timeRef.current.timeout);
       }
+      textCountRef.current.textContent = `${value.length}`;
+      if (!state.isTextCountVisible) {
+        dispatch({ type: 'TEXT_COUNT_VISIBLE_ON' });
+      }
+      timeRef.current.timeout = setTimeout(() => {
+        dispatch({ type: 'TEXT_COUNT_VISIBLE_OFF' });
+      }, 2000);
     },
   });
 
