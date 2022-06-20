@@ -1,4 +1,4 @@
-import { useReducer, useRef } from 'react';
+import { useRef, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 import Divider from '@components/Divider';
@@ -16,40 +16,7 @@ export default function TextAreaBox() {
   const timeRef = useRef<{ timeout: NodeJS.Timeout | null }>({ timeout: null });
   const textCountRef = useRef<HTMLSpanElement>(null);
   const theme = useTheme();
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case 'TEXT_AREA_FOCUS':
-        return {
-          ...state,
-          backgroundColor: theme.palette.bgColor,
-          borderLineColor: theme.palette.borderColor,
-        };
-      case 'TEXT_AREA_FOCUS_OUT':
-        return {
-          ...state,
-          backgroundColor: theme.palette.darkerBgColor,
-          borderLineColor: theme.palette.darkerBgColor,
-        };
-      case 'TEXT_COUNT_VISIBLE_ON':
-        return {
-          ...state,
-          isTextCountVisible: true,
-        };
-      case 'TEXT_COUNT_VISIBLE_OFF':
-        return {
-          ...state,
-          isTextCountVisible: false,
-        };
-      default:
-        throw Error("Textarea box's action type is wrong something");
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, {
-    isTextCountVisible: false,
-    backgroundColor: theme.palette.darkerBgColor,
-    borderLineColor: theme.palette.darkerBgColor,
-  });
+  const [isTextCountVisible, setIsTextCountVisible] = useState(false);
 
   // 작성을 멈추면 현재 입력된 글자 수가 2초 간 나타났다가 사라지는 기능을 구현한다.
   const handleChangeTextArea = debounce({
@@ -60,25 +27,18 @@ export default function TextAreaBox() {
         clearTimeout(timeRef.current.timeout);
       }
       textCountRef.current.textContent = `${value.length}`;
-      if (!state.isTextCountVisible) {
-        dispatch({ type: 'TEXT_COUNT_VISIBLE_ON' });
+      if (!isTextCountVisible) {
+        setIsTextCountVisible(true);
       }
       timeRef.current.timeout = setTimeout(() => {
-        dispatch({ type: 'TEXT_COUNT_VISIBLE_OFF' });
+        setIsTextCountVisible(false);
       }, 2000);
     },
   });
 
   return (
     <TextAreaSquircle
-      backgroundColor={state.backgroundColor}
-      borderLineColor={state.borderLineColor}
-      onFocus={() => {
-        dispatch({ type: 'TEXT_AREA_FOCUS' });
-      }}
-      onBlur={() => {
-        dispatch({ type: 'TEXT_AREA_FOCUS_OUT' });
-      }}
+      backgroundColor={theme.palette.darkerBgColor}
       width={100}
       height="auto"
       unit="%"
@@ -88,7 +48,7 @@ export default function TextAreaBox() {
         placeholder="본문"
         onChange={handleChangeTextArea}
       />
-      <TextCountBox isVisible={state.isTextCountVisible}>
+      <TextCountBox isVisible={isTextCountVisible}>
         <span>띄어쓰기 포함 </span>
         <span ref={textCountRef}>0</span>
         <span>자</span>
@@ -109,6 +69,11 @@ const MyTextArea = styled.textarea`
 
 const TextAreaSquircle = styled(Squircle)`
   position: relative;
+  border: 1px solid ${({ theme }) => theme.palette.bgColor};
+  :focus-within {
+    background-color: ${({ theme }) => theme.palette.bgColor};
+    border: 1px solid ${({ theme }) => theme.palette.borderColor};
+  }
 `;
 
 const TextCountBox = styled.div<TextCountBoxProps>`

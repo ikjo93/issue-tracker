@@ -6,7 +6,7 @@ import { getCssValueByUnit } from '@util/css';
 
 import ModalMenu from './ModalMenu';
 
-interface IMocalContainer {
+interface IModalContainer {
   left?: number | string;
   top?: number | string;
   unit?: string;
@@ -17,7 +17,7 @@ interface IModalInfo {
   menus: object[];
 }
 
-interface DropdownModalProps extends IMocalContainer {
+interface DropdownModalProps extends IModalContainer {
   info: IModalInfo;
 }
 
@@ -52,7 +52,7 @@ const DropdownBackdrop = styled.div`
   z-index: 1;
 `;
 
-const ModalContainer = styled.div<IMocalContainer>`
+const ModalContainer = styled.div<IModalContainer>`
   position: absolute;
   width: 15rem;
   left: ${({ left, unit }) =>
