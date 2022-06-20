@@ -35,6 +35,7 @@ export default function IssueTableCell({
           issueNum={issue.number}
           writer={issue.writer}
           createdDatetime={issue.createdDatetime}
+          milestone={issue.milestone}
         />
       </IssueInfoContainer>
       <UserIconContainer>
