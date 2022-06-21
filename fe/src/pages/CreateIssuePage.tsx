@@ -54,7 +54,7 @@ export default function CreateIssuePage() {
         <GridContainer>
           <UserIcon size="BIG" />
           <Container flexInfo={{ direction: 'column' }} gap={1}>
-            <InputBox onChangeInput={handleChangeTitleInput} />
+            <InputBox onChange={handleChangeTitleInput} placeholder="제목" />
             <TextAreaBox />
           </Container>
           <SideMenu />
