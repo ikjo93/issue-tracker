@@ -37,7 +37,7 @@ export type IssueType = {
   description: string;
   writer: string;
   profileUrl: string;
-  createdDatetime: string;
+  createdDateTime: string;
   milestone: MilestoneType | null;
   labels: LabelType[];
   assignees: AssigneeType[];

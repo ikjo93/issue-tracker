@@ -10,18 +10,18 @@ import { calTimePassed } from '@util/dateHandler';
 interface IIssueDescriptionProps {
   issueNum: number;
   writer: string;
-  createdDatetime: string;
+  createdDateTime: string;
   milestone: MilestoneType | null;
 }
 
 export default function IssueDescription({
   issueNum,
   writer,
-  createdDatetime,
+  createdDateTime,
   milestone,
 }: IIssueDescriptionProps) {
   const writerAndTimeDescription = `이 이슈가 ${calTimePassed(
-    new Date(createdDatetime),
+    new Date(createdDateTime),
   )} 전, ${writer}님에 의해 작성되었습니다.`;
 
   return (

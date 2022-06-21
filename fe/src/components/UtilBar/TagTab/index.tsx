@@ -1,6 +1,5 @@
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import Divider from '@components/Divider';

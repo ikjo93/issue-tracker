@@ -34,13 +34,15 @@ export default function IssueTableCell({
         <IssueDescription
           issueNum={issue.id}
           writer={issue.writer}
-          createdDatetime={issue.createdDatetime}
+          createdDateTime={issue.createdDateTime}
           milestone={issue.milestone}
         />
       </IssueInfoContainer>
-      <UserIconContainer>
-        <UserIcon size="SMALL" imgUrl={issue.profileUrl} />
-      </UserIconContainer>
+      <AssigneeIconContainer>
+        {issue.assignees.map((assignee) => (
+          <UserIcon size="SMALL" imgUrl={assignee.profileUrl} />
+        ))}
+      </AssigneeIconContainer>
     </CellContainer>
   );
 }
@@ -69,8 +71,9 @@ const IssueInfoContainer = styled.div`
   gap: 0.5rem;
 `;
 
-const UserIconContainer = styled.div`
+const AssigneeIconContainer = styled.div`
   position: absolute;
   top: 2.5rem;
   right: 2.5rem;
+  ${mixin.flexMixin({ align: 'center' })};
 `;
