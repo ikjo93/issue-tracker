@@ -5,7 +5,7 @@ export const filterIssues = (queryString: string, issues: IssueType[]) => {
   const queryKeyList = ['writer', 'label', 'milestone', 'assignee'];
   const filteredByQueries = queryKeyList.reduce(
     (tempIssues, queryKey) =>
-      filterByQuery(queryKey, searchParams.get(queryKey), tempIssues),
+      filterByQuery(queryKey, searchParams.get(queryKey) as string, tempIssues),
     issues,
   );
   const filteredByStatus =
