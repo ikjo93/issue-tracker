@@ -44,14 +44,6 @@ module.exports = {
         functions: 'ignore',
       },
     ],
-    'jsx-a11y/label-has-associated-control': [
-      'error',
-      {
-        required: {
-          some: ['nesting', 'id'],
-        },
-      },
-    ],
   },
   settings: {
     'import/resolver': {
