@@ -8,7 +8,7 @@ const fakeIssues: IssueType[] = [...issues];
 
 const getIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   const filteredIssues = filterIssues(req.url.search, fakeIssues);
-  return res(ctx.status(200), ctx.json({ filteredIssues }));
+  return res(ctx.status(200), ctx.json(filteredIssues));
 };
 
 const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {

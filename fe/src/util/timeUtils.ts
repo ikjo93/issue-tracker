@@ -4,6 +4,12 @@ interface IEventTypes {
   [key: string]: number;
 }
 
+export const second = (s) => s * 1000;
+
+export const minute = (m) => m * 60 * 1000;
+
+export const hour = (h) => h * 60 * 60 * 1000;
+
 export const debounce = ({ msTime, callback }) => {
   const msDiffRange = 10;
   const eventTypes: IEventTypes = {};
