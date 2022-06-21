@@ -77,7 +77,8 @@ const TextAreaSquircle = styled(Squircle)`
 `;
 
 const TextCountBox = styled.div<TextCountBoxProps>`
-  ${({ isVisible }) => !isVisible && 'visibility:hidden;'}
+  ${({ isVisible }) => (!isVisible ? 'opacity:0.1;' : 'opacity:1;')}
+  transition: opacity 0.2s;
   position: absolute;
   bottom: 4rem;
   right: 2rem;
