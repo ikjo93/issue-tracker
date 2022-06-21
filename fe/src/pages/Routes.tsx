@@ -3,6 +3,7 @@ import { Route, Routes as RouterRoutes } from 'react-router-dom';
 import { useHeaderState } from '@contexts/HeaderProvider';
 import CreateIssuePage from '@pages/CreateIssuePage';
 import DefaultPage from '@pages/DefaultPage';
+import IssueDetailPage from '@pages/IssueDetailPage';
 import JoinPage from '@pages/JoinPage';
 import Layout from '@pages/Layout';
 import LoginPage from '@pages/LoginPage';
@@ -16,6 +17,7 @@ export default function Routes() {
         <Route path="login" element={<LoginPage />} />
         <Route path="join" element={<JoinPage />} />
         <Route path="createIssue" element={<CreateIssuePage />} />
+        <Route path="detail" element={<IssueDetailPage />} />
       </Route>
     </RouterRoutes>
   );
