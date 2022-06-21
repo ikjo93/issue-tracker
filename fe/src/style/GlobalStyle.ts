@@ -23,6 +23,14 @@ const GlobalStyle = createGlobalStyle`
       outline:none;
     }
   }
+  input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+  }
   textarea{
     margin:0;
     padding:0;

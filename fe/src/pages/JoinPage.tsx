@@ -3,10 +3,9 @@ import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Squircle from '@components/Squircle';
-import colors from '@constants/colors';
-import { fontSize } from '@constants/fonts';
-import mixin from '@style/mixin';
+import Button from '@components/Button';
+import Container from '@components/Container';
+import InputBox from '@components/inputs/InputBox';
 
 interface IFormEventTarget extends EventTarget {
   email?: HTMLInputElement;
@@ -32,56 +31,30 @@ export default function JoinPage() {
 
   return (
     // TODO: custom required UX
-    <Wrapper onSubmit={handleSubmit}>
-      <Squircle>
+    <Wrapper flexInfo={{ align: 'center', justify: 'center' }}>
+      <MyForm onSubmit={handleSubmit}>
         <InputBox name="email" placeholder="아이디(이메일)" required />
-      </Squircle>
-      <Squircle>
         <InputBox name="name" placeholder="닉네임" required />
-      </Squircle>
-      <Squircle>
         <InputBox
           name="password"
           type="password"
           placeholder="비밀번호"
           required
         />
-      </Squircle>
-      <Squircle>
-        <JoinButton type="submit">회원 가입</JoinButton>
-      </Squircle>
+        <Button type="submit">회원 가입</Button>
+      </MyForm>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.form`
+const Wrapper = styled(Container)`
   width: 100%;
   height: 100vh;
-  gap: 0.5rem;
-  ${mixin.flexMixin({
-    direction: 'column',
-    align: 'center',
-    justify: 'center',
-  })}
 `;
 
-const InputBox = styled.input`
-  width: 100%;
-  height: 100%;
-  color: ${({ theme }) => theme.palette.fontColor};
-  background-color: ${({ theme }) => theme.palette.darkerBgColor};
-  padding: 0rem 1rem;
-`;
-
-const JoinButton = styled.button`
-  color: ${colors.offWhite};
-  font-size: ${fontSize.medium};
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.palette.primary};
-  opacity: 0.5;
-  transition: opacity 0.2s;
-  :hover {
-    opacity: 1;
-  }
+const MyForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  align-items: center;
 `;

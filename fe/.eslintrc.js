@@ -44,6 +44,7 @@ module.exports = {
         functions: 'ignore',
       },
     ],
+    'react/jsx-props-no-spreading': 'off',
   },
   settings: {
     'import/resolver': {

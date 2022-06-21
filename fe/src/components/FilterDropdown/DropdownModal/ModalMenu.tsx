@@ -11,6 +11,9 @@ export default function ModalMenu({ modalContent }) {
   const isSelectedFilter = checkIfUrlHasQuery(queryKey, queryValue);
 
   const navigate = useNavigate();
+
+  // 이전: 모달 메뉴 클릭하면 해당 url 을 만들어서 이동
+  // 이후: 전달받은 callback 실행
   const handleMenuClick = () => {
     const queryString = isSelectedFilter
       ? makeUrlQuery('delete', queryKey)
