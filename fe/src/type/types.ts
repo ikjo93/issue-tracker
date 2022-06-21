@@ -2,17 +2,24 @@ import { IPalette } from '@style/theme';
 
 export type UserIconSizeType = 'BIG' | 'SMALL';
 
+export type MemberType = {
+  memberId: number;
+  identity: string;
+  name: string;
+  profileUrl: string | null;
+};
+
 export type LabelType = {
   id: number;
   name: string;
-  description: string;
+  description?: string;
   color: string;
 };
 
 export type MilestoneType = {
   id: number;
   subject: string;
-  description: string;
+  description?: string;
 };
 
 export type AssigneeType = {
@@ -41,4 +48,3 @@ declare module 'styled-components' {
     palette: IPalette;
   }
 }
-
