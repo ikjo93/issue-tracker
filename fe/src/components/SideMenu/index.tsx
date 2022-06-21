@@ -13,8 +13,18 @@ export default function SideMenu() {
     setOpendModalType(type);
   };
 
+  const handleClickModalAway = () => {
+    if (opendModalType) {
+      setOpendModalType(null);
+    }
+  };
+
   return (
-    <Squircle borderLineColor={theme.palette.borderColor} height="fit-content">
+    <Squircle
+      borderLineColor={theme.palette.borderColor}
+      height="fit-content"
+      onClick={handleClickModalAway}
+    >
       <SideMenuItem
         type="ASSIGNEE"
         opendModalType={opendModalType}
