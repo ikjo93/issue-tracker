@@ -2,11 +2,14 @@ import { DefaultTheme } from 'styled-components';
 
 import colors from '@constants/colors';
 
-export interface IPalette {
+export interface IPaletteOptions {
   default: string;
   primary: string;
   warning: string;
   github: string;
+}
+
+export interface IPalette extends IPaletteOptions {
   bgColor: string;
   fontColor: string;
   borderColor: string;

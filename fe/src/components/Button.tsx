@@ -3,13 +3,14 @@ import styled, { css } from 'styled-components';
 import Squircle from '@components/Squircle';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
+import { IPaletteOptions } from '@style/theme';
 
 type ButtonTypes = 'button' | 'submit' | 'reset';
 
 interface ButtonProps {
   width?: number | string;
   height?: number | string;
-  variant?: string;
+  variant?: keyof IPaletteOptions;
   type?: ButtonTypes;
   onClick?: () => void;
   children: React.ReactNode;
