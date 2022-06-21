@@ -3,7 +3,7 @@ import { rest } from 'msw';
 import { minute } from '@util/timeUtils';
 
 interface IUser {
-  member_id: number;
+  memberId: number;
   name: string;
   email: string;
   password: string;
@@ -17,7 +17,7 @@ interface IFakeToken {
 let lastUserId = 2;
 const fakeUsers: IUser[] = [
   {
-    member_id: 1,
+    memberId: 1,
     name: 'Park',
     email: 'super0872@naver.com',
     password: '1234',
@@ -52,12 +52,12 @@ const startLoginTimer = (userId) => {
   }, minute(3));
 };
 
-const postJoin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
+const postJoin = async (req, res, ctx) => {
   const { email, name, password } = req.body;
   const profileUrl =
     'https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg';
   const userData: IUser = {
-    member_id: lastUserId,
+    memberId: lastUserId,
     name,
     email,
     password,
@@ -68,18 +68,18 @@ const postJoin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   return res(ctx.status(201));
 };
 
-const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
+const postLogin = async (req, res, ctx) => {
   const { email, password } = req.body;
   const user = fakeUsers.find((fUser) => fUser.email === email);
   if (!user) {
     return res(ctx.status(401));
   }
   if (user.password === password) {
-    startLoginTimer(user.member_id);
+    startLoginTimer(user.memberId);
     return res(
       ctx.status(201),
-      ctx.cookie('refresh-token', `r-${user.member_id}`),
-      ctx.set('access-token', `a-${user.member_id}`),
+      ctx.cookie('refresh-token', `r-${user.memberId}`),
+      ctx.set('access-token', `a-${user.memberId}`),
       ctx.json({
         profileUrl: user.profile_url,
         status: 'OK',
@@ -90,13 +90,13 @@ const postLogin: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   return res(ctx.status(401));
 };
 
-const getGithubLogin: Parameters<typeof rest.get>[1] = async (_, res, ctx) => {
+const getGithubLogin = async (_, res, ctx) => {
   // code 를 통해 user 를 찾는 로직은 일단 없음
   const user = fakeUsers[0];
-  startLoginTimer(user.member_id);
+  startLoginTimer(user.memberId);
   return res(
-    ctx.cookie('refresh-token', `r-${user.member_id}`),
-    ctx.set('access-token', `a-${user.member_id}`),
+    ctx.cookie('refresh-token', `r-${user.memberId}`),
+    ctx.set('access-token', `a-${user.memberId}`),
     ctx.json({
       profileUrl: user.profile_url,
       status: 'OK',
@@ -105,7 +105,7 @@ const getGithubLogin: Parameters<typeof rest.get>[1] = async (_, res, ctx) => {
   );
 };
 
-const getLogout: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
+const getLogout = async (req, res, ctx) => {
   const refreshToken = req.cookies['refresh-token'];
   delete fakeTokenMap[refreshToken];
   return res(
@@ -116,11 +116,7 @@ const getLogout: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   );
 };
 
-const getAccessTokenReIssue: Parameters<typeof rest.get>[1] = async (
-  req,
-  res,
-  ctx,
-) => {
+const getAccessTokenReIssue = async (req, res, ctx) => {
   const refreshToken = req.cookies['refresh-token'];
   const accessToken = fakeTokenMap[refreshToken];
   if (!accessToken) {
@@ -142,6 +138,15 @@ const getAccessTokenReIssue: Parameters<typeof rest.get>[1] = async (
   );
 };
 
+const getMe = (req, res, ctx) => {
+  const { authorization } = req.headers;
+  const [, accessToken] = authorization.split(' ');
+  // jwt 써야하는데 일단 안씀
+  const userId = accessToken;
+  const user = fakeUsers.find((fUser) => fUser.memberId === userId);
+  return res(ctx.status(200), ctx.json(user));
+};
+
 export default function loginHandlers() {
   return [
     rest.post('/api/join', postJoin),
@@ -149,5 +154,6 @@ export default function loginHandlers() {
     rest.get('/api/github-login', getGithubLogin),
     rest.get('/api/getLogout', getLogout),
     rest.get('/api/access-token/reissue', getAccessTokenReIssue),
+    rest.get('/api/mine', getMe),
   ];
 }

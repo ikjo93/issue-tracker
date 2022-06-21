@@ -6,12 +6,12 @@ import { IssueType } from '@type/types';
 
 const fakeIssues: IssueType[] = [...issues];
 
-const getIssues: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+const getIssues = (req, res, ctx) => {
   const filteredIssues = filterIssues(req.url.search, fakeIssues);
   return res(ctx.status(200), ctx.json(filteredIssues));
 };
 
-const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+const postCreateIssue = (req, res, ctx) => {
   const { subject, description } = req.body;
   const newIssueId = fakeIssues[fakeIssues.length - 1].id + 1;
   const newIssueNumber = fakeIssues[fakeIssues.length - 1].number + 1;
