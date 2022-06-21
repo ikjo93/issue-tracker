@@ -10,14 +10,14 @@ import mixin from '@style/mixin';
 import OpenAndCloseFilter from './OpenAndCloseFilter';
 
 interface IIssueTableHeaderProps {
-  clickedStatusCnt: number;
-  oppositeStatusCnt: number;
+  countOfOpenIssues: number;
+  countOfClosedIssues: number;
   toggleAllIssues: (isChecked: boolean) => void;
   checkedIssueIndices: boolean[];
 }
 export default function IssueTableHeader({
-  clickedStatusCnt,
-  oppositeStatusCnt,
+  countOfOpenIssues,
+  countOfClosedIssues,
   toggleAllIssues,
   checkedIssueIndices,
 }: IIssueTableHeaderProps) {
@@ -40,8 +40,8 @@ export default function IssueTableHeader({
           onChange={handleCheckboxClick}
         />
         <OpenAndCloseFilter
-          clickedStatusCnt={clickedStatusCnt}
-          oppositeStatusCnt={oppositeStatusCnt}
+          countOfOpenIssues={countOfOpenIssues}
+          countOfClosedIssues={countOfClosedIssues}
         />
       </Container>
       <Container

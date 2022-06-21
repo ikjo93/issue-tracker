@@ -4,18 +4,14 @@ import styled from 'styled-components';
 import IconTextBox from '@components/IconTextBox';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
+import { MilestoneType } from '@type/types';
 import { calTimePassed } from '@util/dateHandler';
-
-interface IMilestone {
-  id: number;
-  name: string;
-}
 
 interface IIssueDescriptionProps {
   issueNum: number;
   writer: string;
   createdDatetime: string;
-  milestone: IMilestone;
+  milestone: MilestoneType | null;
 }
 
 export default function IssueDescription({
@@ -32,12 +28,14 @@ export default function IssueDescription({
     <Wrapper>
       <IconTextBox color={colors.label} texts={[`#${issueNum}`]} />
       <IconTextBox color={colors.label} texts={[writerAndTimeDescription]} />
-      <IconTextBox
-        Icon={<SignpostOutlinedIcon fontSize="small" />}
-        color={colors.label}
-        texts={[milestone.name]}
-        spacing={0.5}
-      />
+      {milestone && (
+        <IconTextBox
+          Icon={<SignpostOutlinedIcon fontSize="small" />}
+          color={colors.label}
+          texts={[milestone.subject]}
+          spacing={0.5}
+        />
+      )}
     </Wrapper>
   );
 }

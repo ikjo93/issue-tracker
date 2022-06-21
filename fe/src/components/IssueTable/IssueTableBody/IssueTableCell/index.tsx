@@ -32,7 +32,7 @@ export default function IssueTableCell({
       <IssueInfoContainer>
         <IssueTitle title={issue.subject} labels={issue.labels} />
         <IssueDescription
-          issueNum={issue.number}
+          issueNum={issue.id}
           writer={issue.writer}
           createdDatetime={issue.createdDatetime}
           milestone={issue.milestone}

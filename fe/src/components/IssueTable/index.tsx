@@ -10,7 +10,8 @@ import IssueTableHeader from './IssueTableHeader';
 
 type IssueTableDataType = {
   issues: IssueType[];
-  oppositeStatusCnt: number;
+  countOfOpenIssues: number;
+  countOfClosedIssues: number;
 };
 
 export default function IssueTable() {
@@ -44,8 +45,8 @@ export default function IssueTable() {
   return issueTableData?.issues.length === checkedIssueIndices.length ? (
     <IssueTableContainer>
       <IssueTableHeader
-        clickedStatusCnt={issueTableData.issues.length}
-        oppositeStatusCnt={issueTableData.oppositeStatusCnt}
+        countOfOpenIssues={issueTableData.countOfOpenIssues}
+        countOfClosedIssues={issueTableData.countOfClosedIssues}
         checkedIssueIndices={checkedIssueIndices}
         toggleAllIssues={toggleAllIssues}
       />

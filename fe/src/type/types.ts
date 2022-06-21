@@ -5,27 +5,35 @@ export type UserIconSizeType = 'BIG' | 'SMALL';
 export type LabelType = {
   id: number;
   name: string;
+  description: string;
   color: string;
 };
 
-type MilestoneType = {
+export type MilestoneType = {
   id: number;
+  subject: string;
+  description: string;
+};
+
+export type AssigneeType = {
+  memberId: number;
+  identity: string;
   name: string;
+  profileUrl: string;
 };
 
 // 편의상 대충 만든 타입. 이후 서버에서 실제로 제공하는 데이터 구조에 따라 수정
 export type IssueType = {
   id: number;
-  number: number;
+  status: string;
   subject: string;
   description: string;
   writer: string;
   profileUrl: string;
-  status: string;
   createdDatetime: string;
+  milestone: MilestoneType | null;
   labels: LabelType[];
-  milestone: MilestoneType;
-  assignee: string[];
+  assignees: AssigneeType[];
 };
 
 declare module 'styled-components' {

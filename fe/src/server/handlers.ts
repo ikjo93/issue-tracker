@@ -64,7 +64,7 @@ const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
     description,
     writer: 'happyGyu',
     profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
-    status: 'open',
+    status: 'OPEN',
     createdDatetime: new Date().toISOString(),
     labels: [
       {
@@ -73,9 +73,8 @@ const postCreateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
         color: 'red',
       },
     ],
-    milestone: {id: 123214,
-      name: '마일스톤1'},
-    assignee: ['happyGyu']
+    milestone: { id: 123214, name: '마일스톤1' },
+    assignee: ['happyGyu'],
   };
   fakeIssues.push(newIssue);
   return res(ctx.status(201));

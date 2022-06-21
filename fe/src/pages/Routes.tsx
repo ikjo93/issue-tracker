@@ -12,7 +12,7 @@ export default function Routes() {
   return (
     <RouterRoutes>
       <Route path="/" element={<Layout />}>
-        <Route index element={isLogin ? <DefaultPage /> : <LoginPage />} />
+        <Route index element={true ? <DefaultPage /> : <LoginPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="join" element={<JoinPage />} />
         <Route path="createIssue" element={<CreateIssuePage />} />
