@@ -2,15 +2,24 @@ import { IPalette } from '@style/theme';
 
 export type UserIconSizeType = 'BIG' | 'SMALL';
 
+export type MemberType = {
+  memberId: number;
+  identity: string;
+  name: string;
+  profileUrl: string | null;
+};
+
 export type LabelType = {
   id: number;
   name: string;
+  description?: string;
   color: string;
 };
 
-type MilestoneType = {
+export type MilestoneType = {
   id: number;
-  name: string;
+  subject: string;
+  description?: string;
 };
 
 // 편의상 대충 만든 타입. 이후 서버에서 실제로 제공하는 데이터 구조에 따라 수정
@@ -33,4 +42,3 @@ declare module 'styled-components' {
     palette: IPalette;
   }
 }
-

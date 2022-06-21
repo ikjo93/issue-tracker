@@ -16,7 +16,7 @@ type MethodType = 'get' | 'post';
 
 export default function useAxios<T>(
   url: string,
-  method: MethodType,
+  method: MethodType = 'get',
   options?: AxiosRequestConfig,
 ): ResponseState<T> {
   const initState: ResponseState<T> = {
