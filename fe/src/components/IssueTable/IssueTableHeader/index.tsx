@@ -124,7 +124,7 @@ export default function IssueTableHeader({
             <PopoverContainer<ModalContentType>
               key={type}
               title={title}
-              menus={getNewMenus(menus, type)}
+              menus={getFormattedMenus(menus, type)}
               onClickModalItem={handleClickFilterItem}
             >
               <IconTextBox
@@ -148,7 +148,7 @@ const IssueTableHeaderContainer = styled.div`
   border-radius: 1rem 1rem 0 0;
 `;
 
-function getNewMenus(menus, type) {
+function getFormattedMenus(menus, type) {
   switch (type) {
     case 'ASSIGNEE':
       return menus.map((menu) => ({

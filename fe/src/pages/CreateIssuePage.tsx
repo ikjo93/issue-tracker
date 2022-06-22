@@ -94,7 +94,7 @@ const initState: MenuStateType = {
 const reducer = (state: MenuStateType, action: ActionType) => {
   switch (action.type) {
     case 'ASSIGNEE': {
-      if (state.assignees.includes(action.data)) {
+      if (state.assignees.some(({ id }) => id === action.data.id)) {
         return state;
       }
       return {
@@ -103,7 +103,7 @@ const reducer = (state: MenuStateType, action: ActionType) => {
       };
     }
     case 'LABEL': {
-      if (state.labels.includes(action.data)) {
+      if (state.labels.some(({ id }) => id === action.data.id)) {
         return state;
       }
       return {

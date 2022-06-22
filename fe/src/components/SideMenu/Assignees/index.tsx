@@ -9,6 +9,7 @@ export default function Assignees({ assignees }) {
       <Container flexInfo={{ direction: 'column' }} gap={1}>
         {assignees.map((assignee) => (
           <Assignee
+            key={assignee.id}
             flexInfo={{ justify: 'flex-start', align: 'center' }}
             gap={1}
           >

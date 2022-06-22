@@ -57,7 +57,7 @@ export default function SideMenuItem({
   );
   const title = `${KoType[type]} 추가`;
 
-  const handleClickModalMenu = (menu) => {
+  const handleClickItemAddBtn = (menu) => {
     menuDispatch({ type, data: menu });
   };
 
@@ -73,8 +73,8 @@ export default function SideMenuItem({
           left={-14}
           top={2}
           title={title}
-          menus={getNewMenus(menus, type)}
-          onClickModalItem={handleClickModalMenu}
+          menus={getFormattedMenus(menus, type)}
+          onClickModalItem={handleClickItemAddBtn}
         >
           <AddIcon sx={{ cursor: 'pointer' }} />
         </PopoverContainer>
@@ -86,7 +86,7 @@ export default function SideMenuItem({
 
 const TypeTitle = styled.h6``;
 
-function getNewMenus(menus, type) {
+function getFormattedMenus(menus, type) {
   switch (type) {
     case 'ASSIGNEE':
       return menus?.map((menu) => ({
