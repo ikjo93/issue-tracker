@@ -7,13 +7,15 @@ import IconTextBox from '@components/IconTextBox';
 import { fontWeight } from '@constants/fonts';
 import { makeUrlQuery } from '@util/queryParser';
 
+type OpenAndCloseFilterProps = {
+  countOfOpenIssues: number;
+  countOfClosedIssues: number;
+};
+
 export default function OpenAndCloseFilter({
-  clickedStatusCnt,
-  oppositeStatusCnt,
-}: {
-  clickedStatusCnt: number;
-  oppositeStatusCnt: number;
-}) {
+  countOfOpenIssues,
+  countOfClosedIssues,
+}: OpenAndCloseFilterProps) {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(window.location.search);
   const clickedStatus = searchParams.get('status');
@@ -21,11 +23,6 @@ export default function OpenAndCloseFilter({
     const queryString = makeUrlQuery('set', 'status', status);
     navigate(`/?${queryString}`);
   };
-
-  const [openCnt, closedCnt] =
-    clickedStatus === 'open'
-      ? [clickedStatusCnt, oppositeStatusCnt]
-      : [oppositeStatusCnt, clickedStatusCnt];
 
   return (
     <Container
@@ -35,21 +32,21 @@ export default function OpenAndCloseFilter({
     >
       <IconTextBox
         Icon={<ErrorOutlineIcon fontSize="small" />}
-        texts={['열린 이슈', `(${openCnt})`]}
+        texts={['열린 이슈', `(${countOfOpenIssues})`]}
         fontWeight={
-          clickedStatus === 'open' ? fontWeight.bold : fontWeight.regular
+          clickedStatus === 'OPEN' ? fontWeight.bold : fontWeight.regular
         }
         spacing={0.375}
-        onClick={() => handleClickStatusTab('open')}
+        onClick={() => handleClickStatusTab('OPEN')}
       />
       <IconTextBox
         Icon={<Inventory2OutlinedIcon fontSize="small" />}
-        texts={['닫힌 이슈', `(${closedCnt})`]}
+        texts={['닫힌 이슈', `(${countOfClosedIssues})`]}
         fontWeight={
-          clickedStatus === 'closed' ? fontWeight.bold : fontWeight.regular
+          clickedStatus === 'CLOSED' ? fontWeight.bold : fontWeight.regular
         }
         spacing={0.375}
-        onClick={() => handleClickStatusTab('closed')}
+        onClick={() => handleClickStatusTab('CLOSED')}
       />
     </Container>
   );

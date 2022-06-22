@@ -1,5 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Checkbox } from '@mui/material';
+import axios from 'axios';
 import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,17 +10,22 @@ import IconTextBox from '@components/IconTextBox';
 import OpenAndCloseFilter from '@components/IssueTable/IssueTableHeader/OpenAndCloseFilter';
 import PopoverContainer from '@components/PopoverContainer';
 import colors from '@constants/colors';
-import modalStatic, { ModalIssueType } from '@constants/modalStatic';
+import modalStatic, { ModalStatusChangeType } from '@constants/modalStatic';
 import useAxiosAll from '@hooks/useAxiosAll';
 import mixin from '@style/mixin';
-import { ModalContentType } from '@type/types';
+import { ModalContentType, IssueType } from '@type/types';
 import { checkIfUrlHasQuery, makeUrlQuery } from '@util/queryParser';
 
+interface IIssueTableData {
+  countOfOpenIssues: number;
+  countOfClosedIssues: number;
+  issues: IssueType[];
+}
+
 interface IIssueTableHeaderProps {
-  clickedStatusCnt: number;
-  oppositeStatusCnt: number;
+  issueTableData: IIssueTableData;
+  checkedIssueIds: number[];
   toggleAllIssues: (isChecked: boolean) => void;
-  checkedIssueIndices: boolean[];
 }
 
 const headerItems = [
@@ -42,10 +48,9 @@ const headerItems = [
 ];
 
 export default function IssueTableHeader({
-  clickedStatusCnt,
-  oppositeStatusCnt,
+  issueTableData,
+  checkedIssueIds,
   toggleAllIssues,
-  checkedIssueIndices,
 }: IIssueTableHeaderProps) {
   const navigate = useNavigate();
   const { data: menuDatas } = useAxiosAll<ModalContentType[]>(
@@ -58,12 +63,12 @@ export default function IssueTableHeader({
     ...headerItem,
     menus: menuDatas[idx],
   }));
+  const { countOfOpenIssues, countOfClosedIssues, issues } = issueTableData;
 
   const isAllIssueChecked =
-    checkedIssueIndices.length !== 0 &&
-    checkedIssueIndices.every((isChecked) => isChecked);
+    checkedIssueIds.length === issues.length && issues.length !== 0;
 
-  const isAnyIssueChecked = checkedIssueIndices.some((isChecked) => isChecked);
+  const isAnyIssueChecked = checkedIssueIds.length >= 1;
 
   const handleCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
     toggleAllIssues(e.target.checked);
@@ -77,6 +82,14 @@ export default function IssueTableHeader({
     navigate(`/?${queryString}`);
   };
 
+  const handleClickStatusChangeItem = async ({ targetStatus }) => {
+    await axios.patch('/api/issues/status/update', {
+      updatedStatus: targetStatus,
+      idOfIssues: checkedIssueIds,
+    });
+    navigate(0);
+  };
+
   return (
     <IssueTableHeaderContainer>
       <Container flexInfo={{ align: 'center' }}>
@@ -86,8 +99,8 @@ export default function IssueTableHeader({
           onChange={handleCheckboxClick}
         />
         <OpenAndCloseFilter
-          clickedStatusCnt={clickedStatusCnt}
-          oppositeStatusCnt={oppositeStatusCnt}
+          countOfOpenIssues={countOfOpenIssues}
+          countOfClosedIssues={countOfClosedIssues}
         />
       </Container>
       <Container
@@ -95,9 +108,10 @@ export default function IssueTableHeader({
         flexInfo={{ align: 'center', justify: 'space-around' }}
       >
         {isAnyIssueChecked ? (
-          <PopoverContainer<ModalIssueType>
+          <PopoverContainer<ModalStatusChangeType>
             title="상태수정"
             menus={modalStatic.STATUS_CHANGE}
+            onClickModalItem={handleClickStatusChangeItem}
           >
             <IconTextBox
               Icon={<KeyboardArrowDownIcon />}
@@ -154,14 +168,14 @@ function getNewMenus(menus, type) {
       return menus.map((menu) => ({
         ...menu,
         queryKey: 'label',
-        queryValue: menu.id,
+        queryValue: menu.name,
       }));
     case 'MILESTONE':
       return menus.map((menu) => ({
         ...menu,
         name: menu.subject,
         queryKey: 'milestone',
-        queryValue: menu.id,
+        queryValue: menu.subject,
       }));
     default:
       throw Error('get menus something wrong');

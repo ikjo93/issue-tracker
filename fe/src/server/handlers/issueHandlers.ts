@@ -4,7 +4,7 @@ import issues from '@server/dummyData/issues';
 import { filterIssues } from '@server/filterUtil';
 import { IssueType } from '@type/types';
 
-const fakeIssues: IssueType[] = [...issues];
+let fakeIssues: IssueType[] = [...issues];
 
 const getIssues = (req, res, ctx) => {
   const filteredIssues = filterIssues(req.url.search, fakeIssues);
@@ -20,7 +20,7 @@ const postCreateIssue = (req, res, ctx) => {
     description,
     writer: 'happyGyu',
     profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
-    status: 'open',
+    status: 'OPEN',
     createdDatetime: new Date().toISOString(),
     labels,
     milestone,
@@ -30,9 +30,23 @@ const postCreateIssue = (req, res, ctx) => {
   return res(ctx.status(201));
 };
 
+const patchUpdatedStatus: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const { updatedStatus, idOfIssues } = req.body;
+  const updatedIssues = fakeIssues.map((issue) => {
+    const updatedIssue = { ...issue };
+    if (idOfIssues.includes(issue.id)) {
+      updatedIssue.status = updatedStatus;
+    }
+    return updatedIssue;
+  });
+  fakeIssues = updatedIssues;
+  return res(ctx.status(200), ctx.json(fakeIssues));
+};
+
 export default function issueHandlers() {
   return [
     rest.get('/api/issues', getIssues),
     rest.post('/api/createIssue', postCreateIssue),
+    rest.patch('/api/issues/status/update', patchUpdatedStatus),
   ];
 }

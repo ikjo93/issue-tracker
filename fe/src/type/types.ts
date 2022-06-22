@@ -30,19 +30,18 @@ export type ModalContentType =
   | (MemberType & ModalFilterType)
   | (LabelType & ModalFilterType)
   | (MilestoneType & ModalFilterType);
-// 편의상 대충 만든 타입. 이후 서버에서 실제로 제공하는 데이터 구조에 따라 수정
+
 export type IssueType = {
   id: number;
-  number: number;
+  status: string;
   subject: string;
   description: string;
   writer: string;
   profileUrl: string;
-  status: string;
-  createdDatetime: string;
+  createdDateTime: string;
+  milestone: MilestoneType | null;
   labels: LabelType[];
-  milestone: MilestoneType;
-  assignee: string[];
+  assignees: MemberType[];
 };
 
 declare module 'styled-components' {
