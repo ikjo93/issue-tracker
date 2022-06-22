@@ -43,3 +43,13 @@ export const convertUrlToInputValue = () => {
     .replaceAll('&', ' ');
   return inputValue;
 };
+
+export const convertKeyValueToQuery = (target: object) => {
+  const keyValues = Object.entries(target);
+  if (!keyValues.length) return '';
+  const queryString = keyValues.reduce(
+    (acc, [key, value]) => `${acc}${key}=${value}&`,
+    '?',
+  );
+  return queryString;
+};
