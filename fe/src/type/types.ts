@@ -1,9 +1,13 @@
 import { IPalette } from '@style/theme';
 
+export type ModalFilterType = {
+  queryKey: string;
+  queryValue: string;
+};
 export type UserIconSizeType = 'BIG' | 'SMALL';
 
 export type MemberType = {
-  memberId: number;
+  id: number;
   identity: string;
   name: string;
   profileUrl: string | null;
@@ -29,6 +33,10 @@ export type AssigneeType = {
   profileUrl: string;
 };
 
+export type ModalContentType =
+  | (MemberType & ModalFilterType)
+  | (LabelType & ModalFilterType)
+  | (MilestoneType & ModalFilterType);
 // 편의상 대충 만든 타입. 이후 서버에서 실제로 제공하는 데이터 구조에 따라 수정
 export type IssueType = {
   id: number;
