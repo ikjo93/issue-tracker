@@ -10,12 +10,12 @@ import mixin from '@style/mixin';
 export default function IssueInfo() {
   const theme = useTheme();
   return (
-    <Container gap={1}>
+    <Container>
       <Container flexInfo={{ align: 'center' }} gap={1}>
         <IssueTitle>FE이슈트래커 디자인 시스템 구현</IssueTitle>
         <IssueNumber>#2</IssueNumber>
       </Container>
-      <Container flexInfo={{ align: 'center' }} gap={0.5}>
+      <Container flexInfo={{ align: 'center' }} gap={0.5} mt="1.25rem">
         <IssueStatusBadge
           color={theme.palette.primary}
           backgroundColor={theme.palette.primaryBgColor}
@@ -30,6 +30,16 @@ export default function IssueInfo() {
             fontSize={0.625}
           />
         </IssueStatusBadge>
+        <IconTextBox
+          texts={[
+            '이 이슈가 23분 전에 Oni님에 의해 열렸습니다',
+            '·',
+            '코멘트 2개',
+          ]}
+          spacing={0.5}
+          color={theme.palette.placeholder}
+          fontSize={1.125}
+        />
       </Container>
     </Container>
   );

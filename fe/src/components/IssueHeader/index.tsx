@@ -5,7 +5,7 @@ import IssueUtilButtons from './IssueUtilButtons';
 
 export default function IssueHeader() {
   return (
-    <Container flexInfo={{ justify: 'space-between' }}>
+    <Container flexInfo={{ justify: 'space-between' }} mt="2rem">
       <IssueInfo />
       <IssueUtilButtons />
     </Container>

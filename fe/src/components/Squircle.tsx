@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { widths, heights } from '@constants/lengths';
+import mixin from '@style/mixin';
 import { ITheme } from '@style/theme';
 
 interface ISquircleProps {
@@ -12,10 +13,12 @@ interface ISquircleProps {
   borderLineColor?: string;
   color?: string;
   theme: ITheme;
+  borderRadius?: number;
 }
 
 const Squircle = styled.div<ISquircleProps>`
-  border-radius: 1.2rem;
+  border-radius: ${({ borderRadius }) =>
+    borderRadius ? `${borderRadius}rem` : '1.2rem'};
   width: ${({ width, unit }) =>
     typeof width === 'number'
       ? `${width}${unit || 'rem'}`
