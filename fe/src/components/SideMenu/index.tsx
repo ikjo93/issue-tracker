@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useTheme } from 'styled-components';
 
 import Divider from '@components/Divider';
@@ -7,31 +6,14 @@ import Squircle from '@components/Squircle';
 
 export default function SideMenu() {
   const theme = useTheme();
-  const [opendModalType, setOpendModalType] = useState(null);
-
-  const handleClickSideMenuItem = (type) => {
-    setOpendModalType(type);
-  };
 
   return (
     <Squircle borderLineColor={theme.palette.borderColor} height="fit-content">
-      <SideMenuItem
-        type="ASSIGNEE"
-        opendModalType={opendModalType}
-        onClickMenuItem={handleClickSideMenuItem}
-      />
+      <SideMenuItem type="ASSIGNEE" />
       <Divider margin="" />
-      <SideMenuItem
-        type="LABEL"
-        opendModalType={opendModalType}
-        onClickMenuItem={handleClickSideMenuItem}
-      />
+      <SideMenuItem type="LABEL" />
       <Divider margin="" />
-      <SideMenuItem
-        type="MILESTONE"
-        opendModalType={opendModalType}
-        onClickMenuItem={handleClickSideMenuItem}
-      />
+      <SideMenuItem type="MILESTONE" />
     </Squircle>
   );
 }

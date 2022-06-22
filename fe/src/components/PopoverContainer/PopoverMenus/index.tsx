@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { v4 as uuid } from 'uuid';
 
 import mixin from '@style/mixin';
 import { getCssValueByUnit } from '@util/css';
 
-import ModalMenu from './ModalMenu';
+import ModalMenu from './PopoverMenu';
 
 interface IModalContainer {
   left?: number | string;
@@ -12,27 +11,30 @@ interface IModalContainer {
   unit?: string;
 }
 
-interface IModalInfo {
+interface PopoverMenusProps<M extends { id?: number }> extends IModalContainer {
   title: string;
-  menus: object[];
+  menus?: M[];
+  onClickModalItem?: (item: M) => void;
 }
 
-interface DropdownModalProps extends IModalContainer {
-  info: IModalInfo;
-}
-
-export default function DropdownModal({
-  info,
+export default function PopoverMenus<M extends { id?: number }>({
   left,
   top,
   unit,
-}: DropdownModalProps) {
+  title,
+  menus,
+  onClickModalItem,
+}: PopoverMenusProps<M>) {
   return (
     <>
       <ModalContainer left={left} top={top} unit={unit}>
-        <ModalHeader>{info.title}</ModalHeader>
-        {info.menus.map((menu) => (
-          <ModalMenu key={uuid()} modalContent={menu} />
+        <ModalHeader>{title}</ModalHeader>
+        {menus?.map((menu) => (
+          <ModalMenu
+            key={menu.id}
+            menu={menu}
+            onClickModalItem={onClickModalItem}
+          />
         ))}
       </ModalContainer>
       <DropdownBackdrop />

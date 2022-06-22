@@ -7,7 +7,7 @@ export const checkIfUrlHasQuery = (
 };
 
 export const makeUrlQuery = (
-  method: 'delete' | 'set' | 'append',
+  method: 'delete' | 'set',
   queryKey: string,
   queryValue?: string,
 ) => {
@@ -17,12 +17,11 @@ export const makeUrlQuery = (
     case 'delete':
       searchParams.delete(queryKey);
       break;
-    case 'set':
+    case 'set': {
+      if (!queryValue) break;
       searchParams.set(queryKey, queryValue);
       break;
-    case 'append':
-      searchParams.append(queryKey, queryValue);
-      break;
+    }
     default:
       throw new Error('invalid method');
   }
