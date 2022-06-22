@@ -1,8 +1,7 @@
 import Container from '@components/Container';
-
-import FilterBar from './FilterBar';
-import NewIssueButton from './NewIssueButton';
-import TagTab from './TagTab';
+import FilterBar from '@components/UtilBar/FilterBar';
+import NewButton from '@components/UtilBar/NewButton';
+import TagTab from '@components/UtilBar/TagTab';
 
 export default function UtilBar() {
   return (
@@ -16,7 +15,7 @@ export default function UtilBar() {
         gap={1}
       >
         <TagTab />
-        <NewIssueButton />
+        <NewButton label="이슈 작성" />
       </Container>
     </Container>
   );

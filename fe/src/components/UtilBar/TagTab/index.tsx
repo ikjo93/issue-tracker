@@ -1,5 +1,6 @@
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Divider from '@components/Divider';
@@ -39,17 +40,21 @@ export default function TagTab() {
   return (
     milestoneData && (
       <Wrapper>
-        <IconTextBox
-          Icon={<LocalOfferOutlinedIcon />}
-          texts={['레이블', `(${labelData?.labels.length})`]}
-          spacing={0.625}
-        />
+        <Link to="/list/label">
+          <IconTextBox
+            Icon={<LocalOfferOutlinedIcon />}
+            texts={['레이블', `(${labelData?.labels.length})`]}
+            spacing={0.625}
+          />
+        </Link>
         <Divider isVertical length="100%" margin="0" />
-        <IconTextBox
-          Icon={<SignpostOutlinedIcon />}
-          texts={['마일스톤', `(${milestoneData?.milestones.length})`]}
-          spacing={0.625}
-        />
+        <Link to="/list/milestone">
+          <IconTextBox
+            Icon={<SignpostOutlinedIcon />}
+            texts={['마일스톤', `(${milestoneData?.milestones.length})`]}
+            spacing={0.625}
+          />
+        </Link>
       </Wrapper>
     )
   );
@@ -63,4 +68,3 @@ const Wrapper = styled.div`
   border-radius: 0.75rem;
   padding: 0 0.5rem;
 `;
-

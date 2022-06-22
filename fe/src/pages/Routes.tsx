@@ -7,6 +7,9 @@ import JoinPage from '@pages/JoinPage';
 import Layout from '@pages/Layout';
 import LoginPage from '@pages/LoginPage';
 
+import LabelMilestoneLayout from './LabelMilestoneLayout';
+import LabelPage from './LabelPage';
+
 export default function Routes() {
   const { isLogin } = useHeaderState();
   return (
@@ -16,9 +19,9 @@ export default function Routes() {
         <Route path="login" element={<LoginPage />} />
         <Route path="join" element={<JoinPage />} />
         <Route path="createIssue" element={<CreateIssuePage />} />
-        {/* <Route path="list" element={<LabelMilestoneLayout />}>
+        <Route path="list" element={<LabelMilestoneLayout />}>
           <Route path="label" element={<LabelPage />} />
-        </Route> */}
+        </Route>
       </Route>
     </RouterRoutes>
   );

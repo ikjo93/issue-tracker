@@ -6,11 +6,11 @@ import IconTextBox from '@components/IconTextBox';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 
-export default function NewIssueButton() {
+export default function NewButton({ label }) {
   return (
     <Link to="createIssue">
       <Wrapper>
-        <IconTextBox Icon={<AddIcon />} texts={['이슈 작성']} fontSize={0.75} />
+        <IconTextBox Icon={<AddIcon />} texts={[label]} fontSize={0.75} />
       </Wrapper>
     </Link>
   );
