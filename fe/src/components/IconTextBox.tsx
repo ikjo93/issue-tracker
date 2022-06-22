@@ -18,7 +18,7 @@ export default function IconTextBox({
   Icon,
   isIconAfterText = false,
   texts,
-  color,
+  color = 'inherit',
   spacing,
   fontSize,
   fontWeight,
