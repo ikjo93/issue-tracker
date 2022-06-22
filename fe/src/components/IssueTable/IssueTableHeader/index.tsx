@@ -59,7 +59,7 @@ export default function IssueTableHeader({
   );
 
   if (!menuDatas) return <div />;
-  const headerDatas = headerItems?.map((headerItem, idx) => ({
+  const filterDropdownDatas = headerItems?.map((headerItem, idx) => ({
     ...headerItem,
     menus: menuDatas[idx],
   }));
@@ -74,7 +74,7 @@ export default function IssueTableHeader({
     toggleAllIssues(e.target.checked);
   };
 
-  const handleClickTableHeaderItem = ({ queryKey, queryValue }) => {
+  const handleClickFilterItem = ({ queryKey, queryValue }) => {
     const isSelectedFilter = checkIfUrlHasQuery(queryKey, queryValue);
     const queryString = isSelectedFilter
       ? makeUrlQuery('delete', queryKey)
@@ -120,12 +120,12 @@ export default function IssueTableHeader({
             />
           </PopoverContainer>
         ) : (
-          headerDatas?.map(({ title, type, menus }) => (
+          filterDropdownDatas?.map(({ title, type, menus }) => (
             <PopoverContainer<ModalContentType>
               key={type}
               title={title}
               menus={getNewMenus(menus, type)}
-              onClickModalItem={handleClickTableHeaderItem}
+              onClickModalItem={handleClickFilterItem}
             >
               <IconTextBox
                 Icon={<KeyboardArrowDownIcon />}
