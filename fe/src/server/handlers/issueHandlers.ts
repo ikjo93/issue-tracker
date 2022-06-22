@@ -22,7 +22,7 @@ const postCreateIssue = (req, res, ctx) => {
     description,
     writer: 'happyGyu',
     profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
-    status: 'open',
+    status: 'OPEN',
     createdDateTime: new Date().toISOString(),
     labels: [
       {

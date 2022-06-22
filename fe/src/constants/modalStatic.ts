@@ -4,8 +4,9 @@ export interface ModalIssueType extends ModalFilterType {
   name?: string;
 }
 
-export interface ModalStatusChangeType extends ModalFilterType {
-  name?: string;
+export interface ModalStatusChangeType {
+  name: string;
+  targetStatus: string;
 }
 
 const modalStatic = {
@@ -13,24 +14,22 @@ const modalStatic = {
     {
       name: '열린 이슈',
       queryKey: 'status',
-      queryValue: 'open',
+      queryValue: 'OPEN',
     },
     {
       name: '닫힌 이슈',
       queryKey: 'status',
-      queryValue: 'closed',
+      queryValue: 'CLOSED',
     },
   ],
   STATUS_CHANGE: [
     {
       name: '선택한 이슈 열기',
-      queryKey: '',
-      queryValue: '',
+      targetStatus: 'OPEN',
     },
     {
       name: '선택한 이슈 닫기',
-      queryKey: '',
-      queryValue: '',
+      targetStatus: 'CLOSED',
     },
   ],
 };

@@ -1,5 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Checkbox } from '@mui/material';
+import axios from 'axios';
 import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,7 +10,8 @@ import IconTextBox from '@components/IconTextBox';
 import OpenAndCloseFilter from '@components/IssueTable/IssueTableHeader/OpenAndCloseFilter';
 import PopoverContainer from '@components/PopoverContainer';
 import colors from '@constants/colors';
-import modalStatic, { ModalIssueType } from '@constants/modalStatic';
+import modalStatic, { ModalStatusChangeType } from '@constants/modalStatic';
+import useAxios from '@hooks/useAxios';
 import useAxiosAll from '@hooks/useAxiosAll';
 import mixin from '@style/mixin';
 import { ModalContentType } from '@type/types';
@@ -77,6 +79,13 @@ export default function IssueTableHeader({
     navigate(`/?${queryString}`);
   };
 
+  const handleClickStatusChangeItem = async ({ targetStatus }) => {
+    await axios.patch('/api/issues/status/update', {
+      updatedStatus: targetStatus,
+      idOfIssues: checkedIssueIndices,
+    });
+  };
+
   return (
     <IssueTableHeaderContainer>
       <Container flexInfo={{ align: 'center' }}>
@@ -95,9 +104,10 @@ export default function IssueTableHeader({
         flexInfo={{ align: 'center', justify: 'space-around' }}
       >
         {isAnyIssueChecked ? (
-          <PopoverContainer<ModalIssueType>
+          <PopoverContainer<ModalStatusChangeType>
             title="상태수정"
             menus={modalStatic.STATUS_CHANGE}
+            onClickModalItem={handleClickStatusChangeItem}
           >
             <IconTextBox
               Icon={<KeyboardArrowDownIcon />}
@@ -154,14 +164,14 @@ function getNewMenus(menus, type) {
       return menus.map((menu) => ({
         ...menu,
         queryKey: 'label',
-        queryValue: menu.id,
+        queryValue: menu.name,
       }));
     case 'MILESTONE':
       return menus.map((menu) => ({
         ...menu,
         name: menu.subject,
         queryKey: 'milestone',
-        queryValue: menu.id,
+        queryValue: menu.subject,
       }));
     default:
       throw Error('get menus something wrong');
