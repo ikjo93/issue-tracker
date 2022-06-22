@@ -7,24 +7,24 @@ import IssueTableCell from './IssueTableCell';
 
 interface IIssueTableBodyProps {
   issues: IssueType[];
-  checkedIssueIndices: boolean[];
-  toggleOneIssue: (issueIdx: number, isChecked: boolean) => void;
+  checkedIssueIds: number[];
+  toggleOneIssue: (issueId: number) => void;
 }
 
 export default function IssueTableBody({
   issues,
-  checkedIssueIndices,
+  checkedIssueIds,
   toggleOneIssue,
 }: IIssueTableBodyProps) {
   return (
     <IssueTableBodyContainer>
       {issues.length ? (
-        issues.map((issue, idx) => (
+        issues.map((issue) => (
           <IssueTableCell
             key={issue.id}
             issue={issue}
-            isIssueChecked={checkedIssueIndices[idx]}
-            toggleIssueCheck={(isChecked) => toggleOneIssue(idx, isChecked)}
+            isIssueChecked={checkedIssueIds.includes(issue.id)}
+            toggleIssueCheck={() => toggleOneIssue(issue.id)}
           />
         ))
       ) : (

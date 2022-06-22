@@ -1,8 +1,8 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Checkbox } from '@mui/material';
 import axios from 'axios';
-import { ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
@@ -11,7 +11,6 @@ import OpenAndCloseFilter from '@components/IssueTable/IssueTableHeader/OpenAndC
 import PopoverContainer from '@components/PopoverContainer';
 import colors from '@constants/colors';
 import modalStatic, { ModalStatusChangeType } from '@constants/modalStatic';
-import useAxios from '@hooks/useAxios';
 import useAxiosAll from '@hooks/useAxiosAll';
 import mixin from '@style/mixin';
 import { ModalContentType } from '@type/types';
@@ -20,8 +19,9 @@ import { checkIfUrlHasQuery, makeUrlQuery } from '@util/queryParser';
 interface IIssueTableHeaderProps {
   countOfOpenIssues: number;
   countOfClosedIssues: number;
+  currIssueCounts: number;
+  checkedIssueIds: number[];
   toggleAllIssues: (isChecked: boolean) => void;
-  checkedIssueIndices: boolean[];
 }
 
 const headerItems = [
@@ -46,10 +46,12 @@ const headerItems = [
 export default function IssueTableHeader({
   countOfOpenIssues,
   countOfClosedIssues,
+  currIssueCounts,
+  checkedIssueIds,
   toggleAllIssues,
-  checkedIssueIndices,
 }: IIssueTableHeaderProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { data: menuDatas } = useAxiosAll<ModalContentType[]>(
     ['/api/members', '/api/labels', '/api/milestones', '/api/members'],
     'get',
@@ -62,10 +64,9 @@ export default function IssueTableHeader({
   }));
 
   const isAllIssueChecked =
-    checkedIssueIndices.length !== 0 &&
-    checkedIssueIndices.every((isChecked) => isChecked);
+    checkedIssueIds.length === currIssueCounts && currIssueCounts !== 0;
 
-  const isAnyIssueChecked = checkedIssueIndices.some((isChecked) => isChecked);
+  const isAnyIssueChecked = checkedIssueIds.length >= 1;
 
   const handleCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
     toggleAllIssues(e.target.checked);
@@ -82,8 +83,9 @@ export default function IssueTableHeader({
   const handleClickStatusChangeItem = async ({ targetStatus }) => {
     await axios.patch('/api/issues/status/update', {
       updatedStatus: targetStatus,
-      idOfIssues: checkedIssueIndices,
+      idOfIssues: checkedIssueIds,
     });
+    navigate(0);
   };
 
   return (

@@ -32,7 +32,7 @@ const postCreateIssue = (req, res, ctx) => {
       },
     ],
     milestone: { id: 123214, name: '마일스톤1' },
-    assignee: ['happyGyu'],
+    assignees: ['happyGyu'],
   };
   fakeIssues.push(newIssue);
   return res(ctx.status(201));

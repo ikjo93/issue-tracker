@@ -12,7 +12,7 @@ import IssueTitle from './IssueTitle';
 interface IIssueTableCell {
   issue: IssueType;
   isIssueChecked: boolean;
-  toggleIssueCheck: (isChecked: boolean) => void;
+  toggleIssueCheck: () => void;
 }
 
 export default function IssueTableCell({
@@ -26,7 +26,7 @@ export default function IssueTableCell({
         <Checkbox
           sx={{ color: colors.grey }}
           checked={isIssueChecked}
-          onClick={() => toggleIssueCheck(isIssueChecked)}
+          onClick={toggleIssueCheck}
         />
       </CheckboxContainer>
       <IssueInfoContainer>
