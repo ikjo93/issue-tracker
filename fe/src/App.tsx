@@ -6,10 +6,10 @@ import GlobalStyle from '@style/GlobalStyle';
 import { darkTheme, lightTheme } from '@style/theme';
 
 export default function App() {
-  const { isDark } = useHeaderState();
+  const { isDarkMode } = useHeaderState();
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
       <Routes />
     </ThemeProvider>

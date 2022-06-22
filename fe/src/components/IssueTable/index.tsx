@@ -10,48 +10,47 @@ import IssueTableHeader from './IssueTableHeader';
 
 type IssueTableDataType = {
   issues: IssueType[];
-  oppositeStatusCnt: number;
+  countOfOpenIssues: number;
+  countOfClosedIssues: number;
 };
 
 export default function IssueTable() {
-  const [checkedIssueIndices, setCheckedIssueIndices] = useState<boolean[]>([]);
+  const [checkedIssueIds, setCheckedIssueIds] = useState<number[]>([]);
   const fetchUrl = `/api/issues/${useLocation().search}`;
-  const { data: issueTableData } = useAxios<IssueTableDataType>(
-    fetchUrl,
-    'get',
-  );
+  const { data: issueTableData } = useAxios<IssueTableDataType>(fetchUrl);
 
   const toggleAllIssues = (isChecked: boolean) => {
-    setCheckedIssueIndices((prev) => prev.map(() => isChecked));
+    if (!issueTableData) return;
+    const newState = isChecked
+      ? issueTableData.issues.map((issue) => issue.id)
+      : [];
+    setCheckedIssueIds(newState);
   };
 
-  const toggleOneIssue = (issueIdx: number, isChecked: boolean) => {
-    setCheckedIssueIndices((prev) => {
+  const toggleOneIssue = (issueId: number) => {
+    setCheckedIssueIds((prev) => {
       const newState = [...prev];
-      newState[issueIdx] = !isChecked;
-      return newState;
+      if (!checkedIssueIds.includes(issueId)) {
+        return [...newState, issueId];
+      }
+      return newState.filter((id) => id !== issueId);
     });
   };
 
   useEffect(() => {
-    if (!issueTableData) return;
-    const initCheckedIssueIndices = new Array(
-      issueTableData.issues.length,
-    ).fill(false);
-    setCheckedIssueIndices(initCheckedIssueIndices);
+    setCheckedIssueIds([]);
   }, [issueTableData]);
 
-  return issueTableData?.issues.length === checkedIssueIndices.length ? (
+  return issueTableData ? (
     <IssueTableContainer>
       <IssueTableHeader
-        clickedStatusCnt={issueTableData.issues.length}
-        oppositeStatusCnt={issueTableData.oppositeStatusCnt}
-        checkedIssueIndices={checkedIssueIndices}
+        issueTableData={issueTableData}
+        checkedIssueIds={checkedIssueIds}
         toggleAllIssues={toggleAllIssues}
       />
       <IssueTableBody
         issues={issueTableData.issues}
-        checkedIssueIndices={checkedIssueIndices}
+        checkedIssueIds={checkedIssueIds}
         toggleOneIssue={toggleOneIssue}
       />
     </IssueTableContainer>

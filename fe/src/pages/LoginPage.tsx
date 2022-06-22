@@ -8,6 +8,7 @@ import Container from '@components/Container';
 import Logo from '@components/Header/Logo';
 import InputBox from '@components/inputs/InputBox';
 import { useHeaderDispatch } from '@contexts/HeaderProvider';
+import { convertKeyValueToQuery } from '@util/queryParser';
 
 interface IFormEventTarget extends EventTarget {
   email?: HTMLInputElement;
@@ -34,6 +35,14 @@ export default function LoginPage() {
   };
 
   const handleClickGithubLogin = async () => {
+    // const githubAuthUrl = 'https://github.com/login/oauth/authorize';
+    // const queryConfig = {
+    //   scope: 'user',
+    //   client_id: process.env.CLIENT_ID,
+    // };
+    // const queryString = convertKeyValueToQuery(queryConfig);
+    // const url = githubAuthUrl + queryString;
+    // window.location.href(url);
     // 원래 로직은 github login 을 위한 페이지로 href
     const {
       data: { profileUrl },

@@ -25,7 +25,7 @@ const ThemeToggleButton = styled.button`
 `;
 
 export default function Layout() {
-  const { isDark } = useHeaderState();
+  const { isDarkMode } = useHeaderState();
   const headerDispatch = useHeaderDispatch();
 
   const handleClickToggleButton = () => {
@@ -36,7 +36,7 @@ export default function Layout() {
     <Container padding="0 2rem">
       <Outlet />
       <ThemeToggleButton onClick={handleClickToggleButton}>
-        {isDark ? <WbSunnyIcon /> : <NightlightIcon />}
+        {isDarkMode ? <WbSunnyIcon /> : <NightlightIcon />}
       </ThemeToggleButton>
     </Container>
   );
