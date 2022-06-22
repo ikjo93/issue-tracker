@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import Header from '@components/Header';
 import InputBox from '@components/inputs/InputBox';
 import TextAreaBox from '@components/inputs/TextAreaBox';
 import SideMenu from '@components/SideMenu';
+import { ActionType, MenuStateType } from '@components/SideMenu/type';
 import TitleBar from '@components/TitleBar';
 import UserIcon from '@components/UserIcon';
 
@@ -19,17 +20,20 @@ interface IFormEventTarget extends EventTarget {
 }
 
 export default function CreateIssuePage() {
+  const [menuState, menuDispatch] = useReducer(reducer, initState);
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
-    const subject = formData.subject?.value;
-    const description = formData.description?.value;
+    console.log(formData.subject?.value, formData.description?.value);
     await axios.post('/api/createIssue', {
-      subject,
-      description,
+      subject: formData.subject?.value,
+      description: formData.description?.value,
+      labels: menuState.labels,
+      assignees: menuState.assignees,
+      milestone: menuState.milestone,
     });
     navigate('/');
   };
@@ -54,10 +58,14 @@ export default function CreateIssuePage() {
         <GridContainer>
           <UserIcon size="BIG" />
           <Container flexInfo={{ direction: 'column' }} gap={1}>
-            <InputBox onChange={handleChangeTitleInput} placeholder="제목" />
+            <InputBox
+              name="subject"
+              onChange={handleChangeTitleInput}
+              placeholder="제목"
+            />
             <TextAreaBox />
           </Container>
-          <SideMenu />
+          <SideMenu menuState={menuState} menuDispatch={menuDispatch} />
         </GridContainer>
         <Divider margin="2rem" />
         <Container
@@ -77,6 +85,42 @@ export default function CreateIssuePage() {
     </>
   );
 }
+
+const initState: MenuStateType = {
+  assignees: [],
+  labels: [],
+  milestone: undefined,
+};
+
+const reducer = (state: MenuStateType, action: ActionType) => {
+  switch (action.type) {
+    case 'ASSIGNEE': {
+      if (state.assignees.includes(action.data)) {
+        return state;
+      }
+      return {
+        ...state,
+        assignees: [...state.assignees, action.data],
+      };
+    }
+    case 'LABEL': {
+      if (state.labels.includes(action.data)) {
+        return state;
+      }
+      return {
+        ...state,
+        labels: [...state.labels, action.data],
+      };
+    }
+    case 'MILESTONE':
+      return {
+        ...state,
+        milestone: action.data,
+      };
+    default:
+      throw Error('Unexpected action type on side menu');
+  }
+};
 
 const GridContainer = styled.div`
   display: grid;

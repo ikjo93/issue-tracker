@@ -8,9 +8,14 @@ import Assignees from '@components/SideMenu/Assignees';
 import Labels from '@components/SideMenu/Labels';
 import Milestone from '@components/SideMenu/Milestone';
 import useAxios from '@hooks/useAxios';
-import { ModalContentType } from '@type/types';
+import {
+  LabelType,
+  MemberType,
+  MilestoneType,
+  ModalContentType,
+} from '@type/types';
 
-type ModalTypes = 'ASSIGNEE' | 'LABEL' | 'MILESTONE';
+import { MenuDispatchType, ModalTypes } from './type';
 
 enum KoType {
   ASSIGNEE = '담당자',
@@ -24,23 +29,27 @@ enum TypeEndPoint {
   MILESTONE = 'milestones',
 }
 
-const getSubBoxByType = (type) => {
+const getSubBoxByType = (type, state) => {
   switch (type) {
     case 'ASSIGNEE':
-      return <Assignees />;
+      return <Assignees assignees={state} />;
     case 'LABEL':
-      return <Labels />;
+      return <Labels labels={state} />;
     case 'MILESTONE':
-      return <Milestone />;
+      return <Milestone milestone={state} />;
     default:
       throw Error("Side Menu item's subbox is something wrong");
   }
 };
 
-export default function SideMenuItem({ type }): React.ReactElement<{
-  type: string;
-  opendModalType: ModalTypes;
-  onClickMenuItem?: () => void;
+export default function SideMenuItem({
+  type,
+  state,
+  menuDispatch,
+}): React.ReactElement<{
+  type: ModalTypes;
+  state: MemberType[] | LabelType[] | MilestoneType;
+  menuDispatch: MenuDispatchType;
 }> {
   const { data: menus } = useAxios<ModalContentType[]>(
     `/api/${TypeEndPoint[type]}`,
@@ -49,7 +58,7 @@ export default function SideMenuItem({ type }): React.ReactElement<{
   const title = `${KoType[type]} 추가`;
 
   const handleClickModalMenu = (menu) => {
-    console.log(menu);
+    menuDispatch({ type, data: menu });
   };
 
   return (
@@ -64,14 +73,33 @@ export default function SideMenuItem({ type }): React.ReactElement<{
           left={-14}
           top={2}
           title={title}
-          menus={menus}
+          menus={getNewMenus(menus, type)}
           onClickModalItem={handleClickModalMenu}
         >
           <AddIcon sx={{ cursor: 'pointer' }} />
         </PopoverContainer>
       </Container>
-      {getSubBoxByType(type)}
+      {getSubBoxByType(type, state)}
     </Container>
   );
 }
+
 const TypeTitle = styled.h6``;
+
+function getNewMenus(menus, type) {
+  switch (type) {
+    case 'ASSIGNEE':
+      return menus?.map((menu) => ({
+        ...menu,
+        nickname: menu.name,
+        name: menu.identity,
+      }));
+    case 'MILESTONE':
+      return menus?.map((menu) => ({
+        ...menu,
+        name: menu.subject,
+      }));
+    default:
+      return menus;
+  }
+}
