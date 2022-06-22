@@ -7,7 +7,7 @@ import IconTextBox from '@components/IconTextBox';
 import { fontWeight } from '@constants/fonts';
 import { makeUrlQuery } from '@util/queryParser';
 
-type PropsType = {
+type OpenAndCloseFilterProps = {
   countOfOpenIssues: number;
   countOfClosedIssues: number;
 };
@@ -15,7 +15,7 @@ type PropsType = {
 export default function OpenAndCloseFilter({
   countOfOpenIssues,
   countOfClosedIssues,
-}: PropsType) {
+}: OpenAndCloseFilterProps) {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(window.location.search);
   const clickedStatus = searchParams.get('status');

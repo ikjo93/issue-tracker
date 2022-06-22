@@ -32,11 +32,9 @@ export default function TagTab() {
   const serverDomain = process.env.SERVER;
   const milestoneURL = `${serverDomain}/api/milestones`;
   const labelURL = `${serverDomain}/api/labels`;
-  const { data: milestoneData } = useAxios<MilestoneAPIResponseType>(
-    milestoneURL,
-    'get',
-  );
-  const { data: labelData } = useAxios<LabelAPIResponseType>(labelURL, 'get');
+  const { data: milestoneData } =
+    useAxios<MilestoneAPIResponseType>(milestoneURL);
+  const { data: labelData } = useAxios<LabelAPIResponseType>(labelURL);
 
   return (
     milestoneData && (

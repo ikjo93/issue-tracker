@@ -1,8 +1,8 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Checkbox } from '@mui/material';
 import axios from 'axios';
-import { ChangeEvent, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
@@ -13,13 +13,17 @@ import colors from '@constants/colors';
 import modalStatic, { ModalStatusChangeType } from '@constants/modalStatic';
 import useAxiosAll from '@hooks/useAxiosAll';
 import mixin from '@style/mixin';
-import { ModalContentType } from '@type/types';
+import { ModalContentType, IssueType } from '@type/types';
 import { checkIfUrlHasQuery, makeUrlQuery } from '@util/queryParser';
 
-interface IIssueTableHeaderProps {
+interface IIssueTableData {
   countOfOpenIssues: number;
   countOfClosedIssues: number;
-  currIssueCounts: number;
+  issues: IssueType[];
+}
+
+interface IIssueTableHeaderProps {
+  issueTableData: IIssueTableData;
   checkedIssueIds: number[];
   toggleAllIssues: (isChecked: boolean) => void;
 }
@@ -44,14 +48,11 @@ const headerItems = [
 ];
 
 export default function IssueTableHeader({
-  countOfOpenIssues,
-  countOfClosedIssues,
-  currIssueCounts,
+  issueTableData,
   checkedIssueIds,
   toggleAllIssues,
 }: IIssueTableHeaderProps) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { data: menuDatas } = useAxiosAll<ModalContentType[]>(
     ['/api/members', '/api/labels', '/api/milestones', '/api/members'],
     'get',
@@ -62,9 +63,10 @@ export default function IssueTableHeader({
     ...headerItem,
     menus: menuDatas[idx],
   }));
+  const { countOfOpenIssues, countOfClosedIssues, issues } = issueTableData;
 
   const isAllIssueChecked =
-    checkedIssueIds.length === currIssueCounts && currIssueCounts !== 0;
+    checkedIssueIds.length === issues.length && issues.length !== 0;
 
   const isAnyIssueChecked = checkedIssueIds.length >= 1;
 

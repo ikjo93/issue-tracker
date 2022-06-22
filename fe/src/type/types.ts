@@ -26,13 +26,6 @@ export type MilestoneType = {
   description?: string;
 };
 
-export type AssigneeType = {
-  memberId: number;
-  identity: string;
-  name: string;
-  profileUrl: string;
-};
-
 export type ModalContentType =
   | (MemberType & ModalFilterType)
   | (LabelType & ModalFilterType)
@@ -48,7 +41,7 @@ export type IssueType = {
   createdDateTime: string;
   milestone: MilestoneType | null;
   labels: LabelType[];
-  assignees: AssigneeType[];
+  assignees: MemberType[];
 };
 
 declare module 'styled-components' {

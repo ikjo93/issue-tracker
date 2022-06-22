@@ -30,7 +30,7 @@ const filterByQuery = (
       );
     case 'milestone':
       return originalIssues.filter(
-        (issue) => issue.milestone && issue.milestone.subject === queryValue,
+        (issue) => issue.milestone?.subject === queryValue,
       );
     case 'assignee':
       return originalIssues.filter((issue) =>

@@ -44,11 +44,7 @@ export const convertUrlToInputValue = () => {
 };
 
 export const convertKeyValueToQuery = (target: object) => {
-  const keyValues = Object.entries(target);
-  if (!keyValues.length) return '';
-  const queryString = keyValues.reduce(
-    (acc, [key, value]) => `${acc}${key}=${value}&`,
-    '?',
-  );
+  const searchParamsObj = new URLSearchParams(target);
+  const queryString = `?${searchParamsObj.toString()}`;
   return queryString;
 };

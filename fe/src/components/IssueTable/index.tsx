@@ -28,15 +28,12 @@ export default function IssueTable() {
   };
 
   const toggleOneIssue = (issueId: number) => {
-    const targetIdx = checkedIssueIds.indexOf(issueId);
     setCheckedIssueIds((prev) => {
       const newState = [...prev];
-      if (targetIdx === -1) {
-        newState.push(issueId);
-      } else {
-        newState.splice(targetIdx, 1);
+      if (!checkedIssueIds.includes(issueId)) {
+        return [...newState, issueId];
       }
-      return newState;
+      return newState.filter((id) => id !== issueId);
     });
   };
 
@@ -47,9 +44,7 @@ export default function IssueTable() {
   return issueTableData ? (
     <IssueTableContainer>
       <IssueTableHeader
-        countOfOpenIssues={issueTableData.countOfOpenIssues}
-        countOfClosedIssues={issueTableData.countOfClosedIssues}
-        currIssueCounts={issueTableData.issues.length}
+        issueTableData={issueTableData}
         checkedIssueIds={checkedIssueIds}
         toggleAllIssues={toggleAllIssues}
       />
