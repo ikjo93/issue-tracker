@@ -14,14 +14,14 @@ const getIssues = (req, res, ctx) => {
 const postCreateIssue = (req, res, ctx) => {
   const { subject, description, labels, milestone, assignees } = req.body;
   const newIssueId = fakeIssues[fakeIssues.length - 1].id + 1;
-  const newIssue = {
+  const newIssue: IssueType = {
     id: newIssueId,
     subject,
     description,
     writer: 'happyGyu',
     profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
     status: 'OPEN',
-    createdDatetime: new Date().toISOString(),
+    createdDateTime: new Date().toISOString(),
     labels,
     milestone,
     assignees,
@@ -31,7 +31,10 @@ const postCreateIssue = (req, res, ctx) => {
 };
 
 const patchUpdatedStatus: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
-  const { updatedStatus, idOfIssues } = req.body;
+  const {
+    updatedStatus,
+    idOfIssues,
+  }: { updatedStatus: 'OPEN' | 'CLOSE'; idOfIssues: number[] } = req.body;
   const updatedIssues = fakeIssues.map((issue) => {
     const updatedIssue = { ...issue };
     if (idOfIssues.includes(issue.id)) {

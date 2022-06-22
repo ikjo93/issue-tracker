@@ -8,7 +8,6 @@ import Container from '@components/Container';
 import Logo from '@components/Header/Logo';
 import InputBox from '@components/inputs/InputBox';
 import { useHeaderDispatch } from '@contexts/HeaderProvider';
-import { convertKeyValueToQuery } from '@util/queryParser';
 
 interface IFormEventTarget extends EventTarget {
   email?: HTMLInputElement;

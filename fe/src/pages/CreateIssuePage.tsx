@@ -27,7 +27,6 @@ export default function CreateIssuePage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
-    console.log(formData.subject?.value, formData.description?.value);
     await axios.post('/api/createIssue', {
       subject: formData.subject?.value,
       description: formData.description?.value,
