@@ -4,21 +4,38 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DropdownModal from '@components/FilterDropdown/DropdownModal';
+import useAxios from '@hooks/useAxios';
 import mixin from '@style/mixin';
+import { ModalContentType } from '@type/types';
 import { checkIfUrlHasQuery, makeUrlQuery } from '@util/queryParser';
 
 //  type에 STATUS_CHANGE가 들어간 이상 컴포넌트 이름이 필터드롭다운이 아니라 그냥 드롭다운이 되어야할거 같음
-type FilterDropdownType = 'ISSUE' | 'STATUS_CHANGE';
+type FetchedFilterDropdownType = 'ASSIGNEE' | 'LABEL' | 'MILESTONE' | 'WRITER';
 
 type PropsType = {
   title: string;
-  type: FilterDropdownType;
+  type: FetchedFilterDropdownType;
   spacing?: string;
 };
 
-export default function FilterDropDown({ title, type, spacing }: PropsType) {
+enum TypeEndPoint {
+  ASSIGNEE = 'members',
+  LABEL = 'labels',
+  MILESTONE = 'milestones',
+  WRITER = 'members',
+}
+
+export default function FetchedFilterDropDown({
+  title,
+  type,
+  spacing,
+}: PropsType) {
   const navigate = useNavigate();
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const { data: menus } = useAxios<ModalContentType[]>(
+    `/api/${TypeEndPoint[type]}`,
+    'get',
+  );
 
   const handleClickModalItem = ({ queryKey, queryValue }) => {
     const isSelectedFilter = checkIfUrlHasQuery(queryKey, queryValue);
@@ -34,7 +51,7 @@ export default function FilterDropDown({ title, type, spacing }: PropsType) {
       <DropdownIcon fontSize="small" />
       {isModalOpened && (
         <DropdownModal
-          menus={getStaticMenus(type)}
+          menus={getNewMenus(menus, type)}
           title={title}
           onClickModalItem={handleClickModalItem}
         />
@@ -56,34 +73,35 @@ const DropdownIcon = styled(KeyboardArrowDownIcon)`
   color: ${({ theme }) => theme.palette.fontColor};
 `;
 
-function getStaticMenus(type) {
+function getNewMenus(menus, type) {
   switch (type) {
-    case 'ISSUE':
-      return [
-        {
-          name: '열린 이슈',
-          queryKey: 'status',
-          queryValue: 'open',
-        },
-        {
-          name: '닫힌 이슈',
-          queryKey: 'status',
-          queryValue: 'closed',
-        },
-      ];
-    case 'STATUS_CHANGE':
-      return [
-        {
-          name: '선택한 이슈 열기',
-          queryKey: '',
-          queryValue: '',
-        },
-        {
-          name: '선택한 이슈 닫기',
-          queryKey: '',
-          queryValue: '',
-        },
-      ];
+    case 'ASSIGNEE':
+      return menus.map((menu) => ({
+        ...menu,
+        name: menu.identity,
+        queryKey: 'assignee',
+        queryValue: menu.identity,
+      }));
+    case 'WRITER':
+      return menus.map((menu) => ({
+        ...menu,
+        name: menu.identity,
+        queryKey: 'writer',
+        queryValue: menu.identity,
+      }));
+    case 'LABEL':
+      return menus.map((menu) => ({
+        ...menu,
+        queryKey: 'label',
+        queryValue: menu.id,
+      }));
+    case 'MILESTONE':
+      return menus.map((menu) => ({
+        ...menu,
+        name: menu.subject,
+        queryKey: 'milestone',
+        queryValue: menu.id,
+      }));
     default:
       throw Error('get menus something wrong');
   }

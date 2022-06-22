@@ -1,38 +1,46 @@
 import styled from 'styled-components';
-import { v4 as uuid } from 'uuid';
 
 import mixin from '@style/mixin';
 import { getCssValueByUnit } from '@util/css';
 
 import ModalMenu from './ModalMenu';
 
+interface MenuProps {
+  id?: number;
+  name?: string;
+  queryKey?: string;
+  queryValue?: string;
+}
 interface IModalContainer {
   left?: number | string;
   top?: number | string;
   unit?: string;
 }
 
-interface IModalInfo {
+interface DropdownModalProps<T extends MenuProps> extends IModalContainer {
   title: string;
-  menus: object[];
+  menus?: T[];
+  onClickModalItem: (menu: T) => void;
 }
 
-interface DropdownModalProps extends IModalContainer {
-  info: IModalInfo;
-}
-
-export default function DropdownModal({
-  info,
+export default function DropdownModal<T extends MenuProps>({
   left,
   top,
   unit,
-}: DropdownModalProps) {
+  title,
+  menus,
+  onClickModalItem,
+}: DropdownModalProps<T>) {
   return (
     <>
       <ModalContainer left={left} top={top} unit={unit}>
-        <ModalHeader>{info.title}</ModalHeader>
-        {info.menus.map((menu) => (
-          <ModalMenu key={uuid()} modalContent={menu} />
+        <ModalHeader>{title}</ModalHeader>
+        {menus?.map((menu) => (
+          <ModalMenu
+            key={menu.id}
+            menu={menu}
+            onClickModalItem={onClickModalItem}
+          />
         ))}
       </ModalContainer>
       <DropdownBackdrop />

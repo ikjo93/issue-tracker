@@ -3,7 +3,7 @@ import { IPalette } from '@style/theme';
 export type UserIconSizeType = 'BIG' | 'SMALL';
 
 export type MemberType = {
-  memberId: number;
+  id: number;
   identity: string;
   name: string;
   profileUrl: string | null;
@@ -22,6 +22,7 @@ export type MilestoneType = {
   description?: string;
 };
 
+export type ModalContentType = MemberType | LabelType | MilestoneType;
 // 편의상 대충 만든 타입. 이후 서버에서 실제로 제공하는 데이터 구조에 따라 수정
 export type IssueType = {
   id: number;

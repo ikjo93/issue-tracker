@@ -3,6 +3,7 @@ import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
+import FetchedFilterDropDown from '@components/FetchedFilterDropdown';
 import FilterDropDown from '@components/FilterDropdown';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
@@ -52,10 +53,10 @@ export default function IssueTableHeader({
           <FilterDropDown title="상태수정" type="STATUS_CHANGE" />
         ) : (
           <>
-            <FilterDropDown title="담당자" type="ASSIGNEE" />
-            <FilterDropDown title="레이블" type="LABEL" />
-            <FilterDropDown title="마일스톤" type="MILESTONE" />
-            <FilterDropDown title="작성자" type="WRITER" />
+            <FetchedFilterDropDown title="담당자" type="ASSIGNEE" />
+            <FetchedFilterDropDown title="레이블" type="LABEL" />
+            <FetchedFilterDropDown title="마일스톤" type="MILESTONE" />
+            <FetchedFilterDropDown title="작성자" type="WRITER" />
           </>
         )}
       </Container>

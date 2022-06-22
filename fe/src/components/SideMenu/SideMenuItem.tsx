@@ -8,7 +8,8 @@ import DropdownModal from '@components/FilterDropdown/DropdownModal';
 import Assignees from '@components/SideMenu/Assignees';
 import Labels from '@components/SideMenu/Labels';
 import Milestone from '@components/SideMenu/Milestone';
-import dropDownInfo from '@constants/temp';
+import useAxios from '@hooks/useAxios';
+import { ModalContentType } from '@type/types';
 
 type ModalTypes = 'ASSIGNEE' | 'LABEL' | 'MILESTONE';
 
@@ -16,6 +17,12 @@ enum KoType {
   ASSIGNEE = '담당자',
   LABEL = '레이블',
   MILESTONE = '마일스톤',
+}
+
+enum TypeEndPoint {
+  ASSIGNEE = 'members',
+  LABEL = 'labels',
+  MILESTONE = 'milestones',
 }
 
 const getSubBoxByType = (type) => {
@@ -40,6 +47,12 @@ export default function SideMenuItem({
   opendModalType: ModalTypes;
   onClickMenuItem: () => void;
 }> {
+  const { data: menus } = useAxios<ModalContentType[]>(
+    `/api/${TypeEndPoint[type]}`,
+    'get',
+  );
+  const title = `${KoType[type]} 추가`;
+
   return (
     <Container padding="2.5rem 2rem">
       <Container
@@ -53,7 +66,7 @@ export default function SideMenuItem({
           sx={{ cursor: 'pointer' }}
         />
         {opendModalType === type && (
-          <DropdownModal left={4} top={5} info={dropDownInfo[type]} />
+          <DropdownModal left={4} top={5} title={title} menus={menus} />
         )}
       </Container>
       {getSubBoxByType(type)}
