@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import Button from '@components/Button';
 import Container from '@components/Container';
 import Divider from '@components/Divider';
-import Header from '@components/Header';
 import InputBox from '@components/inputs/InputBox';
 import TextAreaBox from '@components/inputs/TextAreaBox';
 import SideMenu from '@components/SideMenu';
@@ -47,34 +46,31 @@ export default function CreateIssuePage() {
   };
 
   return (
-    <>
-      <Header />
-      <Body onSubmit={handleSubmit}>
-        <TitleBar title="새로운 이슈 작성" />
-        <GridContainer>
-          <UserIcon size="BIG" />
-          <Container flexInfo={{ direction: 'column' }} gap={1}>
-            <InputBox onChange={handleChangeTitleInput} placeholder="제목" />
-            <TextAreaBox />
-          </Container>
-          <SideMenu />
-        </GridContainer>
-        <Divider margin="2rem" />
-        <Container
-          flexInfo={{ direction: 'row' }}
-          position="absolute"
-          right="0"
-          gap={1}
-        >
-          <Button variant="warning" onClick={handleClickCancleButton}>
-            작성 취소
-          </Button>
-          <Button type="submit" disabled={isSubmitButtonDisabled}>
-            완료
-          </Button>
+    <Body onSubmit={handleSubmit}>
+      <TitleBar title="새로운 이슈 작성" />
+      <GridContainer>
+        <UserIcon size="BIG" />
+        <Container flexInfo={{ direction: 'column' }} gap={1}>
+          <InputBox onChange={handleChangeTitleInput} placeholder="제목" />
+          <TextAreaBox />
         </Container>
-      </Body>
-    </>
+        <SideMenu />
+      </GridContainer>
+      <Divider margin="2rem" />
+      <Container
+        flexInfo={{ direction: 'row' }}
+        position="absolute"
+        right="0"
+        gap={1}
+      >
+        <Button variant="warning" onClick={handleClickCancleButton}>
+          작성 취소
+        </Button>
+        <Button type="submit" disabled={isSubmitButtonDisabled}>
+          완료
+        </Button>
+      </Container>
+    </Body>
   );
 }
 

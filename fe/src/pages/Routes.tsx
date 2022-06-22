@@ -16,6 +16,9 @@ export default function Routes() {
         <Route path="login" element={<LoginPage />} />
         <Route path="join" element={<JoinPage />} />
         <Route path="createIssue" element={<CreateIssuePage />} />
+        {/* <Route path="list" element={<LabelMilestoneLayout />}>
+          <Route path="label" element={<LabelPage />} />
+        </Route> */}
       </Route>
     </RouterRoutes>
   );
