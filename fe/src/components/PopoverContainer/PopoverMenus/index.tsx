@@ -3,34 +3,28 @@ import styled from 'styled-components';
 import mixin from '@style/mixin';
 import { getCssValueByUnit } from '@util/css';
 
-import ModalMenu from './ModalMenu';
+import ModalMenu from './PopoverMenu';
 
-interface MenuProps {
-  id?: number;
-  name?: string;
-  queryKey?: string;
-  queryValue?: string;
-}
 interface IModalContainer {
   left?: number | string;
   top?: number | string;
   unit?: string;
 }
 
-interface DropdownModalProps<T extends MenuProps> extends IModalContainer {
+interface PopoverMenusProps<M extends { id?: number }> extends IModalContainer {
   title: string;
-  menus?: T[];
-  onClickModalItem: (menu: T) => void;
+  menus?: M[];
+  onClickModalItem?: (item: M) => void;
 }
 
-export default function DropdownModal<T extends MenuProps>({
+export default function PopoverMenus<M extends { id?: number }>({
   left,
   top,
   unit,
   title,
   menus,
   onClickModalItem,
-}: DropdownModalProps<T>) {
+}: PopoverMenusProps<M>) {
   return (
     <>
       <ModalContainer left={left} top={top} unit={unit}>

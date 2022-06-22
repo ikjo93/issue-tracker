@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import mixin from '@style/mixin';
 import { checkIfUrlHasQuery } from '@util/queryParser';
 
-export default function ModalMenu({ menu, onClickModalItem }) {
+export default function PopoverMenu({ menu, onClickModalItem }) {
   const isSelectedFilter = checkIfUrlHasQuery(menu.queryKey, menu.queryValue);
   return (
-    <ModalMenuContainer
+    <PopoverMenuContainer
       onClick={() => {
         onClickModalItem(menu);
       }}
@@ -19,11 +19,11 @@ export default function ModalMenu({ menu, onClickModalItem }) {
       ) : (
         <RadioButtonUncheckedIcon />
       )}
-    </ModalMenuContainer>
+    </PopoverMenuContainer>
   );
 }
 
-const ModalMenuContainer = styled.div`
+const PopoverMenuContainer = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   width: 100%;
   height: 2.75rem;

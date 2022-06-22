@@ -3,8 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
-import DropdownModal from '@components/FilterDropdown/DropdownModal';
-//  dropDownInfo는 임시. 나중에는 API서버에서 정보를 받아와 구성해야 함.
+import PopoverContainer from '@components/PopoverContainer';
 import Assignees from '@components/SideMenu/Assignees';
 import Labels from '@components/SideMenu/Labels';
 import Milestone from '@components/SideMenu/Milestone';
@@ -38,20 +37,20 @@ const getSubBoxByType = (type) => {
   }
 };
 
-export default function SideMenuItem({
-  type,
-  opendModalType,
-  onClickMenuItem,
-}): React.ReactElement<{
+export default function SideMenuItem({ type }): React.ReactElement<{
   type: string;
   opendModalType: ModalTypes;
-  onClickMenuItem: () => void;
+  onClickMenuItem?: () => void;
 }> {
   const { data: menus } = useAxios<ModalContentType[]>(
     `/api/${TypeEndPoint[type]}`,
     'get',
   );
   const title = `${KoType[type]} 추가`;
+
+  const handleClickModalMenu = (menu) => {
+    console.log(menu);
+  };
 
   return (
     <Container padding="2.5rem 2rem">
@@ -61,13 +60,15 @@ export default function SideMenuItem({
         mb="1rem"
       >
         <TypeTitle>{KoType[type]}</TypeTitle>
-        <AddIcon
-          onClick={() => onClickMenuItem(type)}
-          sx={{ cursor: 'pointer' }}
-        />
-        {opendModalType === type && (
-          <DropdownModal left={4} top={5} title={title} menus={menus} />
-        )}
+        <PopoverContainer
+          left={-14}
+          top={2}
+          title={title}
+          menus={menus}
+          onClickModalItem={handleClickModalMenu}
+        >
+          <AddIcon sx={{ cursor: 'pointer' }} />
+        </PopoverContainer>
       </Container>
       {getSubBoxByType(type)}
     </Container>
