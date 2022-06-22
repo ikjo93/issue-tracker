@@ -1,37 +1,44 @@
 package codesquad.issuetracker.dto.issue;
 
+import codesquad.issuetracker.domain.Issue;
+import codesquad.issuetracker.domain.IssueStatus;
+import codesquad.issuetracker.domain.Label;
+import codesquad.issuetracker.domain.Member;
+import codesquad.issuetracker.domain.Milestone;
 import codesquad.issuetracker.dto.label.LabelDto;
-import codesquad.issuetracker.dto.milestone.MileStoneDto;
-import com.querydsl.core.annotations.QueryProjection;
+import codesquad.issuetracker.dto.member.MemberDto;
+import codesquad.issuetracker.dto.milestone.MilestoneDto;
+import codesquad.issuetracker.mapper.LabelMapper;
+import codesquad.issuetracker.mapper.MemberMapper;
+import codesquad.issuetracker.mapper.MilestoneMapper;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class IssueDto {
 
     private Long id;
+    private IssueStatus status;
     private String subject;
     private String description;
     private String writer;
     private String profileUrl;
     private LocalDateTime createdDateTime;
+    private MilestoneDto milestone;
+    private List<MemberDto> assignees;
     private List<LabelDto> labels;
-    private MileStoneDto mileStone;
 
-    @QueryProjection
-    public IssueDto(Long id, String subject, String description, String writer,
-        String profileUrl, LocalDateTime createdDateTime, MileStoneDto mileStone) {
-        this.id = id;
-        this.subject = subject;
-        this.description = description;
-        this.writer = writer;
-        this.profileUrl = profileUrl;
-        this.createdDateTime = createdDateTime;
-        this.mileStone = mileStone;
-    }
+    private IssueDto() {}
 
-    public void setLabels(List<LabelDto> labels) {
-        this.labels = labels;
+    public static IssueDto of(Issue issue, Milestone milestone, List<Member> assignees, List<Label> labels) {
+        Member writer = issue.getWriter();
+        return new IssueDto(issue.getId(), issue.getStatus(), issue.getSubject(), issue.getDescription(),
+            writer.getIdentity(), writer.getProfileUrl(), issue.getCreatedDateTime(),
+            MilestoneMapper.convertToDto(milestone),
+            MemberMapper.convertToListDto(assignees),
+            LabelMapper.convertToListDto(labels));
     }
 }

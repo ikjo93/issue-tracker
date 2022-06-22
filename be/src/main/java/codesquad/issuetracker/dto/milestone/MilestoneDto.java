@@ -4,14 +4,16 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 @Getter
-public class MileStoneDto {
+public class MilestoneDto {
 
     private Long id;
     private String subject;
+    private String description;
 
     @QueryProjection
-    public MileStoneDto(Long id, String subject) {
+    public MilestoneDto(Long id, String subject, String description) {
         this.id = id;
         this.subject = subject;
+        this.description = description;
     }
 }

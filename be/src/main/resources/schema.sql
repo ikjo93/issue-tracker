@@ -14,7 +14,7 @@ CREATE TABLE member
     identity    VARCHAR(255),
     password    VARCHAR(255),
     email       VARCHAR(255),
-    nickname    VARCHAR(32),
+    name    VARCHAR(32),
     profile_url VARCHAR(255),
     PRIMARY KEY (member_id)
 );
@@ -46,7 +46,7 @@ CREATE TABLE issue
 CREATE TABLE image (
     image_id BIGINT NOT NULL AUTO_INCREMENT,
     issue_id BIGINT NOT NULL,
-    image_url VARCHAR (255),
+    url VARCHAR (255),
     PRIMARY KEY (image_id),
     FOREIGN KEY (issue_id) REFERENCES issue (issue_id)
 );
