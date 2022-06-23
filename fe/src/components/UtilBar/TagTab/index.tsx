@@ -40,45 +40,46 @@ export default function TagTab({ activeTab }: { activeTab?: string }) {
 
   return milestoneData ? (
     <Wrapper>
-      <StyleLink
-        to="/list/label"
-        bgColor={
-          activeTab === 'label'
-            ? theme.palette.darkerBgColor
-            : theme.palette.bgColor
-        }
-        isLeft
-      >
-        <IconTextBox
-          Icon={<LocalOfferOutlinedIcon />}
-          texts={['레이블', `(${labelData?.labels.length})`]}
-          spacing={0.625}
-        />
+      <StyleLink to="/list/label">
+        <TagBox
+          bgColor={
+            activeTab === 'label'
+              ? theme.palette.darkerBgColor
+              : theme.palette.bgColor
+          }
+          isLeft
+        >
+          <IconTextBox
+            Icon={<LocalOfferOutlinedIcon />}
+            texts={['레이블', `(${labelData?.labels.length})`]}
+            spacing={0.625}
+          />
+        </TagBox>
       </StyleLink>
       <Divider isVertical length="100%" margin="0" />
-      <StyleLink
-        to="/list/milestone"
-        bgColor={
-          activeTab === 'milestone'
-            ? theme.palette.darkerBgColor
-            : theme.palette.bgColor
-        }
-        isLeft={false}
-      >
-        <IconTextBox
-          Icon={<SignpostOutlinedIcon />}
-          texts={['마일스톤', `(${milestoneData?.milestones.length})`]}
-          spacing={0.625}
-        />
+      <StyleLink to="/list/milestone">
+        <TagBox
+          bgColor={
+            activeTab === 'milestone'
+              ? theme.palette.darkerBgColor
+              : theme.palette.bgColor
+          }
+          isLeft={false}
+        >
+          <IconTextBox
+            Icon={<SignpostOutlinedIcon />}
+            texts={['마일스톤', `(${milestoneData?.milestones.length})`]}
+            spacing={0.625}
+          />
+        </TagBox>
       </StyleLink>
     </Wrapper>
   ) : null;
 }
 
-const StyleLink = styled(Link)<{ bgColor: string; isLeft: boolean }>`
-  ${mixin.flexMixin({ justify: 'center' })}
-  width: 50%;
-  padding: 0.5rem;
+const TagBox = styled.div<{ bgColor: string; isLeft: boolean }>`
+  ${mixin.flexMixin({ justify: 'center', align: 'center' })}
+  width: 100%;
   height: 100%;
   ${({ bgColor }) => bgColor && `background-color: ${bgColor};`}
   ${({ isLeft }) =>
@@ -93,6 +94,10 @@ const StyleLink = styled(Link)<{ bgColor: string; isLeft: boolean }>`
         `}
 `;
 
+const StyleLink = styled(Link)`
+  width: 100%;
+  height: 100%;
+`;
 const Wrapper = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-around' })};
   width: 20rem;

@@ -3,16 +3,14 @@ import styled from 'styled-components';
 import LabelTableCell from '@components/LabelTable/LabelTableBody/LabelTableCell';
 import mixin from '@style/mixin';
 
-export default function LabelTableBody() {
+export default function LabelTableBody({ labels }) {
   return (
     <LabelTableBodyContainer>
-      <LabelTableCell />
-      <LabelTableCell />
-      {/* {true ? (
-        new Array(2).map(() => <LabelTableCell />)
+      {labels?.length ? (
+        labels.map((label) => <LabelTableCell label={label} />)
       ) : (
         <NoIssueMessage>검색과 일치하는 결과가 없습니다.</NoIssueMessage>
-      )} */}
+      )}
     </LabelTableBodyContainer>
   );
 }

@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 import mixin from '@style/mixin';
 
-export default function LabelTableHeader() {
+export default function LabelTableHeader({ labelsCount }) {
   return (
     <LabelTableHeaderContainer>
-      <span>하이 헤더</span>
+      <span>{labelsCount}개의 레이블</span>
     </LabelTableHeaderContainer>
   );
 }

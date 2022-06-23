@@ -1,15 +1,31 @@
-import styled from 'styled-components';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import styled, { useTheme } from 'styled-components';
 
+import IconTextBox from '@components/IconTextBox';
+import Label from '@components/Label';
 import mixin from '@style/mixin';
 
-export default function LabelTableCell() {
+export default function LabelTableCell({ label }) {
+  const theme = useTheme();
+
   return (
     <CellContainer>
       <LabelInfoContainer>
-        <span>무무야야호호z</span>
+        <Label text={label.name} bgColor={label.color} />
+        <LabelDescription>{label.description}</LabelDescription>
       </LabelInfoContainer>
       <AssigneeIconContainer>
-        <span>여기 아마 삭제버튼zzz </span>
+        <button type="button">
+          <IconTextBox Icon={<EditIcon fontSize="small" />} texts={['편집']} />
+        </button>
+        <button type="button">
+          <IconTextBox
+            Icon={<DeleteIcon fontSize="small" />}
+            texts={['삭제']}
+            color={theme.palette.warning}
+          />
+        </button>
       </AssigneeIconContainer>
     </CellContainer>
   );
@@ -28,9 +44,16 @@ const CellContainer = styled.div`
 `;
 
 const LabelInfoContainer = styled.div`
-  ${mixin.flexMixin({ align: 'center' })};
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  align-items: center;
+`;
+
+const LabelDescription = styled.span`
+  opacity: 0.5;
 `;
 
 const AssigneeIconContainer = styled.div`
   ${mixin.flexMixin({ align: 'center' })};
+  gap: 1rem;
 `;

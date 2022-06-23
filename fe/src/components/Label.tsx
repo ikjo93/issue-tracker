@@ -2,11 +2,11 @@ import styled, { css } from 'styled-components';
 
 type PropsType = {
   text: string;
-  color: string;
+  color?: string;
   bgColor: string;
 };
 
-export default function Label({ text, color, bgColor }: PropsType) {
+export default function Label({ text, color = 'white', bgColor }: PropsType) {
   return (
     <LabelContainer color={color} bgColor={bgColor}>
       {text}
