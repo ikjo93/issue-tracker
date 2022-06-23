@@ -6,13 +6,23 @@ import IconTextBox from '@components/IconTextBox';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 
-export default function NewButton({ label, linkto }) {
-  return (
+export default function NewButton({
+  label,
+  linkto,
+}: {
+  label: string;
+  linkto?: string;
+}) {
+  return linkto ? (
     <Link to={linkto}>
       <Wrapper>
         <IconTextBox Icon={<AddIcon />} texts={[label]} fontSize={0.75} />
       </Wrapper>
     </Link>
+  ) : (
+    <Wrapper>
+      <IconTextBox Icon={<AddIcon />} texts={[label]} fontSize={0.75} />
+    </Wrapper>
   );
 }
 

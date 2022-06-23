@@ -8,7 +8,7 @@ import Header from '@components/Header';
 import { useHeaderDispatch, useHeaderState } from '@contexts/HeaderProvider';
 
 const ThemeToggleButton = styled.button`
-  position: absolute;
+  position: fixed;
   bottom: 1rem;
   right: 1rem;
   width: 3rem;
