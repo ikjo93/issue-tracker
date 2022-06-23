@@ -16,7 +16,8 @@ interface IHeaderState {
 type Action =
   | { type: 'LOGIN'; userInfo: IUserInfo }
   | { type: 'LOGOUT' }
-  | { type: 'THEME_TOGGLE' };
+  | { type: 'THEME_TOGGLE' }
+  | { type: 'REFRESH_TOKEN'; accessToken: string };
 
 type HeaderDispatch = Dispatch<Action>;
 
@@ -66,6 +67,12 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
       return {
         ...state,
         isDarkMode: toggleData,
+      };
+    }
+    case 'REFRESH_TOKEN': {
+      return {
+        ...state,
+        accssToken: action.accessToken,
       };
     }
     default:
