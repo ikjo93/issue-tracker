@@ -1,5 +1,5 @@
-import IssueTable from '@components/IssueTable';
+import LabelTable from '@components/LabelTable';
 
 export default function LabelPage() {
-  return <IssueTable />;
+  return <LabelTable />;
 }
