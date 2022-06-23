@@ -1,20 +1,16 @@
 import React, { useReducer, useContext, createContext, Dispatch } from 'react';
 
-interface IUserInfo {
-  id: number;
-  identity: string;
-  name: string;
-  profileUrl: string;
-}
+import { MemberType } from '@type/types';
+
 interface IHeaderState {
   isLogin: boolean;
   isDarkMode: boolean;
-  userInfo: IUserInfo | null;
-  accssToken: string | null;
+  userInfo: MemberType | null;
+  accessToken: string | null;
 }
 
 type Action =
-  | { type: 'LOGIN'; userInfo: IUserInfo }
+  | { type: 'LOGIN'; userInfo: MemberType; accessToken: string }
   | { type: 'LOGOUT' }
   | { type: 'THEME_TOGGLE' }
   | { type: 'REFRESH_TOKEN'; accessToken: string };
@@ -25,7 +21,7 @@ const initHeaderState: IHeaderState = {
   isLogin: false,
   isDarkMode: Boolean(localStorage.getItem('isDarkMode')) || false,
   userInfo: null,
-  accssToken: null,
+  accessToken: null,
 };
 
 /*
@@ -40,7 +36,7 @@ const initHeaderStateForDefaultPage: IHeaderState = {
     name: '익조',
     profileUrl: 'https://avatars.githubusercontent.com/u/82401504?v=4',
   },
-  accssToken: 'fakeToken',
+  accessToken: 'fakeToken',
 };
 //
 
@@ -54,6 +50,7 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
         ...state,
         isLogin: true,
         userInfo: action.userInfo,
+        accessToken: action.accessToken,
       };
     case 'LOGOUT':
       return {
@@ -72,7 +69,7 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
     case 'REFRESH_TOKEN': {
       return {
         ...state,
-        accssToken: action.accessToken,
+        accessToken: action.accessToken,
       };
     }
     default:
