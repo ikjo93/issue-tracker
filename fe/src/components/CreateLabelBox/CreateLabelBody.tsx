@@ -15,6 +15,7 @@ import { debounce } from '@util/timeUtils';
 const DEFAULT_LABEL_NAME = '레이블 이름';
 const POSSIBLE_COLOR_HEX_LEN = 4;
 const COLOR_HEX_MAX_LEN = 7;
+
 export default function CreateLabelBody() {
   const [labelBgColor, setLabelBgColor] = useState('#EFF0F6');
   const [isLabelDarkText, setIsLabelDarkText] = useState(true);
@@ -69,72 +70,71 @@ export default function CreateLabelBody() {
     setLabelBgColor(`#${randomHex}`);
     colorInputRef.current.value = `#${randomHex}`;
   };
+
   return (
-    <CellContainer>
-      <Wrapper>
-        <Title>새로운 레이블 추가</Title>
-        <CreateInfo>
-          <ExampleLabel>
-            <Label
-              text={labelText}
-              bgColor={labelBgColor}
-              darkText={isLabelDarkText}
-            />
-          </ExampleLabel>
-          <InputBoxes>
-            <InputBox
-              placeholder="레이블 이름"
-              onChange={handleChangeLabelNameInput}
-            />
-            <InputBox placeholder="설명(선택)" />
-            <ColorInputs>
-              <ColorInputBox width={15}>
-                <InputCaption>배경 색상</InputCaption>
-                <Container
-                  flexInfo={{ align: 'center', justify: 'space-between' }}
-                >
-                  <ColorInput
-                    ref={colorInputRef}
-                    defaultValue={labelBgColor}
-                    onChange={handleChangeLabelBgColorInput}
-                  />
-                  <button type="button" onClick={handleClickRandomLabelButton}>
-                    <CachedIcon />
-                  </button>
-                </Container>
-              </ColorInputBox>
-              <ColorInputBox width={20}>
-                <InputCaption>텍스트 색상</InputCaption>
-                <Container
-                  flexInfo={{ align: 'center', justify: 'space-around' }}
-                >
-                  <RadioButton
-                    type="radio"
-                    id="selectDarkBtn"
-                    defaultValue="true"
-                    name="darkText"
-                    onChange={handleChangeRadioButton}
-                    defaultChecked
-                  />
-                  <label htmlFor="selectDarkBtn">어두운 색</label>
-                  <RadioButton
-                    type="radio"
-                    id="selectLightBtn"
-                    defaultValue="false"
-                    name="darkText"
-                    onChange={handleChangeRadioButton}
-                  />
-                  <label htmlFor="selectLightBtn">밝은 색</label>
-                </Container>
-              </ColorInputBox>
-            </ColorInputs>
-          </InputBoxes>
-        </CreateInfo>
-        <ButtonBox>
-          <NewButton label="완료" />
-        </ButtonBox>
-      </Wrapper>
-    </CellContainer>
+    <Wrapper>
+      <Title>새로운 레이블 추가</Title>
+      <CreateInfo>
+        <ExampleLabel>
+          <Label
+            text={labelText}
+            bgColor={labelBgColor}
+            darkText={isLabelDarkText}
+          />
+        </ExampleLabel>
+        <InputBoxes>
+          <InputBox
+            placeholder="레이블 이름"
+            onChange={handleChangeLabelNameInput}
+          />
+          <InputBox placeholder="설명(선택)" />
+          <ColorInputs>
+            <ColorInputBox width={15}>
+              <InputCaption>배경 색상</InputCaption>
+              <Container
+                flexInfo={{ align: 'center', justify: 'space-between' }}
+              >
+                <ColorInput
+                  ref={colorInputRef}
+                  defaultValue={labelBgColor}
+                  onChange={handleChangeLabelBgColorInput}
+                />
+                <button type="button" onClick={handleClickRandomLabelButton}>
+                  <CachedIcon />
+                </button>
+              </Container>
+            </ColorInputBox>
+            <ColorInputBox width={20}>
+              <InputCaption>텍스트 색상</InputCaption>
+              <Container
+                flexInfo={{ align: 'center', justify: 'space-around' }}
+              >
+                <RadioButton
+                  type="radio"
+                  id="selectDarkBtn"
+                  defaultValue="true"
+                  name="darkText"
+                  onChange={handleChangeRadioButton}
+                  defaultChecked
+                />
+                <label htmlFor="selectDarkBtn">어두운 색</label>
+                <RadioButton
+                  type="radio"
+                  id="selectLightBtn"
+                  defaultValue="false"
+                  name="darkText"
+                  onChange={handleChangeRadioButton}
+                />
+                <label htmlFor="selectLightBtn">밝은 색</label>
+              </Container>
+            </ColorInputBox>
+          </ColorInputs>
+        </InputBoxes>
+      </CreateInfo>
+      <ButtonBox>
+        <NewButton label="완료" />
+      </ButtonBox>
+    </Wrapper>
   );
 }
 
@@ -166,14 +166,13 @@ const ColorInputBox = styled(Squircle)`
 const ColorInputs = styled.div`
   width: 80%;
   display: flex;
-
-  /* grid-template-columns: 2fr 3fr; */
   gap: 1rem;
 `;
 
 const Wrapper = styled.form`
   ${mixin.flexMixin({ direction: 'column' })}
   gap:2rem;
+  padding: 2rem;
 `;
 
 const ExampleLabel = styled.div`
@@ -200,11 +199,4 @@ const CreateInfo = styled.div`
 const InputBoxes = styled.div`
   ${mixin.flexMixin({ direction: 'column' })}
   gap: 0.7rem;
-`;
-
-const CellContainer = styled.div`
-  padding: 2rem;
-  height: auto;
-  border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
-  background-color: ${({ theme }) => theme.palette.contentColor};
 `;
