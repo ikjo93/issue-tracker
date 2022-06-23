@@ -2,7 +2,7 @@ import React, { useReducer, useContext, createContext, Dispatch } from 'react';
 
 interface IHeaderState {
   isLogin: boolean;
-  isDark: boolean;
+  isDarkMode: boolean;
   profileUrl: string;
 }
 
@@ -15,7 +15,7 @@ type HeaderDispatch = Dispatch<Action>;
 
 const initHeaderState: IHeaderState = {
   isLogin: false,
-  isDark: Boolean(localStorage.getItem('isDark')) || false,
+  isDarkMode: Boolean(localStorage.getItem('isDarkMode')) || false,
   profileUrl: '',
 };
 
@@ -24,7 +24,7 @@ const initHeaderState: IHeaderState = {
 */
 const initHeaderStateForDefaultPage: IHeaderState = {
   isLogin: true,
-  isDark: JSON.parse(localStorage.getItem('isDark') || 'false'),
+  isDarkMode: JSON.parse(localStorage.getItem('isDarkMode') || 'false'),
   profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
 };
 //
@@ -47,11 +47,11 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
         profileUrl: '',
       };
     case 'THEME_TOGGLE': {
-      const toggleData = !state.isDark;
-      localStorage.setItem('isDark', JSON.stringify(toggleData));
+      const toggleData = !state.isDarkMode;
+      localStorage.setItem('isDarkMode', JSON.stringify(toggleData));
       return {
         ...state,
-        isDark: toggleData,
+        isDarkMode: toggleData,
       };
     }
     default:
@@ -61,7 +61,7 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
 
 export function HeaderProvider({ children }: { children: React.ReactNode }) {
   // TODO: init state 작업에 따라 바꿔서 사용하세요
-  const [state, dispatch] = useReducer(reducer, initHeaderState);
+  const [state, dispatch] = useReducer(reducer, initHeaderStateForDefaultPage);
 
   return (
     <HeaderStateContext.Provider value={state}>

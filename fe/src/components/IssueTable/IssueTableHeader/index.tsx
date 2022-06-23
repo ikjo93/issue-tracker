@@ -1,35 +1,94 @@
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Checkbox } from '@mui/material';
+import axios from 'axios';
 import { ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
-import FilterDropDown from '@components/FilterDropdown';
+import IconTextBox from '@components/IconTextBox';
+import OpenAndCloseFilter from '@components/IssueTable/IssueTableHeader/OpenAndCloseFilter';
+import PopoverContainer from '@components/PopoverContainer';
 import colors from '@constants/colors';
+import modalStatic, { ModalStatusChangeType } from '@constants/modalStatic';
+import useAxiosAll from '@hooks/useAxiosAll';
 import mixin from '@style/mixin';
+import { ModalContentType, IssueType } from '@type/types';
+import { checkIfUrlHasQuery, makeUrlQuery } from '@util/queryParser';
 
-import OpenAndCloseFilter from './OpenAndCloseFilter';
+interface IIssueTableData {
+  countOfOpenIssues: number;
+  countOfClosedIssues: number;
+  issues: IssueType[];
+}
 
 interface IIssueTableHeaderProps {
-  clickedStatusCnt: number;
-  oppositeStatusCnt: number;
+  issueTableData: IIssueTableData;
+  checkedIssueIds: number[];
   toggleAllIssues: (isChecked: boolean) => void;
-  checkedIssueIndices: boolean[];
 }
+
+const headerItems = [
+  {
+    type: 'ASSIGNEE',
+    title: '담당자',
+  },
+  {
+    type: 'LABEL',
+    title: '레이블',
+  },
+  {
+    type: 'MILESTONE',
+    title: '마일스톤',
+  },
+  {
+    type: 'WRITER',
+    title: '작성자',
+  },
+];
+
 export default function IssueTableHeader({
-  clickedStatusCnt,
-  oppositeStatusCnt,
+  issueTableData,
+  checkedIssueIds,
   toggleAllIssues,
-  checkedIssueIndices,
 }: IIssueTableHeaderProps) {
+  const navigate = useNavigate();
+  const { data: menuDatas } = useAxiosAll<ModalContentType[]>(
+    ['/api/members', '/api/labels', '/api/milestones', '/api/members'],
+    'get',
+  );
+
+  if (!menuDatas) return <div />;
+  const filterDropdownDatas = headerItems?.map((headerItem, idx) => ({
+    ...headerItem,
+    menus: menuDatas[idx],
+  }));
+  const { countOfOpenIssues, countOfClosedIssues, issues } = issueTableData;
+
+  const isAllIssueChecked =
+    checkedIssueIds.length === issues.length && issues.length !== 0;
+
+  const isAnyIssueChecked = checkedIssueIds.length >= 1;
+
   const handleCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
     toggleAllIssues(e.target.checked);
   };
 
-  const isAllIssueChecked =
-    checkedIssueIndices.length !== 0 &&
-    checkedIssueIndices.every((isChecked) => isChecked);
+  const handleClickFilterItem = ({ queryKey, queryValue }) => {
+    const isSelectedFilter = checkIfUrlHasQuery(queryKey, queryValue);
+    const queryString = isSelectedFilter
+      ? makeUrlQuery('delete', queryKey)
+      : makeUrlQuery('set', queryKey, queryValue);
+    navigate(`/?${queryString}`);
+  };
 
-  const isAnyIssueChecked = checkedIssueIndices.some((isChecked) => isChecked);
+  const handleClickStatusChangeItem = async ({ targetStatus }) => {
+    await axios.patch('/api/issues/status/update', {
+      updatedStatus: targetStatus,
+      idOfIssues: checkedIssueIds,
+    });
+    navigate(0);
+  };
 
   return (
     <IssueTableHeaderContainer>
@@ -40,8 +99,8 @@ export default function IssueTableHeader({
           onChange={handleCheckboxClick}
         />
         <OpenAndCloseFilter
-          clickedStatusCnt={clickedStatusCnt}
-          oppositeStatusCnt={oppositeStatusCnt}
+          countOfOpenIssues={countOfOpenIssues}
+          countOfClosedIssues={countOfClosedIssues}
         />
       </Container>
       <Container
@@ -49,14 +108,32 @@ export default function IssueTableHeader({
         flexInfo={{ align: 'center', justify: 'space-around' }}
       >
         {isAnyIssueChecked ? (
-          <FilterDropDown title="상태수정" type="STATUS_CHANGE" />
+          <PopoverContainer<ModalStatusChangeType>
+            title="상태수정"
+            menus={modalStatic.STATUS_CHANGE}
+            onClickModalItem={handleClickStatusChangeItem}
+          >
+            <IconTextBox
+              Icon={<KeyboardArrowDownIcon />}
+              texts={['상태수정']}
+              isIconAfterText
+            />
+          </PopoverContainer>
         ) : (
-          <>
-            <FilterDropDown title="담당자" type="ASSIGNEE" />
-            <FilterDropDown title="레이블" type="LABEL" />
-            <FilterDropDown title="마일스톤" type="MILESTONE" />
-            <FilterDropDown title="작성자" type="WRITER" />
-          </>
+          filterDropdownDatas?.map(({ title, type, menus }) => (
+            <PopoverContainer<ModalContentType>
+              key={type}
+              title={title}
+              menus={getFormattedMenus(menus, type)}
+              onClickModalItem={handleClickFilterItem}
+            >
+              <IconTextBox
+                Icon={<KeyboardArrowDownIcon />}
+                texts={[title]}
+                isIconAfterText
+              />
+            </PopoverContainer>
+          ))
         )}
       </Container>
     </IssueTableHeaderContainer>
@@ -70,3 +147,37 @@ const IssueTableHeaderContainer = styled.div`
   background-color: ${({ theme }) => theme.palette.lighterBgColor};
   border-radius: 1rem 1rem 0 0;
 `;
+
+function getFormattedMenus(menus, type) {
+  switch (type) {
+    case 'ASSIGNEE':
+      return menus.map((menu) => ({
+        ...menu,
+        name: menu.identity,
+        queryKey: 'assignee',
+        queryValue: menu.identity,
+      }));
+    case 'WRITER':
+      return menus.map((menu) => ({
+        ...menu,
+        name: menu.identity,
+        queryKey: 'writer',
+        queryValue: menu.identity,
+      }));
+    case 'LABEL':
+      return menus.map((menu) => ({
+        ...menu,
+        queryKey: 'label',
+        queryValue: menu.name,
+      }));
+    case 'MILESTONE':
+      return menus.map((menu) => ({
+        ...menu,
+        name: menu.subject,
+        queryKey: 'milestone',
+        queryValue: menu.subject,
+      }));
+    default:
+      throw Error('get menus something wrong');
+  }
+}

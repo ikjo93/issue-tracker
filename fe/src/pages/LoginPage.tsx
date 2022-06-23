@@ -33,6 +33,23 @@ export default function LoginPage() {
     navigate('/');
   };
 
+  const handleClickGithubLogin = async () => {
+    // const githubAuthUrl = 'https://github.com/login/oauth/authorize';
+    // const queryConfig = {
+    //   scope: 'user',
+    //   client_id: process.env.CLIENT_ID,
+    // };
+    // const queryString = convertKeyValueToQuery(queryConfig);
+    // const url = githubAuthUrl + queryString;
+    // window.location.href(url);
+    // 원래 로직은 github login 을 위한 페이지로 href
+    const {
+      data: { profileUrl },
+    } = await axios.get('/api/github-login');
+    headerDispatch({ type: 'LOGIN', profileUrl });
+    navigate('/');
+  };
+
   return (
     <Wrapper flexInfo={{ align: 'center', justify: 'center' }}>
       <MyForm onSubmit={handleSubmit}>
@@ -42,7 +59,7 @@ export default function LoginPage() {
         <Button width="100%" type="submit">
           아이디로 로그인
         </Button>
-        <Button width="100%" variant="github">
+        <Button width="100%" variant="github" onClick={handleClickGithubLogin}>
           GitHub 계정으로 로그인
         </Button>
         <span>

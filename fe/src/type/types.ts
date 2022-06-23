@@ -1,31 +1,47 @@
 import { IPalette } from '@style/theme';
 
+export type ModalFilterType = {
+  queryKey: string;
+  queryValue: string;
+};
 export type UserIconSizeType = 'BIG' | 'SMALL';
+
+export type MemberType = {
+  id: number;
+  identity: string;
+  name: string;
+  profileUrl: string | null;
+};
 
 export type LabelType = {
   id: number;
   name: string;
+  description?: string;
   color: string;
 };
 
-type MilestoneType = {
+export type MilestoneType = {
   id: number;
-  name: string;
+  subject: string;
+  description?: string;
 };
 
-// 편의상 대충 만든 타입. 이후 서버에서 실제로 제공하는 데이터 구조에 따라 수정
+export type ModalContentType =
+  | (MemberType & ModalFilterType)
+  | (LabelType & ModalFilterType)
+  | (MilestoneType & ModalFilterType);
+
 export type IssueType = {
   id: number;
-  number: number;
+  status: string;
   subject: string;
   description: string;
   writer: string;
   profileUrl: string;
-  status: string;
-  createdDatetime: string;
+  createdDateTime: string;
+  milestone: MilestoneType | null;
   labels: LabelType[];
-  milestone: MilestoneType;
-  assignee: string[];
+  assignees: MemberType[];
 };
 
 declare module 'styled-components' {
@@ -33,4 +49,3 @@ declare module 'styled-components' {
     palette: IPalette;
   }
 }
-

@@ -1,11 +1,13 @@
 import Container from '@components/Container';
 import ProgressBar from '@components/SideMenu/Milestone/ProgressBar';
 
-export default function Milestone() {
+export default function Milestone({ milestone }) {
   return (
-    <Container flexInfo={{ direction: 'column' }} gap={1}>
-      <ProgressBar percent={40} />
-      <span>마스터즈 코스</span>
-    </Container>
+    milestone && (
+      <Container flexInfo={{ direction: 'column' }} gap={1}>
+        <ProgressBar percent={40} />
+        <span>{milestone.subject}</span>
+      </Container>
+    )
   );
 }

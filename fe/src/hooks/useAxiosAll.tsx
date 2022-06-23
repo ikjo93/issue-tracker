@@ -2,20 +2,20 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useEffect, useReducer } from 'react';
 
 export interface ResponseState<T> {
-  data?: T;
+  data?: T[];
   error?: Error;
   isLoading: boolean;
 }
 
 type Action<T> =
   | { type: 'LOADING' }
-  | { type: 'FETCHED'; payload: T }
+  | { type: 'FETCHED'; payload: T[] }
   | { type: 'ERROR'; payload: Error };
 
 type MethodType = 'get' | 'post';
 
-export default function useAxios<T>(
-  url: string,
+export default function useAxiosAll<T>(
+  urls: string[],
   method: MethodType = 'get',
   options?: AxiosRequestConfig,
 ): ResponseState<T> {
@@ -52,20 +52,22 @@ export default function useAxios<T>(
   const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => {
-    if (!url) return;
+    if (!urls) return;
 
     const fetchData = async () => {
       dispatch({ type: 'LOADING' });
       try {
-        const response = await axios[method](url, options);
-        dispatch({ type: 'FETCHED', payload: response.data });
+        const response = await axios.all(
+          urls.map((url) => axios[method](url, options)),
+        );
+        dispatch({ type: 'FETCHED', payload: response.map((res) => res.data) });
       } catch (error) {
         dispatch({ type: 'ERROR', payload: error as Error });
       }
     };
 
     fetchData();
-  }, [options, url, method]);
+  }, []);
 
   return state;
 }
