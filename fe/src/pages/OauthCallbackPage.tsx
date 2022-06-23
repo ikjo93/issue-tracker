@@ -15,9 +15,8 @@ export default function OauthCallbackPage() {
   const loginUrl = `${serverBaseUrl}/api/login?code=${code}`;
 
   const refreshCachedAccessToken = async () => {
-    const res = await axios.get(`${serverBaseUrl}/api/access-token/reissue`);
+    const res = await axios.post(`${serverBaseUrl}/api/access-token/reissue`);
     const newAccessToken = res.headers['access-token'];
-    console.log(newAccessToken);
     headerDispatch({ type: 'REFRESH_TOKEN', accessToken: newAccessToken });
   };
 
@@ -26,11 +25,17 @@ export default function OauthCallbackPage() {
     setInterval(refreshCachedAccessToken, intervalTime);
   };
 
+  const logOut = () => {
+    headerDispatch({ type: 'LOGOUT' });
+    navigate('/');
+  };
+
   useEffect(() => {
     (async () => {
       const jwtResponse = await axios.get(loginUrl);
       const accessToken = jwtResponse.headers['access-token'];
       axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      axios.defaults.headers.common.cookies = document.cookie;
 
       // local환경에서 set cookie가 되지 않아서 임시로 사용하는 로직.
       const refreshToken = jwtResponse.headers['refresh-token'];
@@ -38,7 +43,7 @@ export default function OauthCallbackPage() {
 
       const { data: userInfo } = await axios.get(`${serverBaseUrl}/api/mine`);
       headerDispatch({ type: 'LOGIN', userInfo, accessToken });
-      setRefreshInterval();
+      // setRefreshInterval();
       navigate('/');
     })();
   }, [loginUrl]);
