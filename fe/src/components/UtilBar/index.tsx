@@ -15,7 +15,7 @@ export default function UtilBar() {
         gap={1}
       >
         <TagTab />
-        <NewButton label="이슈 작성" />
+        <NewButton label="이슈 작성" linkto="createIssue" />
       </Container>
     </Container>
   );

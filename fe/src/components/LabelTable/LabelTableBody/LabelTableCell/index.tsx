@@ -6,10 +6,10 @@ export default function LabelTableCell() {
   return (
     <CellContainer>
       <LabelInfoContainer>
-        <span>무무야야호호</span>
+        <span>무무야야호호z</span>
       </LabelInfoContainer>
       <AssigneeIconContainer>
-        <span>여기 아마 삭제버튼</span>
+        <span>여기 아마 삭제버튼zzz </span>
       </AssigneeIconContainer>
     </CellContainer>
   );

@@ -1,7 +1,7 @@
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css, useTheme } from 'styled-components';
 
 import Divider from '@components/Divider';
 import IconTextBox from '@components/IconTextBox';
@@ -29,36 +29,69 @@ type LabelAPIResponseType = {
   labels: LabelDataType[];
 };
 
-export default function TagTab() {
+export default function TagTab({ activeTab }: { activeTab?: string }) {
   const serverDomain = process.env.SERVER;
   const milestoneURL = `${serverDomain}/api/milestones`;
   const labelURL = `${serverDomain}/api/labels`;
   const { data: milestoneData } =
     useAxios<MilestoneAPIResponseType>(milestoneURL);
   const { data: labelData } = useAxios<LabelAPIResponseType>(labelURL);
+  const theme = useTheme();
 
-  return (
-    milestoneData && (
-      <Wrapper>
-        <Link to="/list/label">
-          <IconTextBox
-            Icon={<LocalOfferOutlinedIcon />}
-            texts={['레이블', `(${labelData?.labels.length})`]}
-            spacing={0.625}
-          />
-        </Link>
-        <Divider isVertical length="100%" margin="0" />
-        <Link to="/list/milestone">
-          <IconTextBox
-            Icon={<SignpostOutlinedIcon />}
-            texts={['마일스톤', `(${milestoneData?.milestones.length})`]}
-            spacing={0.625}
-          />
-        </Link>
-      </Wrapper>
-    )
-  );
+  return milestoneData ? (
+    <Wrapper>
+      <StyleLink
+        to="/list/label"
+        bgColor={
+          activeTab === 'label'
+            ? theme.palette.darkerBgColor
+            : theme.palette.bgColor
+        }
+        isLeft
+      >
+        <IconTextBox
+          Icon={<LocalOfferOutlinedIcon />}
+          texts={['레이블', `(${labelData?.labels.length})`]}
+          spacing={0.625}
+        />
+      </StyleLink>
+      <Divider isVertical length="100%" margin="0" />
+      <StyleLink
+        to="/list/milestone"
+        bgColor={
+          activeTab === 'milestone'
+            ? theme.palette.darkerBgColor
+            : theme.palette.bgColor
+        }
+        isLeft={false}
+      >
+        <IconTextBox
+          Icon={<SignpostOutlinedIcon />}
+          texts={['마일스톤', `(${milestoneData?.milestones.length})`]}
+          spacing={0.625}
+        />
+      </StyleLink>
+    </Wrapper>
+  ) : null;
 }
+
+const StyleLink = styled(Link)<{ bgColor: string; isLeft: boolean }>`
+  ${mixin.flexMixin({ justify: 'center' })}
+  width: 50%;
+  padding: 0.5rem;
+  height: 100%;
+  ${({ bgColor }) => bgColor && `background-color: ${bgColor};`}
+  ${({ isLeft }) =>
+    isLeft
+      ? css`
+          border-top-left-radius: 0.75rem;
+          border-bottom-left-radius: 0.75rem;
+        `
+      : css`
+          border-top-right-radius: 0.75rem;
+          border-bottom-right-radius: 0.75rem;
+        `}
+`;
 
 const Wrapper = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-around' })};
@@ -66,5 +99,4 @@ const Wrapper = styled.div`
   height: 2.5rem;
   border: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 0.75rem;
-  padding: 0 0.5rem;
 `;

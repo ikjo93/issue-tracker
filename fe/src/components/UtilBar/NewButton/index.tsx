@@ -6,9 +6,9 @@ import IconTextBox from '@components/IconTextBox';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 
-export default function NewButton({ label }) {
+export default function NewButton({ label, linkto }) {
   return (
-    <Link to="createIssue">
+    <Link to={linkto}>
       <Wrapper>
         <IconTextBox Icon={<AddIcon />} texts={[label]} fontSize={0.75} />
       </Wrapper>
