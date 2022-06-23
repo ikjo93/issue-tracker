@@ -1,6 +1,6 @@
 import { IPalette } from '@style/theme';
 
-export type ModalFilterType = {
+export type PopoverFilterType = {
   queryKey: string;
   queryValue: string;
 };
@@ -26,10 +26,10 @@ export type MilestoneType = {
   description?: string;
 };
 
-export type ModalContentType =
-  | (MemberType & ModalFilterType)
-  | (LabelType & ModalFilterType)
-  | (MilestoneType & ModalFilterType);
+export type PopoverContentType =
+  | (MemberType & PopoverFilterType)
+  | (LabelType & PopoverFilterType)
+  | (MilestoneType & PopoverFilterType);
 
 export type IssueType = {
   id: number;

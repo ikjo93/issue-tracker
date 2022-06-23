@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import CreateLabelBody from '@components/LabelTable/LabelTableBody/CreateLabelBody';
 import LabelTableCell from '@components/LabelTable/LabelTableBody/LabelTableCell';
 import mixin from '@style/mixin';
 
@@ -7,10 +8,11 @@ export default function LabelTableBody({ labels }) {
   return (
     <LabelTableBodyContainer>
       {labels?.length ? (
-        labels.map((label) => <LabelTableCell label={label} />)
+        labels.map((label) => <LabelTableCell key={label.id} label={label} />)
       ) : (
         <NoIssueMessage>검색과 일치하는 결과가 없습니다.</NoIssueMessage>
       )}
+      <CreateLabelBody />
     </LabelTableBodyContainer>
   );
 }
