@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
+import Divider from '@components/Divider';
 import Header from '@components/Header';
+import IssueBody from '@components/IssueBody';
 import IssueHeader from '@components/IssueHeader';
 
 export default function IssueDetailPage() {
@@ -9,6 +11,8 @@ export default function IssueDetailPage() {
       <Header />
       <Body>
         <IssueHeader />
+        <Divider margin="2rem" />
+        <IssueBody />
       </Body>
     </>
   );

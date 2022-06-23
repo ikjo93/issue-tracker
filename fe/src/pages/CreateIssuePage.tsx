@@ -10,9 +10,10 @@ import Header from '@components/Header';
 import InputBox from '@components/inputs/InputBox';
 import TextAreaBox from '@components/inputs/TextAreaBox';
 import SideMenu from '@components/SideMenu';
-import { ActionType, MenuStateType } from '@components/SideMenu/type';
+import { MenuStateType } from '@components/SideMenu/type';
 import TitleBar from '@components/TitleBar';
 import UserIcon from '@components/UserIcon';
+import sideMenuReducer from '@util/sideMenuReducer';
 
 interface IFormEventTarget extends EventTarget {
   subject?: HTMLInputElement;
@@ -20,7 +21,7 @@ interface IFormEventTarget extends EventTarget {
 }
 
 export default function CreateIssuePage() {
-  const [menuState, menuDispatch] = useReducer(reducer, initState);
+  const [menuState, menuDispatch] = useReducer(sideMenuReducer, initState);
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
@@ -89,36 +90,6 @@ const initState: MenuStateType = {
   assignees: [],
   labels: [],
   milestone: undefined,
-};
-
-const reducer = (state: MenuStateType, action: ActionType) => {
-  switch (action.type) {
-    case 'ASSIGNEE': {
-      if (state.assignees.some(({ id }) => id === action.data.id)) {
-        return state;
-      }
-      return {
-        ...state,
-        assignees: [...state.assignees, action.data],
-      };
-    }
-    case 'LABEL': {
-      if (state.labels.some(({ id }) => id === action.data.id)) {
-        return state;
-      }
-      return {
-        ...state,
-        labels: [...state.labels, action.data],
-      };
-    }
-    case 'MILESTONE':
-      return {
-        ...state,
-        milestone: action.data,
-      };
-    default:
-      throw Error('Unexpected action type on side menu');
-  }
 };
 
 const GridContainer = styled.div`

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import { widths, heights } from '@constants/lengths';
-import mixin from '@style/mixin';
 import { ITheme } from '@style/theme';
 
 interface ISquircleProps {
