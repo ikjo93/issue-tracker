@@ -54,6 +54,11 @@ module.exports = {
         },
       },
     ],
+    'react/require-default-props': 'off',
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['target'] },
+    ],
   },
   settings: {
     'import/resolver': {
