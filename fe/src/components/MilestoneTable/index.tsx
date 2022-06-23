@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import LabelTableBody from '@components/LabelTable/LabelTableBody';
-import LabelTableHeader from '@components/LabelTable/LabelTableHeader';
+import MilestoneTableBody from '@components/MilestoneTable/MilestoneTableBody';
+import MilestoneTableHeader from '@components/MilestoneTable/MilestoneTableHeader';
 import useAxios from '@hooks/useAxios';
 import { IssueType } from '@type/types';
 
@@ -12,19 +12,19 @@ type IssueTableDataType = {
   countOfClosedIssues: number;
 };
 
-export default function LabelTable() {
+export default function MilestoneTable() {
   const fetchUrl = `/api/issues/${useLocation().search}`;
   const { data: issueTableData } = useAxios<IssueTableDataType>(fetchUrl);
 
   return issueTableData ? (
-    <LabelTableContainer>
-      <LabelTableHeader />
-      <LabelTableBody />
-    </LabelTableContainer>
+    <MilestoneTableContainer>
+      <MilestoneTableHeader />
+      <MilestoneTableBody />
+    </MilestoneTableContainer>
   ) : null;
 }
 
-const LabelTableContainer = styled.div`
+const MilestoneTableContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 1rem;
   margin-top: 1.5rem;
