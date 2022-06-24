@@ -7,6 +7,11 @@ import NewButton from '@components/UtilBar/NewButton';
 import TagTab from '@components/UtilBar/TagTab';
 import mixin from '@style/mixin';
 
+export type OutletContext = [
+  boolean,
+  React.Dispatch<React.SetStateAction<boolean>>,
+];
+
 const Body = styled.div`
   max-width: 1440px;
   margin: 0 auto;
@@ -37,7 +42,7 @@ export default function LabelMilestoneLayout() {
           />
         )}
       </Nav>
-      <Outlet context={isAdding} />
+      <Outlet context={[isAdding, setIsAdding]} />
     </Body>
   );
 }

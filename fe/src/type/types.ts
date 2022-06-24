@@ -18,6 +18,7 @@ export type LabelType = {
   name: string;
   description?: string;
   color: string;
+  darkText?: boolean;
 };
 
 export type MilestoneType = {

@@ -1,14 +1,18 @@
+import AddIcon from '@mui/icons-material/Add';
 import CachedIcon from '@mui/icons-material/Cached';
-import React, { useRef, useState } from 'react';
+import axios from 'axios';
+import { FormEvent, useRef, useState } from 'react';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 
 import Container from '@components/Container';
+import IconTextBox from '@components/IconTextBox';
 import InputBox from '@components/inputs/InputBox';
 import Label from '@components/Label';
 import Squircle from '@components/Squircle';
-import NewButton from '@components/UtilBar/NewButton';
 import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
+import { OutletContext } from '@pages/LabelMilestoneLayout';
 import mixin from '@style/mixin';
 import { debounce } from '@util/timeUtils';
 
@@ -16,12 +20,32 @@ const DEFAULT_LABEL_NAME = '레이블 이름';
 const POSSIBLE_COLOR_HEX_LEN = 4;
 const COLOR_HEX_MAX_LEN = 7;
 
+interface IFormEventTarget extends EventTarget {
+  name?: HTMLInputElement;
+  description?: HTMLInputElement;
+  color?: HTMLInputElement;
+  darkText?: HTMLInputElement;
+}
+
 export default function CreateLabelBody() {
   const [labelBgColor, setLabelBgColor] = useState('#EFF0F6');
   const [isLabelDarkText, setIsLabelDarkText] = useState(true);
   const [labelText, setLabelText] = useState(DEFAULT_LABEL_NAME);
   const colorInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
+  const [, setIsAdding] = useOutletContext<OutletContext>();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const formData: IFormEventTarget = e.target;
+    await axios.post('/api/labels/create', {
+      name: formData.name?.value,
+      description: formData.description?.value,
+      color: formData.color?.value,
+      darkText: formData.darkText?.value,
+    });
+    setIsAdding(false);
+  };
 
   const handleChangeLabelNameInput = debounce({
     callback: ({ target }) => {
@@ -72,7 +96,7 @@ export default function CreateLabelBody() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleSubmit}>
       <Title>새로운 레이블 추가</Title>
       <CreateInfo>
         <ExampleLabel>
@@ -84,10 +108,11 @@ export default function CreateLabelBody() {
         </ExampleLabel>
         <InputBoxes>
           <InputBox
+            name="name"
             placeholder="레이블 이름"
             onChange={handleChangeLabelNameInput}
           />
-          <InputBox placeholder="설명(선택)" />
+          <InputBox name="description" placeholder="설명(선택)" />
           <ColorInputs>
             <ColorInputBox width={15}>
               <InputCaption>배경 색상</InputCaption>
@@ -96,6 +121,7 @@ export default function CreateLabelBody() {
               >
                 <ColorInput
                   ref={colorInputRef}
+                  name="color"
                   defaultValue={labelBgColor}
                   onChange={handleChangeLabelBgColorInput}
                 />
@@ -132,12 +158,29 @@ export default function CreateLabelBody() {
         </InputBoxes>
       </CreateInfo>
       <ButtonBox>
-        <NewButton label="완료" />
+        <button type="submit">
+          <SubmitButtonWrapper>
+            <IconTextBox
+              Icon={<AddIcon />}
+              texts={['완료']}
+              fontSize={0.75}
+              spacing={0.3}
+            />
+          </SubmitButtonWrapper>
+        </button>
       </ButtonBox>
     </Wrapper>
   );
 }
 
+const SubmitButtonWrapper = styled.div`
+  ${mixin.flexMixin({ align: 'center', justify: 'center' })}
+  width: 7.5rem;
+  height: 2.5rem;
+  color: ${colors.offWhite};
+  background: ${colors.blue};
+  border-radius: 0.75rem;
+`;
 const RadioButton = styled.input``;
 const InputCaption = styled.span`
   color: ${colors.grey4};
