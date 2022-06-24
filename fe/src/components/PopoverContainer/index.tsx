@@ -38,7 +38,10 @@ export default function PopoverContainer<T>({
   );
 }
 
-const Trigger = styled.button``;
+const Trigger = styled.button`
+  color: inherit;
+`;
+
 const Wrapper = styled.div`
   ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
   position: relative;

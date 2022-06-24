@@ -18,7 +18,7 @@ const issues = [
     },
     assignees: [
       {
-        memberId: 1,
+        id: 1,
         identity: 'ikjo',
         name: '익조',
         profileUrl: ikjoProfileURL,
@@ -89,13 +89,13 @@ const issues = [
     },
     assignees: [
       {
-        memberId: 2,
+        id: 2,
         identity: 'Park',
         name: '파크',
         profileUrl: parkProfileURL,
       },
       {
-        memberId: 3,
+        id: 3,
         identity: 'Alan',
         name: '앨런',
         profileUrl: alanProfileURL,
@@ -125,7 +125,7 @@ const issues = [
     },
     assignees: [
       {
-        memberId: 3,
+        id: 3,
         identity: 'Alan',
         name: '앨런',
         profileUrl: alanProfileURL,
