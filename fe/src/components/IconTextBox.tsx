@@ -5,6 +5,7 @@ import mixin from '@style/mixin';
 
 interface IIconTextBoxProps {
   Icon?: React.ReactNode;
+  isIconAfterText?: boolean;
   texts?: string[];
   color?: string;
   spacing?: number;
@@ -15,13 +16,15 @@ interface IIconTextBoxProps {
 
 export default function IconTextBox({
   Icon,
+  isIconAfterText = false,
   texts,
-  color,
+  color = 'inherit',
   spacing,
   fontSize,
   fontWeight,
   onClick,
 }: IIconTextBoxProps) {
+  const Texts = texts?.map((text) => <span key={uuid()}>{text}</span>);
   return (
     <BoxContainer
       color={color}
@@ -30,10 +33,17 @@ export default function IconTextBox({
       fontWeight={fontWeight}
       onClick={onClick}
     >
-      {Icon}
-      {texts?.map((text) => (
-        <span key={uuid()}>{text}</span>
-      ))}
+      {isIconAfterText ? (
+        <>
+          {Texts}
+          {Icon}
+        </>
+      ) : (
+        <>
+          {Icon}
+          {Texts}
+        </>
+      )}
     </BoxContainer>
   );
 }

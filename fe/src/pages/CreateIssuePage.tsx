@@ -1,17 +1,18 @@
 import axios from 'axios';
-import { FormEvent } from 'react';
+import { FormEvent, useState, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
+import Button from '@components/Button';
 import Container from '@components/Container';
 import Divider from '@components/Divider';
 import Header from '@components/Header';
-import SideMenuItem from '@components/SideMenuItem';
-import Squircle from '@components/Squircle';
+import InputBox from '@components/inputs/InputBox';
+import TextAreaBox from '@components/inputs/TextAreaBox';
+import SideMenu from '@components/SideMenu';
+import { ActionType, MenuStateType } from '@components/SideMenu/type';
 import TitleBar from '@components/TitleBar';
 import UserIcon from '@components/UserIcon';
-import colors from '@constants/colors';
-import { fontSize } from '@constants/fonts';
 
 interface IFormEventTarget extends EventTarget {
   subject?: HTMLInputElement;
@@ -19,17 +20,19 @@ interface IFormEventTarget extends EventTarget {
 }
 
 export default function CreateIssuePage() {
-  const theme = useTheme();
+  const [menuState, menuDispatch] = useReducer(reducer, initState);
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
-    const subject = formData.subject?.value;
-    const description = formData.description?.value;
     await axios.post('/api/createIssue', {
-      subject,
-      description,
+      subject: formData.subject?.value,
+      description: formData.description?.value,
+      labels: menuState.labels,
+      assignees: menuState.assignees,
+      milestone: menuState.milestone,
     });
     navigate('/');
   };
@@ -38,62 +41,85 @@ export default function CreateIssuePage() {
     navigate('/');
   };
 
+  const handleChangeTitleInput = ({ target }) => {
+    if (target.value === '') {
+      setIsSubmitButtonDisabled(true);
+    } else if (target.value !== '' && isSubmitButtonDisabled) {
+      setIsSubmitButtonDisabled(false);
+    }
+  };
+
   return (
     <>
       <Header />
       <Body onSubmit={handleSubmit}>
         <TitleBar title="새로운 이슈 작성" />
-        <Divider length="100%" margin="2rem" />
         <GridContainer>
           <UserIcon size="BIG" />
           <Container flexInfo={{ direction: 'column' }} gap={1}>
-            <Squircle
-              backgroundColor={theme.palette.darkerBgColor}
-              width={100}
-              unit="%"
-            >
-              <InputBox name="subject" placeholder="제목" />
-            </Squircle>
-            <Squircle
-              backgroundColor={theme.palette.darkerBgColor}
-              width={100}
-              height="30rem"
-              unit="%"
-            >
-              <TextAreaBox name="description" placeholder="본문" />
-            </Squircle>
+            <InputBox
+              name="subject"
+              onChange={handleChangeTitleInput}
+              placeholder="제목"
+            />
+            <TextAreaBox />
           </Container>
-          <Squircle
-            borderLineColor={theme.palette.borderColor}
-            height="fit-content"
-          >
-            <SideMenuItem type="담당자" />
-            <Divider length="100%" margin="" />
-            <SideMenuItem type="레이블" />
-            <Divider length="100%" margin="" />
-            <SideMenuItem type="마일스톤" />
-          </Squircle>
+          <SideMenu menuState={menuState} menuDispatch={menuDispatch} />
         </GridContainer>
-        <Divider length="100%" margin="2rem" />
+        <Divider margin="2rem" />
         <Container
           flexInfo={{ direction: 'row' }}
           position="absolute"
           right="0"
           gap={1}
         >
-          <Squircle>
-            <CancleButton type="button" onClick={handleClickCancleButton}>
-              작성 취소
-            </CancleButton>
-          </Squircle>
-          <Squircle>
-            <SubmitButton type="submit">완료</SubmitButton>
-          </Squircle>
+          <Button variant="warning" onClick={handleClickCancleButton}>
+            작성 취소
+          </Button>
+          <Button type="submit" disabled={isSubmitButtonDisabled}>
+            완료
+          </Button>
         </Container>
       </Body>
     </>
   );
 }
+
+const initState: MenuStateType = {
+  assignees: [],
+  labels: [],
+  milestone: undefined,
+};
+
+const reducer = (state: MenuStateType, action: ActionType) => {
+  switch (action.type) {
+    case 'ASSIGNEE': {
+      if (state.assignees.some(({ id }) => id === action.data.id)) {
+        return state;
+      }
+      return {
+        ...state,
+        assignees: [...state.assignees, action.data],
+      };
+    }
+    case 'LABEL': {
+      if (state.labels.some(({ id }) => id === action.data.id)) {
+        return state;
+      }
+      return {
+        ...state,
+        labels: [...state.labels, action.data],
+      };
+    }
+    case 'MILESTONE':
+      return {
+        ...state,
+        milestone: action.data,
+      };
+    default:
+      throw Error('Unexpected action type on side menu');
+  }
+};
 
 const GridContainer = styled.div`
   display: grid;
@@ -105,40 +131,4 @@ const Body = styled.form`
   position: relative;
   max-width: 1440px;
   margin: 0 auto;
-`;
-
-const InputBox = styled.input`
-  width: 100%;
-  height: 100%;
-  color: ${({ theme }) => theme.palette.fontColor};
-  background-color: ${({ theme }) => theme.palette.darkerBgColor};
-  padding: 0rem 1rem;
-`;
-
-const TextAreaBox = styled.textarea`
-  width: 100%;
-  height: 100%;
-  resize: none;
-  padding: 1rem;
-  padding-top: 1.5rem;
-`;
-
-const Button = styled.button`
-  color: ${colors.offWhite};
-  font-size: ${fontSize.medium};
-  width: 100%;
-  height: 100%;
-
-  opacity: 0.5;
-  transition: opacity 0.2s;
-  :hover {
-    opacity: 1;
-  }
-`;
-
-const SubmitButton = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.primary};
-`;
-const CancleButton = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.warning};
 `;

@@ -1,25 +1,61 @@
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useAxios from '@hooks/useAxios';
+import { IssueType } from '@type/types';
 
 import IssueTableBody from './IssueTableBody';
 import IssueTableHeader from './IssueTableHeader';
 
-export default function IssueTable() {
-  const fetchUrl = `/api/issues/${useLocation().search}`;
-  const { data: issueTableData } = useAxios(fetchUrl, 'get');
+type IssueTableDataType = {
+  issues: IssueType[];
+  countOfOpenIssues: number;
+  countOfClosedIssues: number;
+};
 
-  return (
-    issueTableData && (
-      <IssueTableContainer>
-        <IssueTableHeader
-          clickedStatusCnt={issueTableData.issues.length}
-          oppositeStatusCnt={issueTableData.oppositeStatusCnt}
-        />
-        <IssueTableBody issues={issueTableData.issues} />
-      </IssueTableContainer>
-    )
+export default function IssueTable() {
+  const [checkedIssueIds, setCheckedIssueIds] = useState<number[]>([]);
+  const fetchUrl = `/api/issues/${useLocation().search}`;
+  const { data: issueTableData } = useAxios<IssueTableDataType>(fetchUrl);
+
+  const toggleAllIssues = (isChecked: boolean) => {
+    if (!issueTableData) return;
+    const newState = isChecked
+      ? issueTableData.issues.map((issue) => issue.id)
+      : [];
+    setCheckedIssueIds(newState);
+  };
+
+  const toggleOneIssue = (issueId: number) => {
+    setCheckedIssueIds((prev) => {
+      const newState = [...prev];
+      if (!checkedIssueIds.includes(issueId)) {
+        return [...newState, issueId];
+      }
+      return newState.filter((id) => id !== issueId);
+    });
+  };
+
+  useEffect(() => {
+    setCheckedIssueIds([]);
+  }, [issueTableData]);
+
+  return issueTableData ? (
+    <IssueTableContainer>
+      <IssueTableHeader
+        issueTableData={issueTableData}
+        checkedIssueIds={checkedIssueIds}
+        toggleAllIssues={toggleAllIssues}
+      />
+      <IssueTableBody
+        issues={issueTableData.issues}
+        checkedIssueIds={checkedIssueIds}
+        toggleOneIssue={toggleOneIssue}
+      />
+    </IssueTableContainer>
+  ) : (
+    <div />
   );
 }
 

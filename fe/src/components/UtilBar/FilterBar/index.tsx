@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import Divider from '@components/Divider';
 import mixin from '@style/mixin';
 
 import FilterBarForm from './FilterBarForm';
@@ -9,6 +10,7 @@ export default function FilterBar() {
   return (
     <FilterBarContainer>
       <FilterBarSelectMenu />
+      <Divider isVertical length="100%" margin="0" />
       <FilterBarForm />
     </FilterBarContainer>
   );

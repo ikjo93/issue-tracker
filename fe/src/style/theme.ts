@@ -2,10 +2,14 @@ import { DefaultTheme } from 'styled-components';
 
 import colors from '@constants/colors';
 
-export interface IPalette {
+export interface IPaletteOptions {
   default: string;
   primary: string;
   warning: string;
+  github: string;
+}
+
+export interface IPalette extends IPaletteOptions {
   bgColor: string;
   fontColor: string;
   borderColor: string;
@@ -24,6 +28,7 @@ const darkPalette: IPalette = {
   default: colors.offWhite,
   primary: colors.blue,
   warning: colors.red,
+  github: colors.black2,
   bgColor: colors.black,
   fontColor: colors.white1,
   borderColor: colors.grey2,
@@ -38,6 +43,7 @@ const lightPalette: IPalette = {
   default: colors.offWhite,
   primary: colors.blue,
   warning: colors.red,
+  github: colors.black2,
   bgColor: colors.white1,
   fontColor: colors.black,
   borderColor: colors.grey1,

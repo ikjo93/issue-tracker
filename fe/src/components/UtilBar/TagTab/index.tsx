@@ -2,24 +2,56 @@ import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
 import styled from 'styled-components';
 
+import Divider from '@components/Divider';
 import IconTextBox from '@components/IconTextBox';
+import useAxios from '@hooks/useAxios';
 import mixin from '@style/mixin';
 
+type MilestoneDataType = {
+  id: number;
+  subject: string;
+  description: string;
+};
+
+type MilestoneAPIResponseType = {
+  milestones: MilestoneDataType[];
+};
+
+type LabelDataType = {
+  id: number;
+  name: string;
+  description: string;
+  color: string;
+};
+
+type LabelAPIResponseType = {
+  labels: LabelDataType[];
+};
+
 export default function TagTab() {
+  const serverDomain = process.env.SERVER;
+  const milestoneURL = `${serverDomain}/api/milestones`;
+  const labelURL = `${serverDomain}/api/labels`;
+  const { data: milestoneData } =
+    useAxios<MilestoneAPIResponseType>(milestoneURL);
+  const { data: labelData } = useAxios<LabelAPIResponseType>(labelURL);
+
   return (
-    <Wrapper>
-      <IconTextBox
-        Icon={<LocalOfferOutlinedIcon />}
-        texts={['레이블', '(3)']}
-        spacing={0.625}
-      />
-      <BorderLine />
-      <IconTextBox
-        Icon={<SignpostOutlinedIcon />}
-        texts={['마일스톤', '(2)']}
-        spacing={0.625}
-      />
-    </Wrapper>
+    milestoneData && (
+      <Wrapper>
+        <IconTextBox
+          Icon={<LocalOfferOutlinedIcon />}
+          texts={['레이블', `(${labelData?.labels.length})`]}
+          spacing={0.625}
+        />
+        <Divider isVertical length="100%" margin="0" />
+        <IconTextBox
+          Icon={<SignpostOutlinedIcon />}
+          texts={['마일스톤', `(${milestoneData?.milestones.length})`]}
+          spacing={0.625}
+        />
+      </Wrapper>
+    )
   );
 }
 
@@ -32,8 +64,3 @@ const Wrapper = styled.div`
   padding: 0 0.5rem;
 `;
 
-const BorderLine = styled.div`
-  width: 1px;
-  height: 100%;
-  background: ${({ theme }) => theme.palette.borderColor};
-`;

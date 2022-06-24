@@ -1,6 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useEffect, FormEvent } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import mixin from '@style/mixin';
@@ -12,18 +12,18 @@ import {
 const initialInputValue = convertUrlToInputValue();
 export default function FilterBarForm() {
   const [inputValue, setInputValue] = useState(initialInputValue);
-  const searchParams = useSearchParams();
+  const queryString = useLocation().search;
   const navigate = useNavigate();
 
-  const handleFilterSubmit = (e) => {
+  const handleFilterSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const queryString = convertInputValueToQuery(inputValue);
-    navigate(`/?${queryString}`);
+    const newQueryString = convertInputValueToQuery(inputValue);
+    navigate(`/?${newQueryString}`);
   };
 
   useEffect(() => {
     setInputValue(convertUrlToInputValue());
-  }, [searchParams]);
+  }, [queryString]);
 
   return (
     <FilterBarFormContainer onSubmit={handleFilterSubmit}>
@@ -42,7 +42,6 @@ const FilterBarFormContainer = styled.form`
   width: 30rem;
   height: 100%;
   padding: 0.5rem 1.5rem;
-  border-left: 1px solid ${({ theme }) => theme.palette.borderColor};
   border-radius: 0 0.75rem 0.75rem 0;
 `;
 
