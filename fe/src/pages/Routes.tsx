@@ -9,6 +9,7 @@ import LabelPage from '@pages/LabelPage';
 import Layout from '@pages/Layout';
 import LoginPage from '@pages/LoginPage';
 import MilestonePage from '@pages/MilestonePage';
+import OauthCallbackPage from '@pages/OauthCallbackPage';
 
 export default function Routes() {
   const { isLogin } = useHeaderState();
@@ -26,6 +27,7 @@ export default function Routes() {
           <Route path="label" element={<LabelPage />} />
           <Route path="milestone" element={<MilestonePage />} />
         </Route>
+        <Route path="callback" element={<OauthCallbackPage />} />
       </Route>
     </RouterRoutes>
   );
