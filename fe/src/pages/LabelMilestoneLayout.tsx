@@ -1,9 +1,10 @@
+import AddIcon from '@mui/icons-material/Add';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import CancelButton from '@components/UtilBar/CancleButton';
-import NewButton from '@components/UtilBar/NewButton';
+import Button from '@components/Button';
 import TagTab from '@components/UtilBar/TagTab';
 import mixin from '@style/mixin';
 
@@ -27,19 +28,27 @@ export default function LabelMilestoneLayout() {
       <Nav>
         <TagTab activeTab={activeTab} />
         {isAdding ? (
-          <CancelButton
-            label="취소"
+          <Button
+            size="small"
+            variant="outlined"
             onClick={() => {
               setIsAdding(false);
             }}
-          />
+          >
+            <CancelOutlinedIcon />
+            <span>취소</span>
+          </Button>
         ) : (
-          <NewButton
-            label="추가"
+          <Button
+            size="small"
+            variant="primary"
             onClick={() => {
               setIsAdding(true);
             }}
-          />
+          >
+            <AddIcon />
+            <span>추가</span>
+          </Button>
         )}
       </Nav>
       <Outlet context={[isAdding, setIsAdding]} />

@@ -17,7 +17,11 @@ export default function LabelTableCell({ label }) {
       </LabelInfoContainer>
       <AssigneeIconContainer>
         <button type="button">
-          <IconTextBox Icon={<EditIcon fontSize="small" />} texts={['편집']} />
+          <IconTextBox
+            Icon={<EditIcon fontSize="small" />}
+            texts={['편집']}
+            color={theme.palette.fontColor}
+          />
         </button>
         <button type="button">
           <IconTextBox

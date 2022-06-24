@@ -14,11 +14,10 @@ type Action<T> =
 
 type MethodType = 'get' | 'post';
 
-export default function useAxios<T, K = void>(
+export default function useAxios<T>(
   url: string,
   method: MethodType = 'get',
   options?: AxiosRequestConfig,
-  dependencyList?: K,
 ): ResponseState<T> {
   const initState: ResponseState<T> = {
     data: undefined,
@@ -66,7 +65,7 @@ export default function useAxios<T, K = void>(
     };
 
     fetchData();
-  }, [options, url, method, dependencyList]);
+  }, [options, url, method]);
 
   return state;
 }

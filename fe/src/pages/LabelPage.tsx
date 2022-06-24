@@ -8,12 +8,7 @@ import { LabelType } from '@type/types';
 
 export default function LabelPage() {
   const [isAdding] = useOutletContext<OutletContext>();
-  const { data: labels } = useAxios<LabelType[], [boolean]>(
-    '/api/labels',
-    'get',
-    {},
-    [isAdding],
-  );
+  const { data: labels } = useAxios<LabelType[]>('/api/labels', 'get');
 
   return (
     <>

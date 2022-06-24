@@ -12,6 +12,7 @@ import SideMenu from '@components/SideMenu';
 import { ActionType, MenuStateType } from '@components/SideMenu/type';
 import TitleBar from '@components/TitleBar';
 import UserIcon from '@components/UserIcon';
+import { useHeaderState } from '@contexts/HeaderProvider';
 
 interface IFormEventTarget extends EventTarget {
   subject?: HTMLInputElement;
@@ -19,6 +20,7 @@ interface IFormEventTarget extends EventTarget {
 }
 
 export default function CreateIssuePage() {
+  const { userInfo } = useHeaderState();
   const [menuState, menuDispatch] = useReducer(reducer, initState);
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const navigate = useNavigate();
@@ -27,6 +29,8 @@ export default function CreateIssuePage() {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
     await axios.post('/api/createIssue', {
+      writer: userInfo?.identity,
+      profileUrl: userInfo?.profileUrl,
       subject: formData.subject?.value,
       description: formData.description?.value,
       labels: menuState.labels,
@@ -52,7 +56,7 @@ export default function CreateIssuePage() {
     <Body onSubmit={handleSubmit}>
       <TitleBar title="새로운 이슈 작성" />
       <GridContainer>
-        <UserIcon size="BIG" />
+        <UserIcon size="BIG" imgUrl={userInfo?.profileUrl} />
         <Container flexInfo={{ direction: 'column' }} gap={1}>
           <InputBox
             name="subject"

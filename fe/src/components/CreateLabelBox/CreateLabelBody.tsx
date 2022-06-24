@@ -2,11 +2,11 @@ import AddIcon from '@mui/icons-material/Add';
 import CachedIcon from '@mui/icons-material/Cached';
 import axios from 'axios';
 import { FormEvent, useRef, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 
+import Button from '@components/Button';
 import Container from '@components/Container';
-import IconTextBox from '@components/IconTextBox';
 import InputBox from '@components/inputs/InputBox';
 import Label from '@components/Label';
 import Squircle from '@components/Squircle';
@@ -126,7 +126,7 @@ export default function CreateLabelBody() {
                   onChange={handleChangeLabelBgColorInput}
                 />
                 <button type="button" onClick={handleClickRandomLabelButton}>
-                  <CachedIcon />
+                  <CachedIcon sx={{ color: theme.palette.fontColor }} />
                 </button>
               </Container>
             </ColorInputBox>
@@ -158,29 +158,15 @@ export default function CreateLabelBody() {
         </InputBoxes>
       </CreateInfo>
       <ButtonBox>
-        <button type="submit">
-          <SubmitButtonWrapper>
-            <IconTextBox
-              Icon={<AddIcon />}
-              texts={['완료']}
-              fontSize={0.75}
-              spacing={0.3}
-            />
-          </SubmitButtonWrapper>
-        </button>
+        <Button type="submit" size="small" variant="primary">
+          <AddIcon />
+          <span>완료</span>
+        </Button>
       </ButtonBox>
     </Wrapper>
   );
 }
 
-const SubmitButtonWrapper = styled.div`
-  ${mixin.flexMixin({ align: 'center', justify: 'center' })}
-  width: 7.5rem;
-  height: 2.5rem;
-  color: ${colors.offWhite};
-  background: ${colors.blue};
-  border-radius: 0.75rem;
-`;
 const RadioButton = styled.input``;
 const InputCaption = styled.span`
   color: ${colors.grey4};
