@@ -1,29 +1,21 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import Container from '@components/Container';
-import { IssueType } from '@type/types';
 
 import IssueInfo from './IssueInfo';
 import IssueUtilButtons from './IssueUtilButtons';
 
-interface IIssueHeaderProps {
-  issueData: IssueType;
-  refreshIssue: () => void;
-}
-
-export default function IssueHeader({
-  issueData,
-  refreshIssue,
-}: IIssueHeaderProps) {
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
+export default function IssueHeader() {
+  const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const titleRef = useRef<HTMLInputElement>(null);
 
   return (
     <Container flexInfo={{ justify: 'space-between' }} margin="2rem 0">
-      <IssueInfo issueData={issueData} />
+      <IssueInfo isTitleEditing={isTitleEditing} titleRef={titleRef} />
       <IssueUtilButtons
-        isEditingTitle={isEditingTitle}
-        setIsEditingTitle={setIsEditingTitle}
-        refreshIssue={refreshIssue}
+        titleRef={titleRef}
+        isTitleEditing={isTitleEditing}
+        setIsTitleEditing={setIsTitleEditing}
       />
     </Container>
   );

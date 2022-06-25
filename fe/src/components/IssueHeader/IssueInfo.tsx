@@ -1,43 +1,69 @@
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { RefObject } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 import Container from '@components/Container';
 import IconTextBox from '@components/IconTextBox';
 import Squircle from '@components/Squircle';
 import { fontSize } from '@constants/fonts';
+import { useIssueState } from '@contexts/IssueProvider';
 import mixin from '@style/mixin';
-import { IssueType } from '@type/types';
 import { calTimePassed } from '@util/dateHandler';
 
-interface IIssueInfoProps {
-  issueData: IssueType;
+interface IIssueInfo {
+  isTitleEditing: boolean;
+  titleRef: RefObject<HTMLInputElement>;
 }
 
-export default function IssueInfo({ issueData }: IIssueInfoProps) {
+export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
+  const { subject, id, writer, comments, createdDateTime, status } =
+    useIssueState();
   const theme = useTheme();
-  const { subject, id, writer, comments, createdDateTime } = issueData;
 
   return (
     <Container>
       <Container flexInfo={{ align: 'center' }} gap={1}>
-        <IssueTitle>{subject}</IssueTitle>
-        <IssueNumber>{`#${id}`}</IssueNumber>
+        {isTitleEditing ? (
+          <input ref={titleRef} placeholder="제목" />
+        ) : (
+          <>
+            <IssueTitle>{subject}</IssueTitle>
+            <IssueNumber>{`#${id}`}</IssueNumber>
+          </>
+        )}
       </Container>
       <Container flexInfo={{ align: 'center' }} gap={0.5} mt="1.25rem">
-        <IssueStatusBadge
-          color={theme.palette.primary}
-          backgroundColor={theme.palette.primaryBgColor}
-          borderLineColor={theme.palette.primary}
-          width={6.25}
-          height={2.5}
-        >
-          <IconTextBox
-            Icon={<ErrorOutlineIcon fontSize="small" />}
-            texts={['열린 이슈']}
-            spacing={0.375}
-            fontSize={0.625}
-          />
-        </IssueStatusBadge>
+        {status === 'OPEN' ? (
+          <IssueStatusBadge
+            color={theme.palette.primary}
+            backgroundColor={theme.palette.primaryBgColor}
+            borderLineColor={theme.palette.primary}
+            width={6.25}
+            height={2.5}
+          >
+            <IconTextBox
+              Icon={<ErrorOutlineIcon fontSize="small" />}
+              texts={['열린 이슈']}
+              spacing={0.375}
+              fontSize={0.625}
+            />
+          </IssueStatusBadge>
+        ) : (
+          <IssueStatusBadge
+            color={theme.palette.default}
+            backgroundColor={theme.palette.warning}
+            borderLineColor={theme.palette.default}
+            width={6.25}
+            height={2.5}
+          >
+            <IconTextBox
+              Icon={<ErrorOutlineIcon fontSize="small" />}
+              texts={['닫힌 이슈']}
+              spacing={0.375}
+              fontSize={0.625}
+            />
+          </IssueStatusBadge>
+        )}
         <IconTextBox
           texts={[
             `이 이슈가 ${calTimePassed(

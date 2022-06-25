@@ -6,28 +6,17 @@ import Divider from '@components/Divider';
 import IssueBody from '@components/IssueBody';
 import IssueHeader from '@components/IssueHeader';
 import { IssueProvider } from '@contexts/IssueProvider';
-import useAxios from '@hooks/useAxios';
-import { IssueType } from '@type/types';
 
 export default function IssueDetailPage() {
   const issueId = useParams().id;
-  const [, setRefreshFlag] = useState(false);
-  const { data: issueData } = useAxios<IssueType>(`/api/detail/${issueId}`);
-
-  const refreshIssue = () => {
-    setRefreshFlag((prev) => !prev);
-  };
-
   return (
-    issueData && (
-      <IssueProvider issueId={Number(issueId)}>
-        <Body>
-          <IssueHeader issueData={issueData} refreshIssue={refreshIssue} />
-          <Divider margin="2rem" />
-          <IssueBody />
-        </Body>
-      </IssueProvider>
-    )
+    <IssueProvider issueId={Number(issueId)}>
+      <Body>
+        <IssueHeader />
+        <Divider margin="2rem" />
+        <IssueBody />
+      </Body>
+    </IssueProvider>
   );
 }
 

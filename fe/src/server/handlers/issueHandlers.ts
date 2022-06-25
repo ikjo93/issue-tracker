@@ -60,11 +60,24 @@ const patchUpdatedStatus: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json(fakeIssues));
 };
 
+const updateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const newIssueData = req.body;
+  const updatedIssues = fakeIssues.map((issue) => {
+    if (issue.id === newIssueData.id) {
+      return { ...issue, ...newIssueData };
+    }
+    return issue;
+  });
+  fakeIssues = updatedIssues;
+  return res(ctx.status(200), ctx.json(fakeIssues));
+};
+
 export default function issueHandlers() {
   return [
     rest.get('/api/issues', getIssues),
-    rest.get('/api/detail/:id', getIssue),
+    rest.get('/api/issue/:id', getIssue),
     rest.post('/api/createIssue', postCreateIssue),
     rest.patch('/api/issues/status/update', patchUpdatedStatus),
+    rest.patch('/api/issue/update', updateIssue),
   ];
 }

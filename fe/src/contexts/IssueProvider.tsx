@@ -6,11 +6,12 @@ import {
   ReactNode,
   SetStateAction,
   useEffect,
+  Dispatch,
 } from 'react';
 
 import { IssueType } from '@type/types';
 
-type IssueDispatch = SetStateAction<IssueType>;
+type IssueDispatch = Dispatch<SetStateAction<IssueType>>;
 
 const IssueStateContext = createContext<IssueType | null>(null);
 const IssueDispatchContext = createContext<IssueDispatch | null>(null);
@@ -21,7 +22,7 @@ interface IIssueProvider {
 }
 
 export function IssueProvider({ issueId, children }: IIssueProvider) {
-  const [issue, setIssue] = useState(null);
+  const [issue, setIssue] = useState(initIssue);
 
   useEffect(() => {
     (async () => {
@@ -38,6 +39,23 @@ export function IssueProvider({ issueId, children }: IIssueProvider) {
     </IssueStateContext.Provider>
   );
 }
+
+const initIssue: IssueType = {
+  id: 0,
+  status: '',
+  subject: '',
+  comments: [],
+  writer: '',
+  profileUrl: '',
+  createdDateTime: '',
+  milestone: {
+    id: 0,
+    subject: '',
+    description: '',
+  },
+  assignees: [],
+  labels: [],
+};
 
 export function useIssueState() {
   const issueState = useContext(IssueStateContext);
