@@ -76,4 +76,8 @@ public class Issue extends BaseTimeEntity {
             .map(IssueLabel::getLabel)
             .collect(Collectors.toList());
     }
+
+    public void updateMilestone(Milestone milestone) {
+        this.milestone = milestone;
+    }
 }
