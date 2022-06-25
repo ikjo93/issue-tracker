@@ -25,11 +25,7 @@ public class LabelDto {
     }
 
     public static LabelDto from(Label label) {
-        if (label != null) {
-            return new LabelDto(label.getId(), label.getName(), label.getDescription(),
+        return new LabelDto(label.getId(), label.getName(), label.getDescription(),
                 label.getColor(), label.isDarkText());
-        }
-
-        return null;
     }
 }

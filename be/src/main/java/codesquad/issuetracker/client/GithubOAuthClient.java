@@ -1,21 +1,16 @@
-package codesquad.issuetracker.service;
+package codesquad.issuetracker.client;
 
-import codesquad.issuetracker.domain.Member;
 import codesquad.issuetracker.dto.auth.AuthMemberInformation;
 import codesquad.issuetracker.dto.auth.OAuthAccessToken;
-import codesquad.issuetracker.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-@RequiredArgsConstructor
+@Component
 public class GithubOAuthClient {
 
     private static final String GITHUB_AUTHORIZATION_SERVER_URL = "https://github.com/login/oauth/access_token";
@@ -23,17 +18,7 @@ public class GithubOAuthClient {
     private static final String USER_SCOPE = "user";
     private static final String GITHUB_RESOURCE_SERVER_USER_API_URL = "https://api.github.com/" + USER_SCOPE;
 
-    private final MemberRepository memberRepository;
-
-    @Transactional
-    public Long authorizeForThirdParty(String code) {
-        OAuthAccessToken token = getAccessTokenFromAuthServer(code);
-        AuthMemberInformation authMemberInformation = getAuthMemberInfoFromResourceServer(token);
-
-        return saveMember(authMemberInformation);
-    }
-
-    private OAuthAccessToken getAccessTokenFromAuthServer(String code) {
+    public OAuthAccessToken getAccessToken(String code) {
         MultiValueMap<String, String> requestHeader = getRequestHeaderForAuth();
         MultiValueMap<String, String> requestPayload = getRequestPayloadForAuth(code);
         HttpEntity<?> request = new HttpEntity<>(requestPayload, requestHeader);
@@ -58,7 +43,7 @@ public class GithubOAuthClient {
         return requestPayload;
     }
 
-    private AuthMemberInformation getAuthMemberInfoFromResourceServer(OAuthAccessToken token) {
+    public AuthMemberInformation getAuthMemberInfo(OAuthAccessToken token) {
         HttpEntity<?> request = new HttpEntity<>(getRequestHeaderForResource(token));
         ResponseEntity<AuthMemberInformation> response = new RestTemplate().exchange(
             GITHUB_RESOURCE_SERVER_USER_API_URL,
@@ -75,12 +60,5 @@ public class GithubOAuthClient {
         requestHeader.set("Accept", GITHUB_API_ACCEPT_HEADER);
         requestHeader.set("Authorization", token.getAuthorizationValue());
         return requestHeader;
-    }
-
-    private Long saveMember(AuthMemberInformation authMemberInformation) {
-        Member member = memberRepository.findByIdentity(authMemberInformation.getIdentity())
-            .orElseGet(() -> memberRepository.save(authMemberInformation));
-
-        return member.getId();
     }
 }
