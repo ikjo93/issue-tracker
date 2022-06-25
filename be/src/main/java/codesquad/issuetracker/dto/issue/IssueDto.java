@@ -11,6 +11,7 @@ import codesquad.issuetracker.dto.member.MemberDtos;
 import codesquad.issuetracker.dto.milestone.MilestoneDto;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -39,8 +40,14 @@ public class IssueDto {
             issue.getId(), issue.getStatus(), issue.getSubject(), issue.getDescription(),
             writer.getIdentity(), writer.getProfileUrl(), issue.getCreatedDateTime(),
             milestone != null ?  MilestoneDto.from(milestone) : null,
-            MemberDtos.from(issue.assignees()),
-            LabelDtos.from(issue.labels())
+            issue.assignees()
+                .stream()
+                .map(MemberDto::from)
+                .collect(Collectors.toList()),
+            issue.labels()
+                .stream()
+                .map(LabelDto::from)
+                .collect(Collectors.toList())
         );
     }
 }

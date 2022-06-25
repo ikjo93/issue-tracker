@@ -15,8 +15,4 @@ public class MemberDtos {
     public MemberDtos(List<MemberDto> members) {
         this.members = members;
     }
-
-    public static List<MemberDto> from(List<Member> members) {
-        return members.stream().map(MemberDto::from).collect(Collectors.toList());
-    }
 }

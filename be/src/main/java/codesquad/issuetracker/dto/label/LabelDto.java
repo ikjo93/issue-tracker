@@ -15,7 +15,6 @@ public class LabelDto {
 
     private LabelDto() {}
 
-    @QueryProjection
     public LabelDto(Long id, String name, String description, String color, boolean isDarkText) {
         this.id = id;
         this.name = name;

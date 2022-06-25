@@ -14,7 +14,6 @@ public class MemberDto {
 
     private MemberDto() {}
 
-    @QueryProjection
     public MemberDto(Long id, String identity, String nickname, String profileUrl) {
         this.id = id;
         this.identity = identity;
