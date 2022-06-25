@@ -35,8 +35,4 @@ public class IssueLabel {
     @NotNull
     private Label label;
 
-    public String getLabelName() {
-        return label.getName();
-    }
-
 }
