@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS issue_label;
 DROP TABLE IF EXISTS label;
 DROP TABLE IF EXISTS reply;
-DROP TABLE IF EXISTS image;
 DROP TABLE IF EXISTS assignee;
 DROP TABLE IF EXISTS issue;
 DROP TABLE IF EXISTS milestone;
@@ -34,21 +33,12 @@ CREATE TABLE issue
     member_id        BIGINT NOT NULL,
     milestone_id     BIGINT,
     subject          VARCHAR(255),
-    description      VARCHAR(255),
     status           VARCHAR(32),
     created_datetime TIMESTAMP,
     updated_datetime TIMESTAMP,
     PRIMARY KEY (issue_id),
     FOREIGN KEY (member_id) REFERENCES member (member_id),
     FOREIGN KEY (milestone_id) REFERENCES milestone (milestone_id)
-);
-
-CREATE TABLE image (
-    image_id BIGINT NOT NULL AUTO_INCREMENT,
-    issue_id BIGINT NOT NULL,
-    url VARCHAR (255),
-    PRIMARY KEY (image_id),
-    FOREIGN KEY (issue_id) REFERENCES issue (issue_id)
 );
 
 CREATE TABLE assignee

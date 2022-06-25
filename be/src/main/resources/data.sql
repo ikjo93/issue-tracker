@@ -7,11 +7,11 @@ VALUES ('이슈 트래커 서비스 구현', '프론트 및 백엔드 구현', N
        ('숙소 예약 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY),
        ('반찬 주문 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY);
 
-INSERT INTO issue (member_id, milestone_id, subject, description, status, created_datetime, updated_datetime)
-VALUES (1, 1, '백엔드 기능 구현', '백엔드', 'OPEN', NOW(), NOW()),
-       (2, 1, '프론트엔드 기능 구현', '프론트엔드', 'OPEN', NOW(), NOW()),
-       (3, null, '배포', '배포', 'OPEN', NOW(), NOW()),
-       (1, 2, '백엔드 기능 구현', '백엔드', 'CLOSED', NOW(), NOW());
+INSERT INTO issue (member_id, milestone_id, subject, status, created_datetime, updated_datetime)
+VALUES (1, 1, '백엔드 기능 구현', 'OPEN', NOW(), NOW()),
+       (2, 1, '프론트엔드 기능 구현', 'OPEN', NOW(), NOW()),
+       (3, null, '배포', 'OPEN', NOW(), NOW()),
+       (1, 2, '백엔드 기능 구현', 'CLOSED', NOW(), NOW());
 
 INSERT INTO label (name, description, color, dark_text_flag)
 VALUES ('be', '백엔드 라벨', '#333333', 0),

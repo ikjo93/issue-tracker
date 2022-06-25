@@ -5,9 +5,7 @@ import codesquad.issuetracker.domain.IssueStatus;
 import codesquad.issuetracker.domain.Member;
 import codesquad.issuetracker.domain.Milestone;
 import codesquad.issuetracker.dto.label.LabelDto;
-import codesquad.issuetracker.dto.label.LabelDtos;
 import codesquad.issuetracker.dto.member.MemberDto;
-import codesquad.issuetracker.dto.member.MemberDtos;
 import codesquad.issuetracker.dto.milestone.MilestoneDto;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +20,6 @@ public class IssueDto {
     private Long id;
     private IssueStatus status;
     private String subject;
-    private String description;
     private String writer;
     private String profileUrl;
     private LocalDateTime createdDateTime;
@@ -37,7 +34,7 @@ public class IssueDto {
         Milestone milestone = issue.getMilestone();
 
         return new IssueDto(
-            issue.getId(), issue.getStatus(), issue.getSubject(), issue.getDescription(),
+            issue.getId(), issue.getStatus(), issue.getSubject(),
             writer.getIdentity(), writer.getProfileUrl(), issue.getCreatedDateTime(),
             milestone != null ?  MilestoneDto.from(milestone) : null,
             issue.assignees()

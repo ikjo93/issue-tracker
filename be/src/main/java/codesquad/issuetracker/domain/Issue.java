@@ -42,9 +42,6 @@ public class Issue extends BaseTimeEntity {
     private Milestone milestone;
 
     @OneToMany(mappedBy = "issue")
-    private List<Image> images = new ArrayList<>();
-
-    @OneToMany(mappedBy = "issue")
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
@@ -54,7 +51,6 @@ public class Issue extends BaseTimeEntity {
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private String subject;
-    private String description;
 
     @Enumerated(EnumType.STRING)
     private IssueStatus status;
