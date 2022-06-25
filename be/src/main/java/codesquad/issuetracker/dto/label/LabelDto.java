@@ -24,7 +24,7 @@ public class LabelDto {
         this.isDarkText = isDarkText;
     }
 
-    public static LabelDto convertToDto(Label label) {
+    public static LabelDto from(Label label) {
         if (label != null) {
             return new LabelDto(label.getId(), label.getName(), label.getDescription(),
                 label.getColor(), label.isDarkText());

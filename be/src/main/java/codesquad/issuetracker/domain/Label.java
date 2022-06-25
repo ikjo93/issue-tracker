@@ -1,5 +1,6 @@
 package codesquad.issuetracker.domain;
 
+import codesquad.issuetracker.dto.label.LabelForm;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -11,12 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "label")
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Label {
 
@@ -34,4 +39,11 @@ public class Label {
 
     @Column(name = "dark_text_flag")
     private boolean isDarkText;
+
+    public void updateInfo(LabelForm form) {
+        this.name = form.getName();
+        this.description = form.getDescription();
+        this.color = form.getColor();
+        this.isDarkText = form.isDarkText();
+    }
 }

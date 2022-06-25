@@ -18,7 +18,7 @@ public class LabelDtos {
         this.labels = labels;
     }
 
-    public static List<LabelDto> convertToListDto(List<Label> labels) {
-        return labels.stream().map(LabelDto::convertToDto).collect(Collectors.toList());
+    public static List<LabelDto> from(List<Label> labels) {
+        return labels.stream().map(LabelDto::from).collect(Collectors.toList());
     }
 }
