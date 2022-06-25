@@ -26,6 +26,7 @@ export default function CreateIssuePage() {
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
+  // Todo: desciprtion 부분 CommentType에 맞게 바꿔서 넣어줘야함
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;

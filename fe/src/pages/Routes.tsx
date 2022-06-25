@@ -24,7 +24,7 @@ export default function Routes() {
           element={isLogin ? <DefaultPage /> : <Navigate to="/login" />}
         />
         <Route path="createIssue" element={<CreateIssuePage />} />
-        <Route path="detail" element={<IssueDetailPage />} />
+        <Route path="detail/:id" element={<IssueDetailPage />} />
         <Route path="list" element={<LabelMilestoneLayout />}>
           <Route path="label" element={<LabelPage />} />
           <Route path="milestone" element={<MilestonePage />} />
