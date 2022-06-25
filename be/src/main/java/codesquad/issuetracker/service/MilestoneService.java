@@ -20,9 +20,9 @@ public class MilestoneService {
     public MilestoneDtos getMilestones() {
         return new MilestoneDtos(
             milestoneRepository.findAll()
-            .stream()
-            .map(MilestoneDto::from)
-            .collect(Collectors.toList())
+                .stream()
+                .map(MilestoneDto::from)
+                .collect(Collectors.toList())
         );
     }
 
@@ -43,9 +43,7 @@ public class MilestoneService {
             throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
         });
 
-        milestone.getIssues()
-            .stream()
-            .forEach(issue -> issue.updateMilestone(null));
+        milestone.getIssues().forEach(issue -> issue.updateMilestone(null));
 
         milestoneRepository.deleteById(id);
     }
