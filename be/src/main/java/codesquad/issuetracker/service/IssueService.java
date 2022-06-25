@@ -1,7 +1,6 @@
 package codesquad.issuetracker.service;
 
 import codesquad.issuetracker.domain.Issue;
-import codesquad.issuetracker.domain.IssueLabel;
 import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
@@ -24,42 +23,26 @@ public class IssueService {
     public IssueDtos getIssuesByCriteria(IssueSearchCondition condition) {
         Set<String> labelConditions = condition.parseLabelConditions();
         Set<String> exclusionConditions = condition.parseExclusionConditions();
-        List<Issue> issues = issueRepository.search(condition, labelConditions, exclusionConditions)
-            .stream()
-            .filter(issue -> containsAllLabels(issue.getIssueLabels(), labelConditions))
-            .collect(Collectors.toList());
+        List<Issue> issues = issueRepository.search(condition, labelConditions, exclusionConditions);
 
-        List<IssueDto> selectedIssues = issues.stream()
+        List<IssueDto> selectedIssues = issues
+            .stream()
             .filter(issue -> issue.hasSameStatus(condition.getStatus()))
             .map(IssueDto::from)
             .collect(Collectors.toList());
 
-        long[] countOfIssuesByStatus = calculateCountOfIssuesByStatus(issues.size(), selectedIssues.size(), condition.isOpenStatus());
+        long totalCount = issues.size();
+        long opened = countOpened(totalCount, selectedIssues.size(), condition.isOpenStatus());
 
-        return new IssueDtos(countOfIssuesByStatus[0], countOfIssuesByStatus[1], selectedIssues);
+        return new IssueDtos(opened, totalCount - opened, selectedIssues);
     }
 
-    private boolean containsAllLabels(List<IssueLabel> issueLabels, Set<String> labelConditions) {
-        Set<String> labelsOfIssue = issueLabels
-            .stream()
-            .map(IssueLabel::getLabelName)
-            .collect(Collectors.toSet());
-
-        return labelsOfIssue.containsAll(labelConditions);
-    }
-
-    private long[] calculateCountOfIssuesByStatus(long totalCount, long countOfSelectedIssues, boolean isOpenStatus) {
-        long countOfOpenIssues, countOfClosedIssues;
-
+    private long countOpened(long totalCount, long countOfSelectedIssues, boolean isOpenStatus) {
         if (isOpenStatus) {
-            countOfOpenIssues = countOfSelectedIssues;
-            countOfClosedIssues = totalCount - countOfSelectedIssues;
-        } else {
-            countOfOpenIssues = totalCount - countOfSelectedIssues;
-            countOfClosedIssues = countOfSelectedIssues;
+            return countOfSelectedIssues;
         }
 
-        return new long[]{countOfOpenIssues, countOfClosedIssues};
+        return totalCount - countOfSelectedIssues;
     }
 
     @Transactional

@@ -48,6 +48,8 @@ public class IssueRepository {
                 isNoMilestone(exclusionConditions.contains(EXCLUSION_CONDITION_MILESTONE)),
                 isAssignedToNobody(exclusionConditions.contains(EXCLUSION_CONDITION_ASSIGNEE))
             )
+            .groupBy(issue.id)
+            .having(issue.id.count().goe(labelConditions.size()))
             .fetch();
     }
 
