@@ -1,11 +1,9 @@
-import axios from 'axios';
 import {
   useState,
   useContext,
   createContext,
   ReactNode,
   SetStateAction,
-  useEffect,
   Dispatch,
 } from 'react';
 
@@ -17,19 +15,12 @@ const IssueStateContext = createContext<IssueType | null>(null);
 const IssueDispatchContext = createContext<IssueDispatch | null>(null);
 
 interface IIssueProvider {
-  issueId: number;
+  initialIssueData: IssueType;
   children: ReactNode;
 }
 
-export function IssueProvider({ issueId, children }: IIssueProvider) {
-  const [issue, setIssue] = useState(initIssue);
-
-  useEffect(() => {
-    (async () => {
-      const { data: issueData } = await axios.get(`/api/issue/${issueId}`);
-      setIssue(issueData);
-    })();
-  }, []);
+export function IssueProvider({ initialIssueData, children }: IIssueProvider) {
+  const [issue, setIssue] = useState(initialIssueData);
 
   return (
     <IssueStateContext.Provider value={issue}>
@@ -39,23 +30,6 @@ export function IssueProvider({ issueId, children }: IIssueProvider) {
     </IssueStateContext.Provider>
   );
 }
-
-const initIssue: IssueType = {
-  id: 0,
-  status: '',
-  subject: '',
-  comments: [],
-  writer: '',
-  profileUrl: '',
-  createdDateTime: '',
-  milestone: {
-    id: 0,
-    subject: '',
-    description: '',
-  },
-  assignees: [],
-  labels: [],
-};
 
 export function useIssueState() {
   const issueState = useContext(IssueStateContext);
