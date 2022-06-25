@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Divider from '@components/Divider';
-import Header from '@components/Header';
 import IssueBody from '@components/IssueBody';
 import IssueHeader from '@components/IssueHeader';
+import { IssueProvider } from '@contexts/IssueProvider';
 import useAxios from '@hooks/useAxios';
 import { IssueType } from '@type/types';
 
@@ -20,14 +20,13 @@ export default function IssueDetailPage() {
 
   return (
     issueData && (
-      <>
-        <Header />
+      <IssueProvider issueId={Number(issueId)}>
         <Body>
           <IssueHeader issueData={issueData} refreshIssue={refreshIssue} />
           <Divider margin="2rem" />
           <IssueBody />
         </Body>
-      </>
+      </IssueProvider>
     )
   );
 }

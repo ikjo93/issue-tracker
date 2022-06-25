@@ -6,14 +6,22 @@ import IconTextBox from '@components/IconTextBox';
 import Squircle from '@components/Squircle';
 import { fontSize } from '@constants/fonts';
 import mixin from '@style/mixin';
+import { IssueType } from '@type/types';
+import { calTimePassed } from '@util/dateHandler';
 
-export default function IssueInfo() {
+interface IIssueInfoProps {
+  issueData: IssueType;
+}
+
+export default function IssueInfo({ issueData }: IIssueInfoProps) {
   const theme = useTheme();
+  const { subject, id, writer, comments, createdDateTime } = issueData;
+
   return (
     <Container>
       <Container flexInfo={{ align: 'center' }} gap={1}>
-        <IssueTitle>FE이슈트래커 디자인 시스템 구현</IssueTitle>
-        <IssueNumber>#2</IssueNumber>
+        <IssueTitle>{subject}</IssueTitle>
+        <IssueNumber>{`#${id}`}</IssueNumber>
       </Container>
       <Container flexInfo={{ align: 'center' }} gap={0.5} mt="1.25rem">
         <IssueStatusBadge
@@ -32,9 +40,11 @@ export default function IssueInfo() {
         </IssueStatusBadge>
         <IconTextBox
           texts={[
-            '이 이슈가 23분 전에 Oni님에 의해 열렸습니다',
+            `이 이슈가 ${calTimePassed(
+              new Date(createdDateTime),
+            )} 전에 ${writer}님에 의해 열렸습니다`,
             '·',
-            '코멘트 2개',
+            `코멘트 ${comments.length}개`,
           ]}
           spacing={0.5}
           color={theme.palette.placeholder}
