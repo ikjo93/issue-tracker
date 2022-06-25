@@ -36,7 +36,7 @@ public class Reply {
     @NotNull
     private Member member;
 
-    private String content;
+    private String comment;
 
     @Column(name = "created_datetime")
     private LocalDateTime createdDateTime;

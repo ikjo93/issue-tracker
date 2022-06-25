@@ -56,7 +56,7 @@ CREATE TABLE reply
     reply_id         BIGINT NOT NULL AUTO_INCREMENT,
     issue_id         BIGINT NOT NULL,
     member_id        BIGINT NOT NULL,
-    content          VARCHAR(255),
+    comment          VARCHAR(255),
     created_datetime TIMESTAMP,
     updated_datetime TIMESTAMP,
     PRIMARY KEY (reply_id),
