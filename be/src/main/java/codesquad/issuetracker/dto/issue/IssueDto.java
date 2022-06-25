@@ -3,6 +3,7 @@ package codesquad.issuetracker.dto.issue;
 import codesquad.issuetracker.domain.Issue;
 import codesquad.issuetracker.domain.IssueStatus;
 import codesquad.issuetracker.domain.Member;
+import codesquad.issuetracker.domain.Milestone;
 import codesquad.issuetracker.dto.label.LabelDto;
 import codesquad.issuetracker.dto.label.LabelDtos;
 import codesquad.issuetracker.dto.member.MemberDto;
@@ -30,14 +31,16 @@ public class IssueDto {
 
     private IssueDto() {}
 
-    public static IssueDto of(Issue issue) {
+    public static IssueDto from(Issue issue) {
         Member writer = issue.getWriter();
+        Milestone milestone = issue.getMilestone();
+
         return new IssueDto(
             issue.getId(), issue.getStatus(), issue.getSubject(), issue.getDescription(),
             writer.getIdentity(), writer.getProfileUrl(), issue.getCreatedDateTime(),
-            MilestoneDto.convertToDto(issue.getMilestone()),
-            MemberDtos.convertToListDto(issue.assignees()),
-            LabelDtos.convertToListDto(issue.labels())
+            milestone != null ?  MilestoneDto.from(milestone) : null,
+            MemberDtos.from(issue.assignees()),
+            LabelDtos.from(issue.labels())
         );
     }
 }

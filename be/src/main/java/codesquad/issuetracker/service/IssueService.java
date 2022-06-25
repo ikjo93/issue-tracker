@@ -31,7 +31,7 @@ public class IssueService {
 
         List<IssueDto> selectedIssues = issues.stream()
             .filter(issue -> issue.hasSameStatus(condition.getStatus()))
-            .map(IssueDto::of)
+            .map(IssueDto::from)
             .collect(Collectors.toList());
 
         long[] countOfIssuesByStatus = calculateCountOfIssuesByStatus(issues.size(), selectedIssues.size(), condition.isOpenStatus());
