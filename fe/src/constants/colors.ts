@@ -12,7 +12,7 @@ const colors = {
   grey1: '#D9DBE9',
   grey2: '#30363d',
   grey3: '#A0A3BD',
-  label: '#6E7191',
+  grey4: '#6E7191',
   blue: '#007AFF',
   skyBlue: '#C7EBFF',
   red: '#d63031',
