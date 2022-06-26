@@ -12,16 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "milestone")
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Milestone {
 
@@ -36,6 +32,16 @@ public class Milestone {
     private String subject;
     private String description;
     private LocalDate endDate;
+
+    public Milestone(String subject, String description, LocalDate endDate) {
+        this.subject = subject;
+        this.description = description;
+        this.endDate = endDate;
+    }
+
+    public static Milestone createMilestone(MilestoneForm form) {
+        return new Milestone(form.getSubject(), form.getDescription(), form.getEndDate());
+    }
 
     public void updateInfo(MilestoneForm form) {
         this.subject = form.getSubject();
