@@ -55,6 +55,13 @@ public class Issue extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private IssueStatus status;
 
+    private Issue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+        this.writer = writer;
+        this.milestone = milestone;
+        this.subject = subject;
+        this.status = status;
+    }
+
     public boolean hasSameStatus(IssueStatus status) {
         return this.status.equals(status);
     }
@@ -75,5 +82,21 @@ public class Issue extends BaseTimeEntity {
 
     public void updateMilestone(Milestone milestone) {
         this.milestone = milestone;
+    }
+
+    public static Issue createIssue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+        return new Issue(writer, milestone, subject, IssueStatus.OPEN);
+    }
+
+    public void addReply(Reply reply) {
+        this.replies.add(reply);
+    }
+
+    public void addAssignee(Assignee assignee) {
+        this.assignees.add(assignee);
+    }
+
+    public void addIssueLabel(IssueLabel issueLabel) {
+        this.issueLabels.add(issueLabel);
     }
 }

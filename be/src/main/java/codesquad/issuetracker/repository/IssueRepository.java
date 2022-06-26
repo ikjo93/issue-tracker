@@ -17,6 +17,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,7 @@ public class IssueRepository {
     private static final String EXCLUSION_CONDITION_MILESTONE = "milestone";
     private static final String EXCLUSION_CONDITION_ASSIGNEE = "assignee";
 
+    private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
     public List<Issue> search(IssueSearchCondition condition, Set<String> labelConditions,
@@ -59,6 +61,10 @@ public class IssueRepository {
             .set(issue.status, updatedStatus)
             .where(issue.id.in(idOfIssues))
             .execute();
+    }
+
+    public void save(Issue issue) {
+        em.persist(issue);
     }
 
     private BooleanExpression writerIdentityEq(String writer) {

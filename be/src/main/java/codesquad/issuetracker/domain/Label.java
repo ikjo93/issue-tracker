@@ -12,16 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "label")
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Label {
 
@@ -40,10 +36,21 @@ public class Label {
     @Column(name = "dark_text_flag")
     private boolean isDarkText;
 
+    private Label(String name, String description, String color, boolean isDarkText) {
+        this.name = name;
+        this.description = description;
+        this.color = color;
+        this.isDarkText = isDarkText;
+    }
+
     public void updateInfo(LabelForm form) {
         this.name = form.getName();
         this.description = form.getDescription();
         this.color = form.getColor();
         this.isDarkText = form.isDarkText();
+    }
+
+    public static Label createLabel(LabelForm form) {
+        return new Label(form.getName(), form.getDescription(), form.getColor(), form.isDarkText());
     }
 }

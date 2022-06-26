@@ -34,4 +34,13 @@ public class Assignee {
     @JoinColumn(name = "member_id")
     @NotNull
     private Member member;
+
+    private Assignee(Issue issue, Member member) {
+        this.issue = issue;
+        this.member = member;
+    }
+
+    public static Assignee createAssignee(Issue issue, Member member) {
+        return new Assignee(issue, member);
+    }
 }
