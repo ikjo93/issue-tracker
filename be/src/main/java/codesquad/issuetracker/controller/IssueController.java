@@ -3,6 +3,7 @@ package codesquad.issuetracker.controller;
 import codesquad.issuetracker.dto.ResponseMessage;
 import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
+import codesquad.issuetracker.dto.issue.form.IssueAssigneeUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueCreateForm;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import codesquad.issuetracker.dto.issue.form.IssueLabelUpdateForm;
@@ -63,6 +64,12 @@ public class IssueController {
     public ResponseMessage updateLabels(@PathVariable Long id, @RequestBody IssueLabelUpdateForm form) {
         issueService.updateLabels(id, form.getLabels());
         return new ResponseMessage(HttpStatus.OK, "이슈의 라벨 수정이 정상적으로 처리되었습니다.");
+    }
+
+    @PatchMapping("/api/issues/{id}/assignees/update")
+    public ResponseMessage updateAssignees(@PathVariable Long id, @RequestBody IssueAssigneeUpdateForm form) {
+        issueService.updateAssignee(id, form.getAssignees());
+        return new ResponseMessage(HttpStatus.OK, "이슈의 담당자 수정이 정상적으로 처리되었습니다.");
     }
 
     @DeleteMapping("/api/issues/{id}")

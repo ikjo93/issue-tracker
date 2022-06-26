@@ -15,6 +15,7 @@ import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
+import codesquad.issuetracker.repository.AssigneeRepository;
 import codesquad.issuetracker.repository.IssueLabelRepository;
 import codesquad.issuetracker.repository.IssueRepository;
 import codesquad.issuetracker.repository.LabelRepository;
@@ -37,6 +38,7 @@ public class IssueService {
     private final MilestoneRepository milestoneRepository;
     private final LabelRepository labelRepository;
     private final IssueLabelRepository issueLabelRepository;
+    private final AssigneeRepository assigneeRepository;
 
     public IssueDtos getIssuesByCriteria(IssueSearchCondition condition) {
         Set<String> labelConditions = condition.parseLabelConditions();
@@ -137,6 +139,19 @@ public class IssueService {
 
         labelRepository.findAllById(ids)
             .forEach(label -> issue.addIssueLabel(IssueLabel.createIssueLabel(issue, label)));
+    }
+
+    @Transactional
+    public void updateAssignee(Long id, List<Long> ids) {
+        Issue issue = getIssueById(id);
+        assigneeRepository.deleteByIssueId(issue.getId());
+
+        if (ids.size() == 0) {
+            return;
+        }
+
+        memberRepository.findAllById(ids)
+            .forEach(member -> issue.addAssignee(Assignee.createAssignee(issue, member)));
     }
 
     @Transactional
