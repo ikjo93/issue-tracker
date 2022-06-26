@@ -96,15 +96,14 @@ public class Issue extends BaseTimeEntity {
         this.issueLabels.add(issueLabel);
     }
 
-    public void updateMilestone(Milestone milestone) {
-        this.milestone = milestone;
+    public void updateStatus(IssueStatus status) {
+        this.status = status;
     }
 
     public void updateSubject(String subject) {
         this.subject = subject;
     }
-
-    public void updateStatus(IssueStatus status) {
-        this.status = status;
+    public void updateMilestone(Milestone milestone) {
+        this.milestone = milestone;
     }
 }

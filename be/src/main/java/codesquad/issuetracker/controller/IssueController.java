@@ -5,6 +5,7 @@ import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
 import codesquad.issuetracker.dto.issue.form.IssueCreateForm;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
+import codesquad.issuetracker.dto.issue.form.IssueLabelUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueMilestoneUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueSubjectUpdateForm;
@@ -32,7 +33,7 @@ public class IssueController {
 
     @GetMapping("/api/issues/{id}")
     public IssueDto issue(@PathVariable Long id) {
-        return issueService.getIssueById(id);
+        return issueService.getIssueDtoById(id);
     }
 
     @PostMapping("/api/issues")
@@ -56,6 +57,12 @@ public class IssueController {
     public ResponseMessage updateMilestone(@PathVariable Long id, @RequestBody IssueMilestoneUpdateForm form) {
         issueService.updateMilestone(id, form.getMilestoneId());
         return new ResponseMessage(HttpStatus.OK, "이슈의 마일스톤 수정이 정상적으로 처리되었습니다.");
+    }
+
+    @PatchMapping("/api/issues/{id}/labels/update")
+    public ResponseMessage updateLabels(@PathVariable Long id, @RequestBody IssueLabelUpdateForm form) {
+        issueService.updateLabels(id, form.getLabels());
+        return new ResponseMessage(HttpStatus.OK, "이슈의 라벨 수정이 정상적으로 처리되었습니다.");
     }
 
     @DeleteMapping("/api/issues/{id}")

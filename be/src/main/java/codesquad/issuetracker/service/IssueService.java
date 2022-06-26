@@ -15,6 +15,7 @@ import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
+import codesquad.issuetracker.repository.IssueLabelRepository;
 import codesquad.issuetracker.repository.IssueRepository;
 import codesquad.issuetracker.repository.LabelRepository;
 import codesquad.issuetracker.repository.MemberRepository;
@@ -35,11 +36,13 @@ public class IssueService {
     private final MemberRepository memberRepository;
     private final MilestoneRepository milestoneRepository;
     private final LabelRepository labelRepository;
+    private final IssueLabelRepository issueLabelRepository;
 
     public IssueDtos getIssuesByCriteria(IssueSearchCondition condition) {
         Set<String> labelConditions = condition.parseLabelConditions();
         Set<String> exclusionConditions = condition.parseExclusionConditions();
-        List<Issue> issues = issueRepository.search(condition, labelConditions, exclusionConditions);
+        List<Issue> issues = issueRepository.search(condition, labelConditions,
+            exclusionConditions);
 
         List<IssueDto> selectedIssues = issues
             .stream()
@@ -61,7 +64,7 @@ public class IssueService {
         return totalCount - countOfSelectedIssues;
     }
 
-    public IssueDto getIssueById(Long id) {
+    public IssueDto getIssueDtoById(Long id) {
         Issue issue = issueRepository.findById(id).orElseThrow(() -> {
             throw new IllegalStateException("존재하지 않는 이슈입니다.");
         });
@@ -95,24 +98,6 @@ public class IssueService {
         return IssueDto.from(issue);
     }
 
-    private Member getMemberById(Long id) {
-        return memberRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 회원입니다.");
-        });
-    }
-
-    private Milestone getMilestoneById(Long milestoneId) {
-        return milestoneRepository.findById(milestoneId).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
-        });
-    }
-
-    private Label getLabelById(Long labelId) {
-        return labelRepository.findById(labelId).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 라벨입니다.");
-        });
-    }
-
     @Transactional
     public void updateStatus(IssueStatusUpdateForm form) {
         List<Issue> issues = issueRepository.findAllById(form.getIdOfIssues());
@@ -122,33 +107,64 @@ public class IssueService {
 
     @Transactional
     public void updateSubject(Long id, String subject) {
-        Issue issue = issueRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 이슈입니다.");
-        });
+        Issue issue = getIssueById(id);
 
         issue.updateSubject(subject);
     }
 
     @Transactional
     public void updateMilestone(Long id, Long milestoneId) {
-        Issue issue = issueRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 이슈입니다.");
-        });
+        Issue issue = getIssueById(id);
 
         if (milestoneId == null) {
             issue.updateMilestone(null);
             return;
         }
 
-        Milestone milestone = milestoneRepository.findById(milestoneId).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
-        });
+        Milestone milestone = getMilestoneById(milestoneId);
 
         issue.updateMilestone(milestone);
     }
 
     @Transactional
+    public void updateLabels(Long id, List<Long> ids) {
+        Issue issue = getIssueById(id);
+        issueLabelRepository.deleteByIssueId(issue.getId());
+
+        if (ids.size() == 0) {
+            return;
+        }
+
+        labelRepository.findAllById(ids)
+            .forEach(label -> issue.addIssueLabel(IssueLabel.createIssueLabel(issue, label)));
+    }
+
+    @Transactional
     public void delete(Long id) {
         issueRepository.deleteById(id);
+    }
+
+    private Issue getIssueById(Long id) {
+        return issueRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 이슈입니다.");
+        });
+    }
+
+    private Member getMemberById(Long id) {
+        return memberRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 회원입니다.");
+        });
+    }
+
+    private Milestone getMilestoneById(Long id) {
+        return milestoneRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
+        });
+    }
+
+    private Label getLabelById(Long id) {
+        return labelRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 라벨입니다.");
+        });
     }
 }
