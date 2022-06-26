@@ -9,8 +9,10 @@ import codesquad.issuetracker.dto.issue.IssueStatusUpdateForm;
 import codesquad.issuetracker.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,5 +37,11 @@ public class IssueController {
     @PostMapping("/api/issues")
     public IssueDto create(@RequestBody IssueCreateForm form) {
         return issueService.create(form);
+    }
+
+    @DeleteMapping("/api/issues/{id}")
+    public ResponseMessage delete(@PathVariable Long id) {
+        issueService.delete(id);
+        return new ResponseMessage(HttpStatus.OK, "이슈 삭제가 정상적으로 처리되었습니다.");
     }
 }

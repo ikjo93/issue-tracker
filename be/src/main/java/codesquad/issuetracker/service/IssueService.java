@@ -116,4 +116,9 @@ public class IssueService {
 
         return label;
     }
+
+    @Transactional
+    public void delete(Long id) {
+        issueRepository.deleteById(id);
+    }
 }
