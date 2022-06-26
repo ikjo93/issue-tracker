@@ -22,5 +22,5 @@ INSERT INTO issue_label (issue_id, label_id) VALUES (1, 1), (2, 1), (1, 3), (2, 
 
 INSERT INTO assignee (issue_id, member_id) VALUES(1, 1);
 
-INSERT INTO reply (issue_id, member_id, content, created_datetime, updated_datetime)
+INSERT INTO reply (issue_id, member_id, comment, created_datetime, updated_datetime)
 VALUES (1, 1, '굿!!', NOW(), NOW()), (2, 2, '굿!!', NOW(), NOW()), (3, 3, '굿!!', NOW(), NOW());
