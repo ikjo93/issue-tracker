@@ -38,8 +38,7 @@ public class LabelController {
     }
 
     @PatchMapping("/api/labels/{id}")
-    public ResponseMessage update(@PathVariable Long id, @RequestBody LabelForm form) {
-        labelService.update(id, form);
-        return new ResponseMessage(HttpStatus.OK, "정상적으로 편집 처리되었습니다.");
+    public LabelDto update(@PathVariable Long id, @RequestBody LabelForm form) {
+        return labelService.update(id, form);
     }
 }

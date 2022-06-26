@@ -38,8 +38,7 @@ public class MilestoneController {
     }
 
     @PatchMapping("/api/milestones/{id}")
-    public ResponseMessage update(@PathVariable Long id, @RequestBody MilestoneForm form) {
-        milestoneService.update(id, form);
-        return new ResponseMessage(HttpStatus.OK, "정상적으로 편집 처리되었습니다.");
+    public MilestoneDto update(@PathVariable Long id, @RequestBody MilestoneForm form) {
+        return milestoneService.update(id, form);
     }
 }

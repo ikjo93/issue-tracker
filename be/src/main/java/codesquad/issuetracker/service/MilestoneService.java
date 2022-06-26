@@ -28,13 +28,7 @@ public class MilestoneService {
 
     @Transactional
     public MilestoneDto save(MilestoneForm form) {
-        Milestone milestone = Milestone.builder()
-            .subject(form.getSubject())
-            .description(form.getDescription())
-            .endDate(form.getEndDate())
-            .build();
-
-        return MilestoneDto.from(milestoneRepository.save(milestone));
+        return MilestoneDto.from(milestoneRepository.save(Milestone.createMilestone(form)));
     }
 
     @Transactional
@@ -49,11 +43,13 @@ public class MilestoneService {
     }
 
     @Transactional
-    public void update(Long id, MilestoneForm form) {
+    public MilestoneDto update(Long id, MilestoneForm form) {
         Milestone milestone = milestoneRepository.findById(id).orElseThrow(() -> {
             throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
         });
 
         milestone.updateInfo(form);
+
+        return MilestoneDto.from(milestone);
     }
 }

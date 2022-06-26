@@ -26,14 +26,7 @@ public class LabelService {
 
     @Transactional
     public LabelDto save(LabelForm form) {
-        Label label = Label.builder()
-            .name(form.getName())
-            .description(form.getDescription())
-            .color(form.getColor())
-            .isDarkText(form.isDarkText())
-            .build();
-
-        return LabelDto.from(labelRepository.save(label));
+        return LabelDto.from(labelRepository.save(Label.createLabel(form)));
     }
 
     @Transactional
@@ -42,11 +35,13 @@ public class LabelService {
     }
 
     @Transactional
-    public void update(Long id, LabelForm form) {
+    public LabelDto update(Long id, LabelForm form) {
         Label label = labelRepository.findById(id).orElseThrow(() -> {
             throw new IllegalStateException("존재하지 않는 라벨입니다.");
         });
 
         label.updateInfo(form);
+
+        return LabelDto.from(label);
     }
 }
