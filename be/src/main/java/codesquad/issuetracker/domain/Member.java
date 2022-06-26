@@ -1,5 +1,6 @@
 package codesquad.issuetracker.domain;
 
+import codesquad.issuetracker.dto.auth.AuthMemberInformation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -12,16 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "member")
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -48,4 +45,17 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Assignee> assignees = new ArrayList<>();
 
+    private Member(MemberType type, String identity, String email, String name,
+        String profileUrl) {
+        this.type = type;
+        this.identity = identity;
+        this.email = email;
+        this.name = name;
+        this.profileUrl = profileUrl;
+    }
+
+    public static Member createGithubMember(AuthMemberInformation info) {
+        return new Member(MemberType.GITHUB, info.getIdentity(), info.getEmail(),
+            info.getName(), info.getProfileUrl());
+    }
 }

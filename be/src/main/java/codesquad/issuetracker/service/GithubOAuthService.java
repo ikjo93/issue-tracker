@@ -26,20 +26,12 @@ public class GithubOAuthService {
         return saveAuthMember(authMemberInformation);
     }
 
-    private Long saveAuthMember(AuthMemberInformation authMember) {
+    private Long saveAuthMember(AuthMemberInformation info) {
         Member member = Optional.ofNullable(
-                memberRepository.findByIdentityAndType(authMember.getIdentity(), MemberType.GITHUB)
+                memberRepository.findByIdentityAndType(info.getIdentity(), MemberType.GITHUB)
             )
             .orElseGet(() ->
-                memberRepository.save(
-                    Member.builder()
-                        .type(MemberType.GITHUB)
-                        .identity(authMember.getIdentity())
-                        .profileUrl(authMember.getProfileUrl())
-                        .name(authMember.getName())
-                        .email(authMember.getEmail())
-                        .build()
-                )
+                memberRepository.save(Member.createGithubMember(info))
             );
 
         return member.getId();
