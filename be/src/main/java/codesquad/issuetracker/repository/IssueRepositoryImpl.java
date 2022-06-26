@@ -84,11 +84,11 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
     }
 
     @Override
-    public void update(IssueStatus updatedStatus, List<Long> idOfIssues) {
+    public void updateStatusOfIssues(IssueStatus updatedStatus, List<Long> ids) {
         queryFactory
             .update(issue)
             .set(issue.status, updatedStatus)
-            .where(issue.id.in(idOfIssues))
+            .where(issue.id.in(ids))
             .execute();
     }
 }

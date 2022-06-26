@@ -6,6 +6,7 @@ import codesquad.issuetracker.dto.issue.IssueDtos;
 import codesquad.issuetracker.dto.issue.IssueCreateForm;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import codesquad.issuetracker.dto.issue.IssueStatusUpdateForm;
+import codesquad.issuetracker.dto.issue.IssueSubjectUpdateForm;
 import codesquad.issuetracker.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,15 +29,26 @@ public class IssueController {
         return issueService.getIssuesByCriteria(condition);
     }
 
-    @PatchMapping("/api/issues/status/update")
-    public ResponseMessage update(@RequestBody IssueStatusUpdateForm form) {
-        issueService.updateStatusByIssueId(form);
-        return new ResponseMessage(HttpStatus.OK, "이슈의 상태 변경이 정상적으로 처리되었습니다.");
+    @GetMapping("/api/issues/{id}")
+    public IssueDto issue(@PathVariable Long id) {
+        return issueService.getIssueById(id);
     }
 
     @PostMapping("/api/issues")
     public IssueDto create(@RequestBody IssueCreateForm form) {
         return issueService.create(form);
+    }
+
+    @PatchMapping("/api/issues/status/update")
+    public ResponseMessage updateStatus(@RequestBody IssueStatusUpdateForm form) {
+        issueService.updateStatus(form);
+        return new ResponseMessage(HttpStatus.OK, "이슈의 상태 변경이 정상적으로 처리되었습니다.");
+    }
+
+    @PatchMapping("/api/issues/{id}/subject/update")
+    public ResponseMessage updateInfo(@PathVariable Long id, @RequestBody IssueSubjectUpdateForm form) {
+        issueService.updateSubject(id, form.getSubject());
+        return new ResponseMessage(HttpStatus.OK, "이슈의 제목 편집이 정상적으로 처리되었습니다.");
     }
 
     @DeleteMapping("/api/issues/{id}")

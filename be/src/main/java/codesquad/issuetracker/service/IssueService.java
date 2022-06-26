@@ -61,9 +61,11 @@ public class IssueService {
         return totalCount - countOfSelectedIssues;
     }
 
-    @Transactional
-    public void updateStatusByIssueId(IssueStatusUpdateForm updateForm) {
-        issueRepository.update(updateForm.getUpdatedStatus(), updateForm.getIdOfIssues());
+    public IssueDto getIssueById(Long id) {
+        Issue issue = issueRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 이슈입니다.");
+        });
+        return IssueDto.from(issue);
     }
 
     @Transactional
@@ -115,6 +117,20 @@ public class IssueService {
         });
 
         return label;
+    }
+
+    @Transactional
+    public void updateStatus(IssueStatusUpdateForm form) {
+        issueRepository.updateStatusOfIssues(form.getUpdatedStatus(), form.getIdOfIssues());
+    }
+
+    @Transactional
+    public void updateSubject(Long id, String subject) {
+        Issue issue = issueRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 이슈입니다.");
+        });
+
+        issue.updateSubject(subject);
     }
 
     @Transactional

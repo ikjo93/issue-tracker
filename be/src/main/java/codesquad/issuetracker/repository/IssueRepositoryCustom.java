@@ -10,6 +10,6 @@ public interface IssueRepositoryCustom {
 
     List<Issue> search(IssueSearchCondition condition, Set<String> labelConditions, Set<String> exclusionConditions);
 
-    void update(IssueStatus updatedStatus, List<Long> idOfIssues);
+    void updateStatusOfIssues(IssueStatus updatedStatus, List<Long> ids);
 
 }

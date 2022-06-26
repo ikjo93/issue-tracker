@@ -99,4 +99,8 @@ public class Issue extends BaseTimeEntity {
     public void addIssueLabel(IssueLabel issueLabel) {
         this.issueLabels.add(issueLabel);
     }
+
+    public void updateSubject(String subject) {
+        this.subject = subject;
+    }
 }
