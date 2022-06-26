@@ -13,7 +13,6 @@ import codesquad.issuetracker.domain.IssueStatus;
 import codesquad.issuetracker.domain.QAssignee;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +44,7 @@ public class IssueRepository {
                 milestoneSubjectEq(condition.getMilestone()),
                 assigneeIdentityEq(condition.getAssignee()),
                 replierIdentityEq(condition.getReplier()),
-                labelNamesAllEq(labelConditions),
+                inLabelNames(labelConditions),
                 isUnLabeled(exclusionConditions.contains(EXCLUSION_CONDITION_LABEL)),
                 isNoMilestone(exclusionConditions.contains(EXCLUSION_CONDITION_MILESTONE)),
                 isAssignedToNobody(exclusionConditions.contains(EXCLUSION_CONDITION_ASSIGNEE))
@@ -83,20 +82,8 @@ public class IssueRepository {
         return hasText(replier) ? reply.member.identity.eq(replier) : null;
     }
 
-    private BooleanExpression labelNameEq(String labelName) {
-        return hasText(labelName) ? issueLabel.label.name.eq(labelName) : null;
-    }
-
-    private BooleanExpression labelNamesAllEq(Set<String> labelNames) {
-        if (labelNames.size() < 1) {
-            return null;
-        }
-
-        BooleanExpression booleanExpression = Expressions.asBoolean(false).isTrue();
-        for (String labelName : labelNames) {
-            booleanExpression = booleanExpression.or(labelNameEq(labelName));
-        }
-        return booleanExpression;
+    private BooleanExpression inLabelNames(Set<String> labelNames) {
+        return labelNames.size() > 0 ? issueLabel.label.name.in(labelNames) : null;
     }
 
     private BooleanExpression isUnLabeled(boolean flag) {
