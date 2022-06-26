@@ -1,4 +1,4 @@
-package codesquad.issuetracker.dto.issue;
+package codesquad.issuetracker.dto.issue.form;
 
 import codesquad.issuetracker.domain.IssueStatus;
 import java.util.List;

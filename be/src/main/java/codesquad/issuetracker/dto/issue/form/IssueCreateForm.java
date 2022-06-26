@@ -1,4 +1,4 @@
-package codesquad.issuetracker.dto.issue;
+package codesquad.issuetracker.dto.issue.form;
 
 import java.util.List;
 import lombok.Getter;

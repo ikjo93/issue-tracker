@@ -3,10 +3,11 @@ package codesquad.issuetracker.controller;
 import codesquad.issuetracker.dto.ResponseMessage;
 import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
-import codesquad.issuetracker.dto.issue.IssueCreateForm;
+import codesquad.issuetracker.dto.issue.form.IssueCreateForm;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
-import codesquad.issuetracker.dto.issue.IssueStatusUpdateForm;
-import codesquad.issuetracker.dto.issue.IssueSubjectUpdateForm;
+import codesquad.issuetracker.dto.issue.form.IssueMilestoneUpdateForm;
+import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
+import codesquad.issuetracker.dto.issue.form.IssueSubjectUpdateForm;
 import codesquad.issuetracker.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,9 +47,15 @@ public class IssueController {
     }
 
     @PatchMapping("/api/issues/{id}/subject/update")
-    public ResponseMessage updateInfo(@PathVariable Long id, @RequestBody IssueSubjectUpdateForm form) {
+    public ResponseMessage updateSubject(@PathVariable Long id, @RequestBody IssueSubjectUpdateForm form) {
         issueService.updateSubject(id, form.getSubject());
         return new ResponseMessage(HttpStatus.OK, "이슈의 제목 편집이 정상적으로 처리되었습니다.");
+    }
+
+    @PatchMapping("/api/issues/{id}/milestone/update")
+    public ResponseMessage updateMilestone(@PathVariable Long id, @RequestBody IssueMilestoneUpdateForm form) {
+        issueService.updateMilestone(id, form.getMilestoneId());
+        return new ResponseMessage(HttpStatus.OK, "이슈의 마일스톤 수정이 정상적으로 처리되었습니다.");
     }
 
     @DeleteMapping("/api/issues/{id}")

@@ -62,6 +62,10 @@ public class Issue extends BaseTimeEntity {
         this.status = status;
     }
 
+    public static Issue createIssue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+        return new Issue(writer, milestone, subject, IssueStatus.OPEN);
+    }
+
     public boolean hasSameStatus(IssueStatus status) {
         return this.status.equals(status);
     }
@@ -80,14 +84,6 @@ public class Issue extends BaseTimeEntity {
             .collect(Collectors.toList());
     }
 
-    public void updateMilestone(Milestone milestone) {
-        this.milestone = milestone;
-    }
-
-    public static Issue createIssue(Member writer, Milestone milestone, String subject, IssueStatus status) {
-        return new Issue(writer, milestone, subject, IssueStatus.OPEN);
-    }
-
     public void addReply(Reply reply) {
         this.replies.add(reply);
     }
@@ -100,7 +96,15 @@ public class Issue extends BaseTimeEntity {
         this.issueLabels.add(issueLabel);
     }
 
+    public void updateMilestone(Milestone milestone) {
+        this.milestone = milestone;
+    }
+
     public void updateSubject(String subject) {
         this.subject = subject;
+    }
+
+    public void updateStatus(IssueStatus status) {
+        this.status = status;
     }
 }

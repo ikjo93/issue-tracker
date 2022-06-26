@@ -82,13 +82,4 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
     private BooleanExpression isAssignedToNobody(boolean flag) {
         return flag ? assignee.id.isNull() : null;
     }
-
-    @Override
-    public void updateStatusOfIssues(IssueStatus updatedStatus, List<Long> ids) {
-        queryFactory
-            .update(issue)
-            .set(issue.status, updatedStatus)
-            .where(issue.id.in(ids))
-            .execute();
-    }
 }
