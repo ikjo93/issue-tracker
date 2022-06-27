@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
+import { useLabelContext } from '@contexts/LabelProvider';
 import mixin from '@style/mixin';
 
-export default function LabelTableHeader({ labelsCount }) {
+export default function LabelTableHeader() {
+  const { labels } = useLabelContext();
+
   return (
     <LabelTableHeaderContainer>
-      <span>{labelsCount}개의 레이블</span>
+      <span>{labels?.length}개의 레이블</span>
     </LabelTableHeaderContainer>
   );
 }

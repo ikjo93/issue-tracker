@@ -61,7 +61,7 @@ const patchUpdatedStatus: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
 };
 
 const updateIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
-  const newIssueData = req.body;
+  const newIssueData: Partial<IssueType> = req.body;
   const updatedIssues = fakeIssues.map((issue) => {
     if (issue.id === newIssueData.id) {
       return { ...issue, ...newIssueData };
