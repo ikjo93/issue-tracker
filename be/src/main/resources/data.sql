@@ -2,10 +2,10 @@ INSERT INTO member (type, identity, password, email, name, profile_url) VALUES (
 INSERT INTO member (type, identity, password, email, name, profile_url) VALUES ('NORMAL', 'park', '1234', 'park@naver.com', '파크', 'https://avatars.githubusercontent.com/u/58503584?v=4');
 INSERT INTO member (type, identity, password, email, name, profile_url) VALUES ('NORMAL', 'alan', '1234', 'alan@naver.com', '앨런', 'https://avatars.githubusercontent.com/u/95538993?v=4');
 
-INSERT INTO milestone (subject, description, end_date)
-VALUES ('이슈 트래커 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY),
-       ('숙소 예약 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY),
-       ('반찬 주문 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY);
+INSERT INTO milestone (subject, description, end_date, status)
+VALUES ('이슈 트래커 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY, 'OPEN'),
+       ('숙소 예약 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY, 'OPEN'),
+       ('반찬 주문 서비스 구현', '프론트 및 백엔드 구현', NOW() + INTERVAL 14 DAY, 'OPEN');
 
 INSERT INTO issue (member_id, milestone_id, subject, status, created_datetime, updated_datetime)
 VALUES (1, 1, '백엔드 기능 구현', 'OPEN', NOW(), NOW()),

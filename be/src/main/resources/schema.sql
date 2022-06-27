@@ -24,6 +24,7 @@ CREATE TABLE milestone
     subject      VARCHAR(64),
     description  VARCHAR(255),
     end_date     TIMESTAMP,
+    status       VARCHAR(32),
     PRIMARY KEY (milestone_id)
 );
 
