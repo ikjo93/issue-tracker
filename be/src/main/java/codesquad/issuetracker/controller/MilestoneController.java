@@ -4,7 +4,9 @@ import codesquad.issuetracker.dto.ResponseMessage;
 import codesquad.issuetracker.dto.milestone.MilestoneDto;
 import codesquad.issuetracker.dto.milestone.MilestoneDtos;
 import codesquad.issuetracker.dto.milestone.MilestoneForm;
+import codesquad.issuetracker.dto.milestone.MilestoneStatusUpdateForm;
 import codesquad.issuetracker.service.MilestoneService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +29,7 @@ public class MilestoneController {
     }
 
     @PostMapping("/api/milestones")
-    public MilestoneDto create(@RequestBody MilestoneForm form) {
+    public MilestoneDto create(@Valid @RequestBody MilestoneForm form) {
         return milestoneService.save(form);
     }
 
@@ -38,7 +40,13 @@ public class MilestoneController {
     }
 
     @PatchMapping("/api/milestones/{id}")
-    public MilestoneDto update(@PathVariable Long id, @RequestBody MilestoneForm form) {
+    public MilestoneDto update(@PathVariable Long id, @Valid @RequestBody MilestoneForm form) {
         return milestoneService.update(id, form);
+    }
+
+    @PatchMapping("/api/milestones/{id}/status/update")
+    public ResponseMessage updateStatus(@PathVariable Long id, @Valid @RequestBody MilestoneStatusUpdateForm form) {
+        milestoneService.updateStatus(id, form.getUpdatedStatus());
+        return new ResponseMessage(HttpStatus.OK, "마일스톤의 상태 변경이 정상적으로 처리되었습니다.");
     }
 }

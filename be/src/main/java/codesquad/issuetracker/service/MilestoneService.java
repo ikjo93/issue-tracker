@@ -1,6 +1,7 @@
 package codesquad.issuetracker.service;
 
 import codesquad.issuetracker.domain.Milestone;
+import codesquad.issuetracker.domain.MilestoneStatus;
 import codesquad.issuetracker.dto.milestone.MilestoneDto;
 import codesquad.issuetracker.dto.milestone.MilestoneDtos;
 import codesquad.issuetracker.dto.milestone.MilestoneForm;
@@ -33,9 +34,7 @@ public class MilestoneService {
 
     @Transactional
     public void delete(Long id) {
-        Milestone milestone = milestoneRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
-        });
+        Milestone milestone = getMilestone(id);
 
         milestone.getIssues().forEach(issue -> issue.updateMilestone(null));
 
@@ -44,12 +43,23 @@ public class MilestoneService {
 
     @Transactional
     public MilestoneDto update(Long id, MilestoneForm form) {
-        Milestone milestone = milestoneRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
-        });
+        Milestone milestone = getMilestone(id);
 
         milestone.updateInfo(form);
 
         return MilestoneDto.from(milestone);
+    }
+
+    @Transactional
+    public void updateStatus(Long id, MilestoneStatus status) {
+        Milestone milestone = getMilestone(id);
+
+        milestone.updateStatus(status);
+    }
+
+    private Milestone getMilestone(Long id) {
+        return milestoneRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
+        });
     }
 }
