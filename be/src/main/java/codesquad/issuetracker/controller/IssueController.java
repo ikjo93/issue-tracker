@@ -11,6 +11,7 @@ import codesquad.issuetracker.dto.issue.form.IssueMilestoneUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueSubjectUpdateForm;
 import codesquad.issuetracker.service.IssueService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,36 +39,36 @@ public class IssueController {
     }
 
     @PostMapping("/api/issues")
-    public IssueDto create(@RequestBody IssueCreateForm form) {
+    public IssueDto create(@Valid @RequestBody IssueCreateForm form) {
         return issueService.create(form);
     }
 
     @PatchMapping("/api/issues/status/update")
-    public ResponseMessage updateStatus(@RequestBody IssueStatusUpdateForm form) {
+    public ResponseMessage updateStatus(@Valid @RequestBody IssueStatusUpdateForm form) {
         issueService.updateStatus(form);
         return new ResponseMessage(HttpStatus.OK, "이슈의 상태 변경이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/subject/update")
-    public ResponseMessage updateSubject(@PathVariable Long id, @RequestBody IssueSubjectUpdateForm form) {
+    public ResponseMessage updateSubject(@PathVariable Long id, @Valid @RequestBody IssueSubjectUpdateForm form) {
         issueService.updateSubject(id, form.getSubject());
         return new ResponseMessage(HttpStatus.OK, "이슈의 제목 편집이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/milestone/update")
-    public ResponseMessage updateMilestone(@PathVariable Long id, @RequestBody IssueMilestoneUpdateForm form) {
+    public ResponseMessage updateMilestone(@PathVariable Long id, @Valid @RequestBody IssueMilestoneUpdateForm form) {
         issueService.updateMilestone(id, form.getMilestoneId());
         return new ResponseMessage(HttpStatus.OK, "이슈의 마일스톤 수정이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/labels/update")
-    public ResponseMessage updateLabels(@PathVariable Long id, @RequestBody IssueLabelUpdateForm form) {
+    public ResponseMessage updateLabels(@PathVariable Long id, @Valid @RequestBody IssueLabelUpdateForm form) {
         issueService.updateLabels(id, form.getLabels());
         return new ResponseMessage(HttpStatus.OK, "이슈의 라벨 수정이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/assignees/update")
-    public ResponseMessage updateAssignees(@PathVariable Long id, @RequestBody IssueAssigneeUpdateForm form) {
+    public ResponseMessage updateAssignees(@PathVariable Long id, @Valid @RequestBody IssueAssigneeUpdateForm form) {
         issueService.updateAssignee(id, form.getAssignees());
         return new ResponseMessage(HttpStatus.OK, "이슈의 담당자 수정이 정상적으로 처리되었습니다.");
     }
