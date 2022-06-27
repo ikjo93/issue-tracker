@@ -1,14 +1,17 @@
+import { IssueType } from '@type/types';
+
 const alanProfileURL = 'https://avatars.githubusercontent.com/u/95538993?v=4';
 const ikjoProfileURL = 'https://avatars.githubusercontent.com/u/82401504?v=4';
 const parkProfileURL = 'https://avatars.githubusercontent.com/u/58503584?v=4';
 
-const issues = [
+const issues: IssueType[] = [
   {
     id: 1,
     status: 'OPEN',
     subject: '백엔드 기능 구현',
     comments: [
       {
+        id: 1,
         writerIdentity: 'Alan',
         createdDateTime: '2022-06-18T21:23:00',
         content: '우하하하 열심히 해보세요!',
@@ -51,6 +54,7 @@ const issues = [
     subject: '프론트엔드 기능 구현',
     comments: [
       {
+        id: 2,
         writerIdentity: 'ikjo',
         createdDateTime: '2022-06-20T05:23:00',
         content: '우하하하 열심히 해보세요!!!!',
@@ -80,11 +84,13 @@ const issues = [
     subject: '배포',
     comments: [
       {
+        id: 3,
         writerIdentity: 'Alan',
         createdDateTime: '2022-06-20T05:23:00',
         content: '우하하하 열심히 해보세요!!!!',
       },
       {
+        id: 4,
         writerIdentity: 'Park',
         createdDateTime: '2022-06-21T05:23:00',
         content: '우하하하 열심히 해보세요~~!!!!',
@@ -93,7 +99,7 @@ const issues = [
     writer: 'Park',
     profileUrl: parkProfileURL,
     createdDateTime: '2022-06-20T21:23:00',
-    milestone: null,
+    milestone: undefined,
     assignees: [],
     labels: [],
   },
