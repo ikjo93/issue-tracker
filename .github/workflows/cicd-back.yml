@@ -1,0 +1,70 @@
+name: BACKEND CI/CD
+
+on:
+  push:
+    branches: [ deploy-BE ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./be
+
+    steps:
+      - name: checkout Github Action
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Insert secret data into yml file
+        run: |
+          sed -i "s|\${DB_URL}|$DB_URL|g" ./src/main/resources/application.yml
+          sed -i "s|\${DB_USERNAME}|$DB_USERNAME|g" ./src/main/resources/application.yml
+          sed -i "s|\${DB_PASSWORD}|$DB_PASSWORD|g" ./src/main/resources/application.yml
+          sed -i "s|\${S3_ACCESSKEY}|$S3_ACCESSKEY|g" ./src/main/resources/aws.yml
+          sed -i "s|\${S3_SECRETKEY}|$S3_SECRETKEY|g" ./src/main/resources/aws.yml
+          sed -i "s|\${S3_REGION}|$S3_REGION|g" ./src/main/resources/aws.yml
+          sed -i "s|\${S3_BUCKET}|$S3_BUCKET|g" ./src/main/resources/aws.yml
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          S3_ACCESSKEY: ${{ secrets.S3_ACCESSKEY }}
+          S3_SECRETKEY: ${{ secrets.S3_SECRETKEY }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew bootJar
+
+      - name: Docker build
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t issue-be .
+          docker tag issue-be ${{ secrets.DOCKER_USERNAME }}/issue-be:${GITHUB_SHA::7}
+          docker push ${{ secrets.DOCKER_USERNAME }}/issue-be:${GITHUB_SHA::7}
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ec2-user
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          envs: GITHUB_SHA
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/issue-be:${GITHUB_SHA::7}
+            docker tag ${{ secrets.DOCKER_USERNAME }}/issue-be:${GITHUB_SHA::7} issue-be
+            docker stop spring-container
+            docker run -d --rm --name spring-container -e CLIENT_ID=${{ secrets.CLIENT_ID }} -e CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -p 8080:8080 --net mynet --ip 172.19.0.3 issue-be
