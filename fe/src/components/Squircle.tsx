@@ -11,7 +11,9 @@ interface ISquircleProps {
   opacity?: number;
   backgroundColor?: string;
   borderLineColor?: string;
+  color?: string;
   theme: ITheme;
+  borderRadius?: number;
 }
 
 const Squircle = styled.div<ISquircleProps>`
@@ -23,9 +25,10 @@ const Squircle = styled.div<ISquircleProps>`
     getCssValueByUnit(height, unit) || heights.squircle.default};
   opacity: ${({ opacity }) => opacity || 1};
   ${({ backgroundColor }) =>
-    backgroundColor && `background-color: ${backgroundColor}`};
+    backgroundColor && `background-color: ${backgroundColor};`}
   ${({ borderLineColor }) =>
-    borderLineColor && `border: 1px solid ${borderLineColor}`};
+    borderLineColor && `border: 1px solid ${borderLineColor};`}
+  ${({ color }) => color && `color:  ${color};`}
 `;
 
 export default Squircle;
