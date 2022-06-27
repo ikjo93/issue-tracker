@@ -25,6 +25,10 @@ const sideMenuReducer = (state: MenuStateType, action: ActionType) => {
         ...state,
         milestone: action.data,
       };
+    case 'ALL':
+      return {
+        ...action.data,
+      };
     default:
       throw Error('Unexpected action type on side menu');
   }

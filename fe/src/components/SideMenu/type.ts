@@ -11,7 +11,8 @@ export type MenuStateType = {
 export type ActionType =
   | { type: 'ASSIGNEE'; data: MemberType }
   | { type: 'LABEL'; data: LabelType }
-  | { type: 'MILESTONE'; data: MilestoneType };
+  | { type: 'MILESTONE'; data: MilestoneType }
+  | { type: 'ALL'; data: MenuStateType };
 
 export type MenuDispatchType = Dispatch<ActionType>;
 

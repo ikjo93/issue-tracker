@@ -126,6 +126,15 @@ const updateAssignees: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json(fakeIssues));
 };
 
+const deleteIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const { id: targetId } = req.params;
+  const updatedIssues = fakeIssues.filter(
+    (issue) => issue.id !== Number(targetId),
+  );
+  fakeIssues = updatedIssues;
+  return res(ctx.status(200), ctx.json(fakeIssues));
+};
+
 export default function issueHandlers() {
   return [
     rest.get('/api/issues', getIssues),
@@ -136,5 +145,6 @@ export default function issueHandlers() {
     rest.patch('/api/issues/:id/labels/update', updateLabels),
     rest.patch('/api/issues/:id/milestone/update', updateMilestone),
     rest.patch('/api/issues/:id/assignees/update', updateAssignees),
+    rest.delete('/api/issues/:id', deleteIssue),
   ];
 }
