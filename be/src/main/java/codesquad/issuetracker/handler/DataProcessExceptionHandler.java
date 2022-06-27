@@ -1,8 +1,6 @@
-package codesquad.issuetracker.controller;
+package codesquad.issuetracker.handler;
 
 import codesquad.issuetracker.dto.ResponseMessage;
-import codesquad.issuetracker.exception.ImageUploadException;
-import codesquad.issuetracker.exception.InvalidTokenException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 @ResponseBody
-public class ExceptionControllerAdvice {
-
-    @ExceptionHandler(InvalidTokenException.class)
-    public ResponseEntity<ResponseMessage> handleJwtException(InvalidTokenException exception) {
-        ResponseMessage message = new ResponseMessage(HttpStatus.UNAUTHORIZED, exception.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
-    }
+public class DataProcessExceptionHandler {
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<ResponseMessage> handleEmptyDataException() {
@@ -32,12 +24,6 @@ public class ExceptionControllerAdvice {
     public ResponseEntity<ResponseMessage> handleIllegalStateException(IllegalStateException exception) {
         ResponseMessage message = new ResponseMessage(HttpStatus.NOT_FOUND, exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-    }
-
-    @ExceptionHandler(ImageUploadException.class)
-    public ResponseEntity<ResponseMessage> handleImageUploadException(ImageUploadException exception) {
-        ResponseMessage message = new ResponseMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
