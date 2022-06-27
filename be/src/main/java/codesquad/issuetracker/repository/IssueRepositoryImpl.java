@@ -9,7 +9,6 @@ import static codesquad.issuetracker.domain.QReply.reply;
 import static org.springframework.util.StringUtils.hasText;
 
 import codesquad.issuetracker.domain.Issue;
-import codesquad.issuetracker.domain.IssueStatus;
 import codesquad.issuetracker.domain.QAssignee;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;

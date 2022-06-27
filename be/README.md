@@ -99,3 +99,32 @@
 #### 도메인 및 테이블 설계
 + ERD
 > ![image](https://user-images.githubusercontent.com/82401504/175385258-7085046f-a541-48c2-9dbe-e0b8e1b700d1.png)
+
+## 3주차 수요일 리뷰 요청
+
+### 진행 내용
+#### 애플리케이션
+##### 완료
++ 2주차 금요일 리뷰 피드백 반영(리팩토링)
++ S3 이미지 업로드 기능 구현
++ 레이블/마일스톤/이슈 관련 CRUD 기능 구현
+  + 이슈 : 이슈 생성, 이슈 삭제, 이슈 제목/담당자/마일스톤/레이블 수정 API
++ 깃허브 OAuth 인증 관련 로직 RestTemplate -> WebClient 변경
+  + 변경 사유 : To be deprecated RestTemplate
++ 기존 Repository Spring Data JPA 적용
++ API 명세서
+  + <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
+
+##### 진행 예정
++ 
+
+#### 인프라
+##### 완료
++ (없음)
+
+##### 진행 예정
++ 깃허브 액션 및 도커 활용 리액트 웹 앱 배포
+
+#### 도메인 및 테이블 설계
++ ERD
+> ![image](https://user-images.githubusercontent.com/82401504/175858983-7a13c86e-7def-44d7-a0c3-4bbb741925db.png)
