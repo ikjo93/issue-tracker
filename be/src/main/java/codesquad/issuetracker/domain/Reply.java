@@ -46,4 +46,8 @@ public class Reply extends BaseTimeEntity {
     public static Reply createReply(Issue issue, Member member, String comment) {
         return new Reply(issue, member, comment);
     }
+
+    public void updateComment(String comment) {
+        this.comment = comment;
+    }
 }

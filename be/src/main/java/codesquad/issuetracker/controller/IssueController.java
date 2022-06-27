@@ -45,11 +45,6 @@ public class IssueController {
         return issueService.createIssue(form);
     }
 
-    @PostMapping("/api/issues/{id}/replies")
-    public ReplyDto reply(@PathVariable Long id, @Valid @RequestBody ReplyForm form) {
-        return issueService.createReply(id, form);
-    }
-
     @PatchMapping("/api/issues/status/update")
     public ResponseMessage updateStatusOfIssue(@Valid @RequestBody IssueStatusUpdateForm form) {
         issueService.updateStatusOfIssue(form);
