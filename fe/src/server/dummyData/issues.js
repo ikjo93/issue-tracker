@@ -9,6 +9,7 @@ const issues = [
     subject: '백엔드 기능 구현',
     comments: [
       {
+        id: 1,
         writerIdentity: 'Alan',
         createdDateTime: '2022-06-18T21:23:00',
         content: '우하하하 열심히 해보세요!',
@@ -51,6 +52,7 @@ const issues = [
     subject: '프론트엔드 기능 구현',
     comments: [
       {
+        id: 2,
         writerIdentity: 'ikjo',
         createdDateTime: '2022-06-20T05:23:00',
         content: '우하하하 열심히 해보세요!!!!',
@@ -80,11 +82,13 @@ const issues = [
     subject: '배포',
     comments: [
       {
+        id: 3,
         writerIdentity: 'Alan',
         createdDateTime: '2022-06-20T05:23:00',
         content: '우하하하 열심히 해보세요!!!!',
       },
       {
+        id: 4,
         writerIdentity: 'Park',
         createdDateTime: '2022-06-21T05:23:00',
         content: '우하하하 열심히 해보세요~~!!!!',
