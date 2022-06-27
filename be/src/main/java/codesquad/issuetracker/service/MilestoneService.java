@@ -6,6 +6,7 @@ import codesquad.issuetracker.dto.milestone.MilestoneDto;
 import codesquad.issuetracker.dto.milestone.MilestoneDtos;
 import codesquad.issuetracker.dto.milestone.MilestoneForm;
 import codesquad.issuetracker.repository.MilestoneRepository;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,26 @@ public class MilestoneService {
 
     private final MilestoneRepository milestoneRepository;
 
-    public MilestoneDtos getMilestones() {
-        return new MilestoneDtos(
-            milestoneRepository.findAll()
-                .stream()
-                .map(MilestoneDto::from)
-                .collect(Collectors.toList())
-        );
+    public MilestoneDtos getMilestones(MilestoneStatus status) {
+        List<Milestone> milestones = milestoneRepository.findAll();
+
+        List<MilestoneDto> selectedMilestones = milestones.stream()
+            .filter(milestone -> milestone.hasSameStatus(status))
+            .map(MilestoneDto::from)
+            .collect(Collectors.toList());
+
+        long totalCount = milestones.size();
+        long opened = countOpened(totalCount, selectedMilestones.size(), status);
+
+        return new MilestoneDtos(opened, totalCount - opened, selectedMilestones);
+    }
+
+    private long countOpened(long totalCount, int countOfSelectedMilestones, MilestoneStatus status) {
+        if (status.equals(MilestoneStatus.OPEN)) {
+            return countOfSelectedMilestones;
+        }
+
+        return totalCount - countOfSelectedMilestones;
     }
 
     @Transactional

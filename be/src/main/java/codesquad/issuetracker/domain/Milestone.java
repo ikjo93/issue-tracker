@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -59,5 +58,9 @@ public class Milestone {
 
     public void updateStatus(MilestoneStatus status) {
         this.status = status;
+    }
+
+    public boolean hasSameStatus(MilestoneStatus status) {
+        return this.status.equals(status);
     }
 }

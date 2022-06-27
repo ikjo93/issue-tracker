@@ -1,5 +1,6 @@
 package codesquad.issuetracker.controller;
 
+import codesquad.issuetracker.domain.MilestoneStatus;
 import codesquad.issuetracker.dto.ResponseMessage;
 import codesquad.issuetracker.dto.milestone.MilestoneDto;
 import codesquad.issuetracker.dto.milestone.MilestoneDtos;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,8 +26,8 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @GetMapping("/api/milestones")
-    public MilestoneDtos milestones() {
-        return milestoneService.getMilestones();
+    public MilestoneDtos milestones(@RequestParam(defaultValue = "OPEN") MilestoneStatus status) {
+        return milestoneService.getMilestones(status);
     }
 
     @PostMapping("/api/milestones")
