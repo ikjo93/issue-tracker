@@ -1,8 +1,10 @@
+import { IssueType } from '@type/types';
+
 const alanProfileURL = 'https://avatars.githubusercontent.com/u/95538993?v=4';
 const ikjoProfileURL = 'https://avatars.githubusercontent.com/u/82401504?v=4';
 const parkProfileURL = 'https://avatars.githubusercontent.com/u/58503584?v=4';
 
-const issues = [
+const issues: IssueType[] = [
   {
     id: 1,
     status: 'OPEN',
@@ -97,7 +99,7 @@ const issues = [
     writer: 'Park',
     profileUrl: parkProfileURL,
     createdDateTime: '2022-06-20T21:23:00',
-    milestone: null,
+    milestone: undefined,
     assignees: [],
     labels: [],
   },
