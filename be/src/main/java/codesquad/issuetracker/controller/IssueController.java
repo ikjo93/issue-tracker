@@ -10,6 +10,8 @@ import codesquad.issuetracker.dto.issue.form.IssueLabelUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueMilestoneUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
 import codesquad.issuetracker.dto.issue.form.IssueSubjectUpdateForm;
+import codesquad.issuetracker.dto.reply.ReplyDto;
+import codesquad.issuetracker.dto.reply.ReplyForm;
 import codesquad.issuetracker.service.IssueService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,36 +42,41 @@ public class IssueController {
 
     @PostMapping("/api/issues")
     public IssueDto create(@Valid @RequestBody IssueCreateForm form) {
-        return issueService.create(form);
+        return issueService.createIssue(form);
+    }
+
+    @PostMapping("/api/issues/{id}/replies")
+    public ReplyDto reply(@PathVariable Long id, @Valid @RequestBody ReplyForm form) {
+        return issueService.createReply(id, form);
     }
 
     @PatchMapping("/api/issues/status/update")
-    public ResponseMessage updateStatus(@Valid @RequestBody IssueStatusUpdateForm form) {
-        issueService.updateStatus(form);
+    public ResponseMessage updateStatusOfIssue(@Valid @RequestBody IssueStatusUpdateForm form) {
+        issueService.updateStatusOfIssue(form);
         return new ResponseMessage(HttpStatus.OK, "이슈의 상태 변경이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/subject/update")
-    public ResponseMessage updateSubject(@PathVariable Long id, @Valid @RequestBody IssueSubjectUpdateForm form) {
-        issueService.updateSubject(id, form.getSubject());
+    public ResponseMessage updateSubjectOfIssue(@PathVariable Long id, @Valid @RequestBody IssueSubjectUpdateForm form) {
+        issueService.updateSubjectOfIssue(id, form.getSubject());
         return new ResponseMessage(HttpStatus.OK, "이슈의 제목 편집이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/milestone/update")
-    public ResponseMessage updateMilestone(@PathVariable Long id, @Valid @RequestBody IssueMilestoneUpdateForm form) {
-        issueService.updateMilestone(id, form.getMilestoneId());
+    public ResponseMessage updateMilestoneOfIssue(@PathVariable Long id, @Valid @RequestBody IssueMilestoneUpdateForm form) {
+        issueService.updateMilestoneOfIssue(id, form.getMilestoneId());
         return new ResponseMessage(HttpStatus.OK, "이슈의 마일스톤 수정이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/labels/update")
-    public ResponseMessage updateLabels(@PathVariable Long id, @Valid @RequestBody IssueLabelUpdateForm form) {
-        issueService.updateLabels(id, form.getLabels());
+    public ResponseMessage updateLabelsOfIssue(@PathVariable Long id, @Valid @RequestBody IssueLabelUpdateForm form) {
+        issueService.updateLabelsOfIssue(id, form.getLabels());
         return new ResponseMessage(HttpStatus.OK, "이슈의 라벨 수정이 정상적으로 처리되었습니다.");
     }
 
     @PatchMapping("/api/issues/{id}/assignees/update")
-    public ResponseMessage updateAssignees(@PathVariable Long id, @Valid @RequestBody IssueAssigneeUpdateForm form) {
-        issueService.updateAssignee(id, form.getAssignees());
+    public ResponseMessage updateAssigneesOfIssue(@PathVariable Long id, @Valid @RequestBody IssueAssigneeUpdateForm form) {
+        issueService.updateAssigneeOfIssue(id, form.getAssignees());
         return new ResponseMessage(HttpStatus.OK, "이슈의 담당자 수정이 정상적으로 처리되었습니다.");
     }
 

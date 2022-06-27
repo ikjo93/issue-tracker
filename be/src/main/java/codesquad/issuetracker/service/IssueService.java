@@ -1,7 +1,5 @@
 package codesquad.issuetracker.service;
 
-import static org.springframework.util.StringUtils.hasText;
-
 import codesquad.issuetracker.domain.Assignee;
 import codesquad.issuetracker.domain.Issue;
 import codesquad.issuetracker.domain.IssueLabel;
@@ -15,12 +13,15 @@ import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
+import codesquad.issuetracker.dto.reply.ReplyDto;
+import codesquad.issuetracker.dto.reply.ReplyForm;
 import codesquad.issuetracker.repository.AssigneeRepository;
 import codesquad.issuetracker.repository.IssueLabelRepository;
 import codesquad.issuetracker.repository.IssueRepository;
 import codesquad.issuetracker.repository.LabelRepository;
 import codesquad.issuetracker.repository.MemberRepository;
 import codesquad.issuetracker.repository.MilestoneRepository;
+import codesquad.issuetracker.repository.ReplyRepository;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,6 +40,7 @@ public class IssueService {
     private final LabelRepository labelRepository;
     private final IssueLabelRepository issueLabelRepository;
     private final AssigneeRepository assigneeRepository;
+    private final ReplyRepository replyRepository;
 
     public IssueDtos getIssuesByCriteria(IssueSearchCondition condition) {
         Set<String> labelConditions = condition.parseLabelConditions();
@@ -67,23 +69,19 @@ public class IssueService {
     }
 
     public IssueDto getIssueDtoById(Long id) {
-        Issue issue = issueRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 이슈입니다.");
-        });
+        Issue issue = getIssueById(id);
+
         return IssueDto.from(issue);
     }
 
     @Transactional
-    public IssueDto create(IssueCreateForm form) {
+    public IssueDto createIssue(IssueCreateForm form) {
         Member writer = getMemberById(form.getWriterId());
         Milestone milestone = getMilestoneById(form.getMilestoneId());
         Issue issue = Issue.createIssue(writer, milestone, form.getSubject(), IssueStatus.OPEN);
 
-        String comment = form.getComment();
-        if (hasText(comment)) {
-            Reply reply = Reply.createReply(issue, writer, comment);
-            issue.addReply(reply);
-        }
+        Reply reply = Reply.createReply(issue, writer, form.getComment());
+        issue.addReply(reply);
 
         List<Long> assigneeIds = form.getAssigneeIds();
         for (Long assigneeId : assigneeIds) {
@@ -101,21 +99,32 @@ public class IssueService {
     }
 
     @Transactional
-    public void updateStatus(IssueStatusUpdateForm form) {
+    public ReplyDto createReply(Long issueId, ReplyForm form) {
+        Issue issue = getIssueById(issueId);
+        Member member = getMemberById(form.getWriterId());
+        Reply reply = Reply.createReply(issue, member, form.getComment());
+
+        replyRepository.save(reply);
+
+        return ReplyDto.from(reply);
+    }
+
+    @Transactional
+    public void updateStatusOfIssue(IssueStatusUpdateForm form) {
         List<Issue> issues = issueRepository.findAllById(form.getIdOfIssues());
         IssueStatus updatedStatus = form.getUpdatedStatus();
         issues.forEach(issue -> issue.updateStatus(updatedStatus));
     }
 
     @Transactional
-    public void updateSubject(Long id, String subject) {
+    public void updateSubjectOfIssue(Long id, String subject) {
         Issue issue = getIssueById(id);
 
         issue.updateSubject(subject);
     }
 
     @Transactional
-    public void updateMilestone(Long id, Long milestoneId) {
+    public void updateMilestoneOfIssue(Long id, Long milestoneId) {
         Issue issue = getIssueById(id);
 
         if (milestoneId == null) {
@@ -129,7 +138,7 @@ public class IssueService {
     }
 
     @Transactional
-    public void updateLabels(Long id, List<Long> ids) {
+    public void updateLabelsOfIssue(Long id, List<Long> ids) {
         Issue issue = getIssueById(id);
         issueLabelRepository.deleteByIssueId(issue.getId());
 
@@ -142,7 +151,7 @@ public class IssueService {
     }
 
     @Transactional
-    public void updateAssignee(Long id, List<Long> ids) {
+    public void updateAssigneeOfIssue(Long id, List<Long> ids) {
         Issue issue = getIssueById(id);
         assigneeRepository.deleteByIssueId(issue.getId());
 
