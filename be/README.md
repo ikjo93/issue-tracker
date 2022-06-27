@@ -107,16 +107,22 @@
 ##### 완료
 + 2주차 금요일 리뷰 피드백 반영(리팩토링)
 + S3 이미지 업로드 기능 구현
-+ 레이블/마일스톤/이슈 관련 CRUD 기능 구현
-  + 이슈 : 이슈 생성, 이슈 삭제, 이슈 제목/담당자/마일스톤/레이블 수정 API
++ 마일스톤/레이블/이슈 관련 API 구현
+  + 마일스톤 API
+    + 마일스톤 목록 조회(기능 보완)
+    + 마일스톤 생성, 마일스톤 삭제, 마일스톤 수정, 마일스톤 상태 수정
+  + 레이블 API
+    + 레이블 생성, 레이블 삭제, 레이블 수정
+  + 이슈 API
+    + 이슈 상세 조회
+    + 이슈 생성 및 이슈 댓글 생성
+    + 이슈 상태/제목/담당자/마일스톤/레이블 수정
+    + 이슈 삭제
 + 깃허브 OAuth 인증 관련 로직 RestTemplate -> WebClient 변경
   + 변경 사유 : To be deprecated RestTemplate
 + 기존 Repository Spring Data JPA 적용
 + API 명세서
   + <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
-
-##### 진행 예정
-+ 
 
 #### 인프라
 ##### 완료
