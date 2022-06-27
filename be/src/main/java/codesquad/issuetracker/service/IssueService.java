@@ -40,7 +40,6 @@ public class IssueService {
     private final LabelRepository labelRepository;
     private final IssueLabelRepository issueLabelRepository;
     private final AssigneeRepository assigneeRepository;
-    private final ReplyRepository replyRepository;
 
     public IssueDtos getIssuesByCriteria(IssueSearchCondition condition) {
         Set<String> labelConditions = condition.parseLabelConditions();
@@ -96,17 +95,6 @@ public class IssueService {
         issueRepository.save(issue);
 
         return IssueDto.from(issue);
-    }
-
-    @Transactional
-    public ReplyDto createReply(Long issueId, ReplyForm form) {
-        Issue issue = getIssueById(issueId);
-        Member member = getMemberById(form.getWriterId());
-        Reply reply = Reply.createReply(issue, member, form.getComment());
-
-        replyRepository.save(reply);
-
-        return ReplyDto.from(reply);
     }
 
     @Transactional
