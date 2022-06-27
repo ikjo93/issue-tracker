@@ -30,10 +30,10 @@ jobs:
           sed -i "s|\${DB_URL}|$DB_URL|g" ./src/main/resources/application.yml
           sed -i "s|\${DB_USERNAME}|$DB_USERNAME|g" ./src/main/resources/application.yml
           sed -i "s|\${DB_PASSWORD}|$DB_PASSWORD|g" ./src/main/resources/application.yml
-          sed -i "s|\${S3_ACCESSKEY}|$S3_ACCESSKEY|g" ./src/main/resources/aws.yml
-          sed -i "s|\${S3_SECRETKEY}|$S3_SECRETKEY|g" ./src/main/resources/aws.yml
-          sed -i "s|\${S3_REGION}|$S3_REGION|g" ./src/main/resources/aws.yml
-          sed -i "s|\${S3_BUCKET}|$S3_BUCKET|g" ./src/main/resources/aws.yml
+          sed -i "s|\${S3_ACCESSKEY}|$S3_ACCESSKEY|g" ./src/main/resources/application.yml
+          sed -i "s|\${S3_SECRETKEY}|$S3_SECRETKEY|g" ./src/main/resources/application.yml
+          sed -i "s|\${S3_REGION}|$S3_REGION|g" ./src/main/resources/application.yml
+          sed -i "s|\${S3_BUCKET}|$S3_BUCKET|g" ./src/main/resources/application.yml
         env:
           DB_URL: ${{ secrets.DB_URL }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
