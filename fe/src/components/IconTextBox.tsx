@@ -12,6 +12,7 @@ interface IIconTextBoxProps {
   fontSize?: number;
   fontWeight?: number;
   onClick?: () => void;
+  cursor?: string;
 }
 
 export default function IconTextBox({
@@ -23,6 +24,7 @@ export default function IconTextBox({
   fontSize,
   fontWeight,
   onClick,
+  cursor = 'pointer',
 }: IIconTextBoxProps) {
   const Texts = texts?.map((text) => <span key={uuid()}>{text}</span>);
   return (
@@ -32,6 +34,7 @@ export default function IconTextBox({
       fontSize={fontSize}
       fontWeight={fontWeight}
       onClick={onClick}
+      cursor={cursor}
     >
       {isIconAfterText ? (
         <>
@@ -53,10 +56,12 @@ const BoxContainer = styled.div<{
   spacing?: number;
   fontSize?: number;
   fontWeight?: number;
+  cursor?: string;
 }>`
   ${mixin.flexMixin({ align: 'center' })}
   color: ${({ color }) => color};
   ${({ spacing }) => spacing && `gap : ${spacing}rem;`};
   ${({ fontSize }) => fontSize && `font-size : ${fontSize}rem;`};
   ${({ fontWeight }) => fontWeight && `font-weight : ${fontWeight};`};
+  cursor: ${({ cursor }) => cursor};
 `;

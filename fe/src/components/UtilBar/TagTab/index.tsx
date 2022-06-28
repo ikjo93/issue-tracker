@@ -5,22 +5,13 @@ import styled, { css, useTheme } from 'styled-components';
 
 import Divider from '@components/Divider';
 import IconTextBox from '@components/IconTextBox';
-import useAxios from '@hooks/useAxios';
+import { useLabelContext } from '@contexts/LabelProvider';
+import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import mixin from '@style/mixin';
-import { LabelType, MilestoneType } from '@type/types';
 
 export default function TagTab({ activeTab }: { activeTab?: string }) {
-  const { state: milestoneState } = useAxios<{
-    milestones: MilestoneType[];
-  }>('/api/milestones');
-
-  const { state: labelState } = useAxios<{ labels: LabelType[] }>(
-    '/api/labels',
-  );
-
-  const { data: { milestones } = {} } = milestoneState;
-  const { data: { labels } = {} } = labelState;
-
+  const { data: { countOfOpenMilestones } = {} } = useMilestoneContext();
+  const { labels } = useLabelContext();
   const theme = useTheme();
 
   return (
@@ -53,7 +44,7 @@ export default function TagTab({ activeTab }: { activeTab?: string }) {
         >
           <IconTextBox
             Icon={<SignpostOutlinedIcon />}
-            texts={['마일스톤', `(${milestones?.length})`]}
+            texts={['마일스톤', `(${countOfOpenMilestones})`]}
             spacing={0.625}
           />
         </TagBox>

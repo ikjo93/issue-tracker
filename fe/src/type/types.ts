@@ -33,6 +33,10 @@ export type MilestoneType = {
   id: number;
   subject: string;
   description?: string;
+  endDate?: string;
+  status: string;
+  totalCountOfIssues: number;
+  countOfClosedIssues: number;
 };
 
 export type PopoverContentType =
@@ -52,6 +56,12 @@ export type IssueType = {
   labels: LabelType[];
   assignees: MemberType[];
 };
+
+export interface IMilestoneResponse {
+  countOfOpenMilestones: number;
+  countOfClosedMilestones: number;
+  milestones: MilestoneType[];
+}
 
 declare module 'styled-components' {
   interface DefaultTheme {

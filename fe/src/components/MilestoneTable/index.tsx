@@ -1,27 +1,15 @@
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import MilestoneTableBody from '@components/MilestoneTable/MilestoneTableBody';
 import MilestoneTableHeader from '@components/MilestoneTable/MilestoneTableHeader';
-import useAxios from '@hooks/useAxios';
-import { IssueType } from '@type/types';
-
-type IssueTableDataType = {
-  issues: IssueType[];
-  countOfOpenIssues: number;
-  countOfClosedIssues: number;
-};
 
 export default function MilestoneTable() {
-  const fetchUrl = `/api/issues/${useLocation().search}`;
-  const { data: issueTableData } = useAxios<IssueTableDataType>(fetchUrl);
-
-  return issueTableData ? (
+  return (
     <MilestoneTableContainer>
       <MilestoneTableHeader />
       <MilestoneTableBody />
     </MilestoneTableContainer>
-  ) : null;
+  );
 }
 
 const MilestoneTableContainer = styled.div`

@@ -7,34 +7,13 @@ import PopoverContainer from '@components/PopoverContainer';
 import Assignees from '@components/SideMenu/Assignees';
 import Labels from '@components/SideMenu/Labels';
 import Milestone from '@components/SideMenu/Milestone';
-import useAxios from '@hooks/useAxios';
-import {
-  LabelType,
-  MemberType,
-  MilestoneType,
-  PopoverContentType,
-  MenuDispatchType,
-  ModalTypes,
-} from '@type/types';
-
-
-
-type MenuKey = 'milestones' | 'labels' | 'members';
-
-type SideMenuItemTypes = {
-  [key in MenuKey]?: PopoverContentType;
-};
+import { MenuDispatchType, ModalTypes } from '@components/SideMenu/type';
+import { LabelType, MemberType, MilestoneType } from '@type/types';
 
 enum KoType {
   ASSIGNEE = '담당자',
   LABEL = '레이블',
   MILESTONE = '마일스톤',
-}
-
-enum TypeEndPoint {
-  ASSIGNEE = 'members',
-  LABEL = 'labels',
-  MILESTONE = 'milestones',
 }
 
 const getSubBoxByType = (type, state) => {
@@ -53,19 +32,13 @@ const getSubBoxByType = (type, state) => {
 export default function SideMenuItem({
   type,
   state,
+  menus,
   menuDispatch,
 }): React.ReactElement<{
   type: ModalTypes;
   state: MemberType[] | LabelType[] | MilestoneType;
   menuDispatch: MenuDispatchType;
 }> {
-  const {
-    state: { data: menus = {} },
-  } = useAxios<SideMenuItemTypes>(`/api/${TypeEndPoint[type]}`);
-
-  // TODO: 무조건 바꿔야할 코드...
-  const deletedRootBraceMenus = Object.values(menus)[0];
-
   const title = `${KoType[type]} 추가`;
 
   const handleClickItemAddBtn = (menu) => {
@@ -84,7 +57,7 @@ export default function SideMenuItem({
           left={-14}
           top={2}
           title={title}
-          menus={getFormattedMenus(deletedRootBraceMenus, type)}
+          menus={getFormattedMenus(menus, type)}
           onClickPopoverItem={handleClickItemAddBtn}
         >
           <AddIcon sx={{ cursor: 'pointer' }} />
@@ -102,7 +75,6 @@ function getFormattedMenus(menus, type) {
     case 'ASSIGNEE':
       return menus?.map((menu) => ({
         ...menu,
-        nickname: menu.name,
         name: menu.identity,
       }));
     case 'MILESTONE':

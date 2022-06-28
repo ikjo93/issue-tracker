@@ -22,6 +22,7 @@ export default function PopoverContainer<T>({
   children,
 }: PropsType<T>) {
   const [isPopoverOpened, setIsPopoverOpened] = useState(false);
+
   return (
     <Wrapper onClick={() => setIsPopoverOpened((prev) => !prev)}>
       <Trigger type="button">{children}</Trigger>
