@@ -1,13 +1,13 @@
 import { Checkbox } from '@mui/material';
 import styled from 'styled-components';
 
+import IssueDescription from '@components/IssueTable/IssueTableBody/IssueTableCell/IssueDescription';
+import IssueTitle from '@components/IssueTable/IssueTableBody/IssueTableCell/IssueTitle';
 import UserIcon from '@components/UserIcon';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import { IssueType } from '@type/types';
 
-import IssueDescription from './IssueDescription';
-import IssueTitle from './IssueTitle';
 
 interface IIssueTableCell {
   issue: IssueType;
