@@ -11,9 +11,12 @@ import mixin from '@style/mixin';
 export default function MilestoneTableCell({ milestone }) {
   const openIssueCount =
     milestone.totalCountOfIssues - milestone.countOfClosedIssues;
-  const progressBarPercent = Math.floor(
-    (milestone.countOfClosedIssues / milestone.totalCountOfIssues) * 100,
-  );
+  const progressBarPercent =
+    milestone.totalCountOfIssues === 0
+      ? 0
+      : Math.floor(
+          (milestone.countOfClosedIssues / milestone.totalCountOfIssues) * 100,
+        );
 
   return (
     <CellContainer>

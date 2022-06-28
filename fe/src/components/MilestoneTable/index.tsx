@@ -1,24 +1,19 @@
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 
 import MilestoneTableBody from '@components/MilestoneTable/MilestoneTableBody';
 import MilestoneTableHeader from '@components/MilestoneTable/MilestoneTableHeader';
-import useAxios from '@hooks/useAxios';
-import { MilestoneType } from '@type/types';
+import { ResponseState } from '@hooks/useAxios';
+import { IMilestoneResponse } from '@type/types';
 
-interface IMilestoneResponse {
-  countOfOpenMilestones: number;
-  countOfClosedMilestones: number;
-  milestones: MilestoneType[];
-}
-
-export default function MilestoneTable() {
+export default function MilestoneTable({
+  state,
+}: {
+  state: ResponseState<IMilestoneResponse>;
+}) {
   const {
-    state: {
-      data: { milestones, countOfOpenMilestones, countOfClosedMilestones } = {},
-    },
-    refetch,
-  } = useAxios<IMilestoneResponse>(`/api/milestones/${useLocation().search}`);
+    data: { milestones, countOfOpenMilestones, countOfClosedMilestones } = {},
+  } = state;
 
   return (
     <MilestoneTableContainer>

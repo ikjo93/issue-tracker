@@ -8,6 +8,11 @@ import IconTextBox from '@components/IconTextBox';
 export default function ButtonBoxes() {
   const theme = useTheme();
 
+  const handleClickCloseButton = () => {};
+
+  const handleClickEditButton = () => {};
+
+  const handleClickDeleteButton = () => {};
   return (
     <Wrapper>
       <button type="button">

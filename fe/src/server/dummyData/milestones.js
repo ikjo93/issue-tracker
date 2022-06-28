@@ -1,6 +1,6 @@
 const mileStones = {
   countOfOpenMilestones: 3,
-  countOfClosedMilestones: 0,
+  countOfClosedMilestones: 1,
   milestones: [
     {
       id: 1,

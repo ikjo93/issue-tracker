@@ -1,13 +1,7 @@
-import { useContext, createContext, ReactNode, useMemo } from 'react';
+import { useContext, createContext, useMemo } from 'react';
 
 import useAxios from '@hooks/useAxios';
-import { MilestoneType } from '@type/types';
-
-interface IMilestoneResponse {
-  countOfOpenMilestones: number;
-  countOfClosedMilestones: number;
-  milestones: MilestoneType[];
-}
+import { IMilestoneResponse } from '@type/types';
 
 const MilestoneContext = createContext<{
   data?: IMilestoneResponse;

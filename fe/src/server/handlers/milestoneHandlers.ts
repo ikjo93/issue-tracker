@@ -36,6 +36,8 @@ const postMilestones = (req, res, ctx) => {
     countOfClosedIssues: 0,
   };
   lastMilestoneId += 1;
+  fakeMilestones.countOfOpenMilestones += 1;
+  fakeMilestones.milestones.push(newMilestone);
   return res(ctx.status(200), ctx.json(newMilestone));
 };
 
