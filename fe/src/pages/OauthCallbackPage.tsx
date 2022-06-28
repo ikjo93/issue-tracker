@@ -11,8 +11,7 @@ export default function OauthCallbackPage() {
   const navigate = useNavigate();
   const headerDispatch = useHeaderDispatch();
   const code = searchParams.get('code');
-  const serverBaseUrl = process.env.SERVER;
-  const loginUrl = `${serverBaseUrl}/api/login?code=${code}`;
+  const loginUrl = `/api/login?code=${code}`;
   let accessToken = '';
 
   const setAccessTokenOnHeader = () => {
@@ -20,7 +19,7 @@ export default function OauthCallbackPage() {
   };
 
   const refreshCachedAccessToken = async () => {
-    const res = await axios.post(`${serverBaseUrl}/api/access-token/reissue`);
+    const res = await axios.post('/api/access-token/reissue');
     if (res.status === 403) {
       logOut();
     }
@@ -46,7 +45,7 @@ export default function OauthCallbackPage() {
       accessToken = jwtResponse.headers['access-token'];
       setAccessTokenOnHeader();
 
-      const { data: userInfo } = await axios.get(`${serverBaseUrl}/api/mine`);
+      const { data: userInfo } = await axios.get(`/api/mine`);
       headerDispatch({ type: 'LOGIN', userInfo });
       setRefreshInterval();
       navigate('/');
