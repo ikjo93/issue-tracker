@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CachedIcon from '@mui/icons-material/Cached';
 import axios from 'axios';
 import { FormEvent, useRef, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 
 import Button from '@components/Button';
@@ -35,6 +35,7 @@ export default function CreateLabelBody() {
   const colorInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
   const [, setIsAdding] = useOutletContext<OutletContext>();
+  const navigate = useNavigate();
   const { refetch: labelAxiosRefetch } = useLabelContext();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -48,6 +49,7 @@ export default function CreateLabelBody() {
     });
     setIsAdding(false);
     labelAxiosRefetch();
+    navigate('/list/label');
   };
 
   const handleChangeLabelNameInput = debounce({

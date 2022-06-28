@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
 import { FormEvent } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
@@ -21,6 +21,7 @@ interface IFormEventTarget extends EventTarget {
 export default function CreateMilestoneBody() {
   const [, setIsAdding] = useOutletContext<OutletContext>();
   const { refetch: milestonesRefetch } = useMilestoneContext();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -32,6 +33,7 @@ export default function CreateMilestoneBody() {
     });
     setIsAdding(false);
     milestonesRefetch();
+    navigate('/list/milestone');
   };
 
   return (
