@@ -14,8 +14,14 @@ let lastMilestoneId =
   mileStones.countOfOpenMilestones + mileStones.countOfClosedMilestones + 1;
 
 const getMilestones = (req, res, ctx) => {
-  console.log(req.url.search);
-  return res(ctx.status(200), ctx.json(fakeMilestones));
+  const target = new URLSearchParams(req.url.search).get('status') || 'OPEN';
+  const filteredMilestone = {
+    ...fakeMilestones,
+    milestones: fakeMilestones.milestones.filter(
+      (milestone) => milestone.status === target,
+    ),
+  };
+  return res(ctx.status(200), ctx.json(filteredMilestone));
 };
 
 const postMilestones = (req, res, ctx) => {

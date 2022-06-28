@@ -8,6 +8,7 @@ interface IMilestoneResponse {
   countOfClosedMilestones: number;
   milestones: MilestoneType[];
 }
+
 const MilestoneContext = createContext<{
   data?: IMilestoneResponse;
   refetch: () => void;

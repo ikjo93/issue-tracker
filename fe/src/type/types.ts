@@ -32,6 +32,10 @@ export type MilestoneType = {
   id: number;
   subject: string;
   description?: string;
+  endTime?: string;
+  status: string;
+  totalCountOfIssues: number;
+  countOfClosedIssues: number;
 };
 
 export type PopoverContentType =

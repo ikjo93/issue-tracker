@@ -1,11 +1,19 @@
 import styled from 'styled-components';
 
+import MilestoneStatusTabs from '@components/MilestoneTable/MilestoneTableHeader/MilestoneStatusTabs';
+import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import mixin from '@style/mixin';
 
-export default function MilestoneTableHeader() {
+export default function MilestoneTableHeader({
+  countOfOpenMilestones,
+  countOfClosedMilestones,
+}) {
   return (
     <MilestoneTableHeaderContainer>
-      <span>하이 헤더</span>
+      <MilestoneStatusTabs
+        countOfOpenMilestones={countOfOpenMilestones}
+        countOfClosedMilestones={countOfClosedMilestones}
+      />
     </MilestoneTableHeaderContainer>
   );
 }

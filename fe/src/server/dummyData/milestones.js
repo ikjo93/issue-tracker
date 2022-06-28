@@ -29,6 +29,15 @@ const mileStones = {
       totalCountOfIssues: 1,
       countOfClosedIssues: 0,
     },
+    {
+      id: 4,
+      subject: '카카오 페이지 구현',
+      description: '프론트 구현',
+      endDate: '2022-06-11',
+      status: 'CLOSED',
+      totalCountOfIssues: 1,
+      countOfClosedIssues: 0,
+    },
   ],
 };
 

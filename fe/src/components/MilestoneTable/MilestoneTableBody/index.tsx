@@ -1,17 +1,14 @@
 import styled from 'styled-components';
 
 import MilestoneTableCell from '@components/MilestoneTable/MilestoneTableBody/MilestoneTableCell';
-import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import mixin from '@style/mixin';
 
-export default function MilestoneTableBody() {
-  const { data: { milestones } = {} } = useMilestoneContext();
-
+export default function MilestoneTableBody({ milestones }) {
   return (
     <MilestoneTableBodyContainer>
       {milestones?.length ? (
         milestones?.map((milestone) => (
-          <MilestoneTableCell milestone={milestone} />
+          <MilestoneTableCell key={milestone.id} milestone={milestone} />
         ))
       ) : (
         <NoIssueMessage>검색과 일치하는 결과가 없습니다.</NoIssueMessage>
