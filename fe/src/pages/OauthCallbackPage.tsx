@@ -51,8 +51,8 @@ export default function OauthCallbackPage() {
       navigate('/');
 
       // local환경에서 set cookie가 되지 않아서 임시로 사용하는 로직.
-      const refreshToken = jwtResponse.headers['refresh-token'];
-      document.cookie = `refresh-token=${refreshToken}`;
+      // const refreshToken = jwtResponse.headers['refresh-token'];
+      // document.cookie = `refresh-token=${refreshToken}`;
     })();
   }, [loginUrl]);
 
