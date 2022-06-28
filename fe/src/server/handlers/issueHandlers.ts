@@ -5,7 +5,7 @@ import fakeLabels from '@server/dummyData/labels';
 import fakeMembers from '@server/dummyData/members';
 import fakeMileStones from '@server/dummyData/milestones';
 import { filterIssues } from '@server/filterUtil';
-import { IssueType } from '@type/types';
+import { IssueType, ReplyType } from '@type/types';
 
 let fakeIssues: IssueType[] = [...issues];
 
@@ -21,20 +21,13 @@ const getIssues = (req, res, ctx) => {
 };
 
 const postCreateIssue = (req, res, ctx) => {
-  const {
-    subject,
-    comments,
-    labels,
-    milestone,
-    assignees,
-    writer,
-    profileUrl,
-  } = req.body;
+  const { subject, replies, labels, milestone, assignees, writer, profileUrl } =
+    req.body;
   const newIssueId = fakeIssues[fakeIssues.length - 1].id + 1;
   const newIssue: IssueType = {
     id: newIssueId,
     subject,
-    comments,
+    replies,
     writer,
     profileUrl,
     status: 'OPEN',
@@ -74,7 +67,7 @@ const updateSubject: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
     return updatedIssue;
   });
   fakeIssues = updatedIssues;
-  return res(ctx.status(200), ctx.json(fakeIssues));
+  return res(ctx.status(200));
 };
 
 const updateLabels: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
@@ -89,7 +82,7 @@ const updateLabels: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
     return updatedIssue;
   });
   fakeIssues = updatedIssues;
-  return res(ctx.status(200), ctx.json(fakeIssues));
+  return res(ctx.status(200));
 };
 
 const updateMilestone: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
@@ -106,7 +99,7 @@ const updateMilestone: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
     return updatedIssue;
   });
   fakeIssues = updatedIssues;
-  return res(ctx.status(200), ctx.json(fakeIssues));
+  return res(ctx.status(200));
 };
 
 const updateAssignees: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
@@ -123,7 +116,7 @@ const updateAssignees: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
     return updatedIssue;
   });
   fakeIssues = updatedIssues;
-  return res(ctx.status(200), ctx.json(fakeIssues));
+  return res(ctx.status(200));
 };
 
 const deleteIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
@@ -132,7 +125,52 @@ const deleteIssue: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
     (issue) => issue.id !== Number(targetId),
   );
   fakeIssues = updatedIssues;
-  return res(ctx.status(200), ctx.json(fakeIssues));
+  return res(ctx.status(200));
+};
+
+const addReply: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const { id: issueId } = req.params;
+  const { writerId, comment }: { writerId: number; comment: string } = req.body;
+  const writerInfo = fakeMembers.find((member) => member.id === writerId);
+  if (!writerInfo) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 회원입니다',
+      }),
+    );
+  }
+  const targetIssue = fakeIssues.find((issue) => issue.id === Number(issueId));
+  if (!targetIssue) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 이슈입니다',
+      }),
+    );
+  }
+  const newReply = {
+    id: new Date().getTime(),
+    writer: writerInfo.identity,
+    comment,
+    profileUrl: writerInfo.profileUrl,
+    createdDateTime: new Date().toISOString(),
+  };
+  targetIssue.replies.push(newReply);
+  return res(ctx.status(200));
+};
+
+const updateReply: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const { id: replyId } = req.params;
+  const { comment: newComment } = req.body;
+  const fakeReplies: ReplyType[] = [];
+  fakeIssues.forEach((issue) => fakeReplies.push(...issue.replies));
+  const targetReply = fakeReplies.find((reply) => reply.id === Number(replyId));
+  if (!targetReply) return res(ctx.status(404));
+  targetReply.comment = newComment;
+  return res(ctx.status(200));
 };
 
 export default function issueHandlers() {
@@ -146,5 +184,7 @@ export default function issueHandlers() {
     rest.patch('/api/issues/:id/milestone/update', updateMilestone),
     rest.patch('/api/issues/:id/assignees/update', updateAssignees),
     rest.delete('/api/issues/:id', deleteIssue),
+    rest.post('/api/issues/:id/replies', addReply),
+    rest.patch('/api/issues/replies/:id/update', updateReply),
   ];
 }

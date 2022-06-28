@@ -9,12 +9,13 @@ const issues: IssueType[] = [
     id: 1,
     status: 'OPEN',
     subject: '백엔드 기능 구현',
-    comments: [
+    replies: [
       {
         id: 1,
-        writerIdentity: 'Alan',
+        writer: 'Alan',
+        profileUrl: alanProfileURL,
         createdDateTime: '2022-06-18T21:23:00',
-        content: '우하하하 열심히 해보세요!',
+        comment: '우하하하 열심히 해보세요!',
       },
     ],
     writer: 'ikjo',
@@ -52,12 +53,13 @@ const issues: IssueType[] = [
     id: 2,
     status: 'OPEN',
     subject: '프론트엔드 기능 구현',
-    comments: [
+    replies: [
       {
         id: 2,
-        writerIdentity: 'ikjo',
+        writer: 'ikjo',
         createdDateTime: '2022-06-20T05:23:00',
-        content: '우하하하 열심히 해보세요!!!!',
+        comment: '우하하하 열심히 해보세요!!!!',
+        profileUrl: ikjoProfileURL,
       },
     ],
     writer: 'Alan',
@@ -82,18 +84,20 @@ const issues: IssueType[] = [
     id: 3,
     status: 'OPEN',
     subject: '배포',
-    comments: [
+    replies: [
       {
         id: 3,
-        writerIdentity: 'Alan',
+        writer: 'Alan',
         createdDateTime: '2022-06-20T05:23:00',
-        content: '우하하하 열심히 해보세요!!!!',
+        comment: '우하하하 열심히 해보세요!!!!',
+        profileUrl: alanProfileURL,
       },
       {
         id: 4,
-        writerIdentity: 'Park',
+        writer: 'Park',
         createdDateTime: '2022-06-21T05:23:00',
-        content: '우하하하 열심히 해보세요~~!!!!',
+        comment: '우하하하 열심히 해보세요~~!!!!',
+        profileUrl: parkProfileURL,
       },
     ],
     writer: 'Park',
@@ -107,7 +111,7 @@ const issues: IssueType[] = [
     id: 4,
     status: 'CLOSED',
     subject: '이슈 4번 제목',
-    comments: [],
+    replies: [],
     writer: 'ikjo',
     profileUrl: ikjoProfileURL,
     createdDateTime: '2022-06-21T18:23:00',
@@ -143,7 +147,7 @@ const issues: IssueType[] = [
     id: 5,
     status: 'CLOSED',
     subject: '이슈 5번 제목',
-    comments: [],
+    replies: [],
     writer: 'Alan',
     profileUrl: alanProfileURL,
     createdDateTime: '2022-06-21T21:23:00',

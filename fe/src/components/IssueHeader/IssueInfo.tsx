@@ -21,7 +21,7 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
       subject,
       id,
       writer,
-      comments = [],
+      replies = [],
       createdDateTime = '',
       status,
     } = {},
@@ -78,7 +78,7 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
               new Date(createdDateTime),
             )} 전에 ${writer}님에 의해 열렸습니다`,
             '·',
-            `코멘트 ${comments.length}개`,
+            `코멘트 ${replies.length}개`,
           ]}
           spacing={0.5}
           color={theme.palette.placeholder}

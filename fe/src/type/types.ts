@@ -1,10 +1,11 @@
 import { IPalette } from '@style/theme';
 
-export type CommentType = {
+export type ReplyType = {
   id: number;
-  writerIdentity: string;
+  writer: string;
+  comment: string;
+  profileUrl: string;
   createdDateTime: string;
-  content: string;
 };
 
 export type PopoverFilterType = {
@@ -43,7 +44,7 @@ export type IssueType = {
   id: number;
   status: string;
   subject: string;
-  comments: CommentType[];
+  replies: ReplyType[];
   writer: string;
   profileUrl: string;
   createdDateTime: string;

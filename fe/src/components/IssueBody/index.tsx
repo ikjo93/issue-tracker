@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 
-import CommentSection from '@components/IssueBody/CommentSection';
-import UserIcon from '@components/UserIcon';
+import ReplySection from '@components/IssueBody/ReplySection';
 
 import SideMenuSection from './SideMenuSection';
 
 export default function IssueBody() {
   return (
     <IssueBodyGrid>
-      <UserIcon size="BIG" imgUrl="profileUrl" />
-      <CommentSection />
+      <ReplySection />
       <SideMenuSection />
     </IssueBodyGrid>
   );
@@ -17,6 +15,6 @@ export default function IssueBody() {
 
 const IssueBodyGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 15fr 5fr;
+  grid-template-columns: 16fr 5fr;
   grid-gap: 1rem;
 `;
