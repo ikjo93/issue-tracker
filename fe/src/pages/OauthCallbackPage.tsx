@@ -13,11 +13,19 @@ export default function OauthCallbackPage() {
   const code = searchParams.get('code');
   const serverBaseUrl = process.env.SERVER;
   const loginUrl = `${serverBaseUrl}/api/login?code=${code}`;
+  let accessToken = '';
+
+  const setAccessTokenOnHeader = () => {
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  };
 
   const refreshCachedAccessToken = async () => {
     const res = await axios.post(`${serverBaseUrl}/api/access-token/reissue`);
-    const newAccessToken = res.headers['access-token'];
-    headerDispatch({ type: 'REFRESH_TOKEN', accessToken: newAccessToken });
+    if (res.status === 403) {
+      logOut();
+    }
+    accessToken = res.headers['access-token'];
+    setAccessTokenOnHeader();
   };
 
   const setRefreshInterval = () => {
@@ -27,24 +35,25 @@ export default function OauthCallbackPage() {
 
   const logOut = () => {
     headerDispatch({ type: 'LOGOUT' });
+    accessToken = '';
+    document.cookie = `refresh-token=expires. ${new Date().toISOString()}`;
     navigate('/');
   };
 
   useEffect(() => {
     (async () => {
       const jwtResponse = await axios.get(loginUrl);
-      const accessToken = jwtResponse.headers['access-token'];
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-      axios.defaults.headers.common.cookies = document.cookie;
+      accessToken = jwtResponse.headers['access-token'];
+      setAccessTokenOnHeader();
+
+      const { data: userInfo } = await axios.get(`${serverBaseUrl}/api/mine`);
+      headerDispatch({ type: 'LOGIN', userInfo });
+      setRefreshInterval();
+      navigate('/');
 
       // local환경에서 set cookie가 되지 않아서 임시로 사용하는 로직.
       const refreshToken = jwtResponse.headers['refresh-token'];
       document.cookie = `refresh-token=${refreshToken}`;
-
-      const { data: userInfo } = await axios.get(`${serverBaseUrl}/api/mine`);
-      headerDispatch({ type: 'LOGIN', userInfo, accessToken });
-      // setRefreshInterval();
-      navigate('/');
     })();
   }, [loginUrl]);
 
