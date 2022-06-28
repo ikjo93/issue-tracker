@@ -14,7 +14,7 @@ interface IIssueProvider {
 }
 
 export function IssueProvider({ issueId, children }: IIssueProvider) {
-  const { state, refetch } = useAxios<IssueType>(`/api/issue/${issueId}`);
+  const { state, refetch } = useAxios<IssueType>(`/api/issues/${issueId}`);
 
   const { data: issue } = state;
   const issueContextValue = useMemo(() => ({ issue, refetch }), [state]);
