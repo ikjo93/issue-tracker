@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import axios from 'axios';
-import { FormEvent, useEffect, useRef } from 'react';
+import { FormEvent } from 'react';
 import styled from 'styled-components';
 
 import Button from '@components/Button';
@@ -31,7 +31,6 @@ export default function ReplyWritingArea({
 }: IReplyWritingArea) {
   const { userInfo } = useHeaderState();
   const { issue: { id } = {}, refetch: issueAxiosRefetch } = useIssueContext();
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmitReply = async (e: FormEvent) => {
     e.preventDefault();
@@ -52,16 +51,11 @@ export default function ReplyWritingArea({
     issueAxiosRefetch();
   };
 
-  useEffect(() => {
-    if (!textAreaRef.current) return;
-    textAreaRef.current.value = originalData?.comment || '';
-  }, [textAreaRef]);
-
   return (
     <ReplyForm onSubmit={handleSubmitReply}>
       <Container gap={1} flexInfo={{}} width="100%">
         <UserIcon size="BIG" imgUrl={userInfo?.profileUrl} />
-        <TextAreaBox textAreaRef={textAreaRef} />
+        <TextAreaBox defaultValue={originalData?.comment} />
       </Container>
       <Container flexInfo={{}} gap={0.5}>
         {type === 'NEW' ? (

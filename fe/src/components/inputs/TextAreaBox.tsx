@@ -13,9 +13,9 @@ interface TextCountBoxProps {
 const DEBOUNCE_CHECK_TIME_MS = 1000;
 
 export default function TextAreaBox({
-  textAreaRef,
+  defaultValue,
 }: {
-  textAreaRef?: React.RefObject<HTMLTextAreaElement>;
+  defaultValue?: string;
 }) {
   const timeRef = useRef<{ timeout: NodeJS.Timeout | null }>({ timeout: null });
   const textCountRef = useRef<HTMLSpanElement>(null);
@@ -51,7 +51,7 @@ export default function TextAreaBox({
         name="description"
         placeholder="본문"
         onChange={handleChangeTextArea}
-        ref={textAreaRef}
+        defaultValue={defaultValue}
       />
       <TextCountBox isVisible={isTextCountVisible}>
         <span>띄어쓰기 포함 </span>
