@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 import mixin from '@style/mixin';
 
-export default function MilestoneTableCell() {
+export default function MilestoneTableCell({ milestone }) {
   return (
     <CellContainer>
       <MilestoneInfoContainer>
-        <span>무무야야호호</span>
+        <span>{milestone.subject}</span>
       </MilestoneInfoContainer>
       <AssigneeIconContainer>
         <span>여기 아마 삭제버튼</span>
