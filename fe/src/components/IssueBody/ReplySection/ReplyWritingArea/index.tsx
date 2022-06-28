@@ -33,17 +33,17 @@ export default function ReplyWritingArea({
   const { issue: { id } = {}, refetch: issueAxiosRefetch } = useIssueContext();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleSubmitReply = (e: FormEvent) => {
+  const handleSubmitReply = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
     if (!formData.description) throw new Error('Something wrong with form');
     if (type === 'NEW') {
-      axios.post(`/api/issues/${id}/replies`, {
+      await axios.post(`/api/issues/${id}/replies`, {
         writerId: userInfo?.id,
         comment: formData.description.value,
       });
     } else if (type === 'EDIT') {
-      axios.patch(`/api/issues/replies/${originalData?.id}/update`, {
+      await axios.patch(`/api/issues/replies/${originalData?.id}/update`, {
         comment: formData.description.value,
       });
       finishEdit();
@@ -53,7 +53,7 @@ export default function ReplyWritingArea({
   };
 
   useEffect(() => {
-    if (!textAreaRef) return;
+    if (!textAreaRef.current) return;
     textAreaRef.current.value = originalData?.comment || '';
   }, [textAreaRef]);
 

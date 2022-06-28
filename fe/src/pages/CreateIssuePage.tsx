@@ -1,4 +1,3 @@
-import { Description } from '@mui/icons-material';
 import axios from 'axios';
 import { FormEvent, useState, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +9,11 @@ import Divider from '@components/Divider';
 import InputBox from '@components/inputs/InputBox';
 import TextAreaBox from '@components/inputs/TextAreaBox';
 import SideMenu from '@components/SideMenu';
+import sideMenuReducer from '@components/SideMenu/sideMenuReducer';
 import { MenuStateType } from '@components/SideMenu/type';
 import TitleBar from '@components/TitleBar';
 import UserIcon from '@components/UserIcon';
 import { useHeaderState } from '@contexts/HeaderProvider';
-import sideMenuReducer from '@util/sideMenuReducer';
 
 interface IFormEventTarget extends EventTarget {
   subject?: HTMLInputElement;

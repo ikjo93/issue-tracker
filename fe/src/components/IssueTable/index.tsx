@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import IssueTableBody from '@components/IssueTable/IssueTableBody';
+import IssueTableHeader from '@components/IssueTable/IssueTableHeader';
 import useAxios from '@hooks/useAxios';
 import { IssueType } from '@type/types';
 
-import IssueTableBody from './IssueTableBody';
-import IssueTableHeader from './IssueTableHeader';
 
 type IssueTableDataType = {
   issues: IssueType[];

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import Container from '@components/Container';
 import IconTextBox from '@components/IconTextBox';
+import ReplyWritingArea from '@components/IssueBody/ReplySection/ReplyWritingArea';
 import UserIcon from '@components/UserIcon';
 import { fontSize } from '@constants/fonts';
 import { useHeaderState } from '@contexts/HeaderProvider';
@@ -12,7 +13,6 @@ import mixin from '@style/mixin';
 import { ReplyType } from '@type/types';
 import { calTimePassed } from '@util/dateHandler';
 
-import ReplyWritingArea from '../ReplyWritingArea';
 
 interface IReplyProps {
   replyData: ReplyType;

@@ -40,7 +40,7 @@ const postCreateIssue = (req, res, ctx) => {
   return res(ctx.status(201));
 };
 
-const patchUpdatedStatus: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+const updateStatus: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   const {
     updatedStatus,
     idOfIssues,
@@ -178,13 +178,13 @@ export default function issueHandlers() {
     rest.get('/api/issues', getIssues),
     rest.get('/api/issue/:id', getIssue),
     rest.post('/api/createIssue', postCreateIssue),
-    rest.patch('/api/issues/status/update', patchUpdatedStatus),
+    rest.post('/api/issues/:id/replies', addReply),
+    rest.patch('/api/issues/status/update', updateStatus),
     rest.patch('/api/issues/:id/subject/update', updateSubject),
     rest.patch('/api/issues/:id/labels/update', updateLabels),
     rest.patch('/api/issues/:id/milestone/update', updateMilestone),
     rest.patch('/api/issues/:id/assignees/update', updateAssignees),
-    rest.delete('/api/issues/:id', deleteIssue),
-    rest.post('/api/issues/:id/replies', addReply),
     rest.patch('/api/issues/replies/:id/update', updateReply),
+    rest.delete('/api/issues/:id', deleteIssue),
   ];
 }

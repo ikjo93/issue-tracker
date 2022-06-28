@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 import ReplySection from '@components/IssueBody/ReplySection';
-
-import SideMenuSection from './SideMenuSection';
+import SideMenuSection from '@components/IssueBody/SideMenuSection';
 
 export default function IssueBody() {
   return (

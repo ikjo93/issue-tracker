@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
+import PopoverMenu from '@components/PopoverContainer/PopoverMenus/PopoverMenu';
 import mixin from '@style/mixin';
 import { getCssValueByUnit } from '@util/css';
 
-import PopoverMenu from './PopoverMenu';
 
 interface IPopoverContainer {
   left?: number | string;

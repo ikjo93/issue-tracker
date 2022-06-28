@@ -8,8 +8,8 @@ import AlertDialog from '@components/AlertDialog';
 import Container from '@components/Container';
 import IconTextBox from '@components/IconTextBox';
 import SideMenu from '@components/SideMenu';
+import sideMenuReducer from '@components/SideMenu/sideMenuReducer';
 import { useIssueContext } from '@contexts/IssueProvider';
-import sideMenuReducer from '@util/sideMenuReducer';
 
 export default function SideMenuSection() {
   const theme = useTheme();

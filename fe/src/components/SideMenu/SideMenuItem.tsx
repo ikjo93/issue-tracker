@@ -13,9 +13,11 @@ import {
   MemberType,
   MilestoneType,
   PopoverContentType,
+  MenuDispatchType,
+  ModalTypes,
 } from '@type/types';
 
-import { MenuDispatchType, ModalTypes } from './type';
+
 
 type MenuKey = 'milestones' | 'labels' | 'members';
 

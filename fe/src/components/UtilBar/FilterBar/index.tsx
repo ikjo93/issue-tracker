@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 import Divider from '@components/Divider';
+import FilterBarForm from '@components/UtilBar/FilterBar/FilterBarForm';
+import FilterBarSelectMenu from '@components/UtilBar/FilterBar/FilterBarSelectMenu';
 import mixin from '@style/mixin';
-
-import FilterBarForm from './FilterBarForm';
-import FilterBarSelectMenu from './FilterBarSelectMenu';
 
 export default function FilterBar() {
   return (

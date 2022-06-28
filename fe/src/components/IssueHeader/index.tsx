@@ -1,9 +1,8 @@
 import { useState, useRef } from 'react';
 
 import Container from '@components/Container';
-
-import IssueInfo from './IssueInfo';
-import IssueUtilButtons from './IssueUtilButtons';
+import IssueInfo from '@components/IssueHeader/IssueInfo';
+import IssueUtilButtons from '@components/IssueHeader/IssueUtilButtons';
 
 export default function IssueHeader() {
   const [isTitleEditing, setIsTitleEditing] = useState(false);
