@@ -34,9 +34,3 @@ const MilestoneTitleContainer = styled.div`
   gap: 1rem;
   height: 2rem;
 `;
-
-const LabelContainer = styled.div`
-  ${mixin.flexMixin({ align: 'center', justify: 'space-between' })}
-  margin-left: 0.5rem;
-  gap: 0.5rem;
-`;
