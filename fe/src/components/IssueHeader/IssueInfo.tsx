@@ -21,7 +21,7 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
       subject,
       id,
       writer,
-      comments = [],
+      replies = [],
       createdDateTime = '',
       status,
     } = {},
@@ -44,7 +44,7 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
         {status === 'OPEN' ? (
           <IssueStatusBadge
             color={theme.palette.primary}
-            backgroundColor={theme.palette.primaryBgColor}
+            backgroundColor={theme.palette.secondary}
             borderLineColor={theme.palette.primary}
             width={6.25}
             height={2.5}
@@ -78,7 +78,7 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
               new Date(createdDateTime),
             )} 전에 ${writer}님에 의해 열렸습니다`,
             '·',
-            `코멘트 ${comments.length}개`,
+            `코멘트 ${replies.length}개`,
           ]}
           spacing={0.5}
           color={theme.palette.placeholder}

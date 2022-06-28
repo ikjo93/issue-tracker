@@ -12,7 +12,11 @@ interface TextCountBoxProps {
 
 const DEBOUNCE_CHECK_TIME_MS = 1000;
 
-export default function TextAreaBox() {
+export default function TextAreaBox({
+  defaultValue,
+}: {
+  defaultValue?: string;
+}) {
   const timeRef = useRef<{ timeout: NodeJS.Timeout | null }>({ timeout: null });
   const textCountRef = useRef<HTMLSpanElement>(null);
   const theme = useTheme();
@@ -47,6 +51,7 @@ export default function TextAreaBox() {
         name="description"
         placeholder="본문"
         onChange={handleChangeTextArea}
+        defaultValue={defaultValue}
       />
       <TextCountBox isVisible={isTextCountVisible}>
         <span>띄어쓰기 포함 </span>
