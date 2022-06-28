@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import MilestoneStatusTabs from '@components/MilestoneTable/MilestoneTableHeader/MilestoneStatusTabs';
-import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import mixin from '@style/mixin';
 
 export default function MilestoneTableHeader({

@@ -9,7 +9,11 @@ export default function MilestoneDescription({
 }): React.ReactElement<{ description: string }> {
   return (
     <Wrapper>
-      <IconTextBox color={colors.grey4} texts={[description]} />
+      <IconTextBox
+        color={colors.grey4}
+        texts={[description]}
+        cursor="default"
+      />
     </Wrapper>
   );
 }

@@ -16,12 +16,14 @@ export default function MilestoneTitle({
         Icon={<SignpostOutlinedIcon color="primary" fontSize="small" />}
         texts={[milestone.subject]}
         spacing={0.75}
+        cursor="default"
       />
       <IconTextBox
         Icon={<CalendarTodayIcon fontSize="small" />}
         texts={[milestone.endDate]}
         spacing={0.5}
         color={colors.grey4}
+        cursor="default"
       />
     </MilestoneTitleContainer>
   );

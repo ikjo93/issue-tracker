@@ -3,12 +3,16 @@ import styled from 'styled-components';
 import MilestoneTableCell from '@components/MilestoneTable/MilestoneTableBody/MilestoneTableCell';
 import mixin from '@style/mixin';
 
-export default function MilestoneTableBody({ milestones }) {
+export default function MilestoneTableBody({ milestones, milestonesRefetch }) {
   return (
     <MilestoneTableBodyContainer>
       {milestones?.length ? (
         milestones?.map((milestone) => (
-          <MilestoneTableCell key={milestone.id} milestone={milestone} />
+          <MilestoneTableCell
+            key={milestone.id}
+            milestone={milestone}
+            milestonesRefetch={milestonesRefetch}
+          />
         ))
       ) : (
         <NoIssueMessage>검색과 일치하는 결과가 없습니다.</NoIssueMessage>

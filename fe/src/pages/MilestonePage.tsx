@@ -15,7 +15,7 @@ export default function MilestonePage() {
   return (
     <>
       {isAdding && <CreateMilestoneBox milestonesRefetch={refetch} />}
-      <MilestoneTable state={state} />
+      <MilestoneTable state={state} milestonesRefetch={refetch} />
     </>
   );
 }

@@ -8,8 +8,10 @@ import { IMilestoneResponse } from '@type/types';
 
 export default function MilestoneTable({
   state,
+  milestonesRefetch,
 }: {
   state: ResponseState<IMilestoneResponse>;
+  milestonesRefetch: () => void;
 }) {
   const {
     data: { milestones, countOfOpenMilestones, countOfClosedMilestones } = {},
@@ -21,7 +23,10 @@ export default function MilestoneTable({
         countOfOpenMilestones={countOfOpenMilestones}
         countOfClosedMilestones={countOfClosedMilestones}
       />
-      <MilestoneTableBody milestones={milestones} />
+      <MilestoneTableBody
+        milestones={milestones}
+        milestonesRefetch={milestonesRefetch}
+      />
     </MilestoneTableContainer>
   );
 }
