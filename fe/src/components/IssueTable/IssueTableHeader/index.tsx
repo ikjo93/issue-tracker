@@ -77,12 +77,12 @@ export default function IssueTableHeader({
       case 'MILESTONE':
         return {
           ...item,
-          menus: labels,
+          menus: milestones,
         };
       case 'LABEL':
         return {
           ...item,
-          menus: milestones,
+          menus: labels,
         };
       default:
         throw Error('unexpected item type');

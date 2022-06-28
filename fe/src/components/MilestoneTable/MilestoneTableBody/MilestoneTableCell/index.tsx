@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import MilestoneTableCellItem from '@components/MilestoneTable/MilestoneTableBody/MilestoneTableCell/MilestoneTableCellIItem';
 import UpdateMilestoneBody from '@components/MilestoneTable/MilestoneTableBody/MilestoneTableCell/UpdateMilestoneBody';
 
-export default function MilestoneTableCell({ milestone, milestonesRefetch }) {
+export default function MilestoneTableCell({ milestone }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleIsEditing = () => {
@@ -17,13 +17,11 @@ export default function MilestoneTableCell({ milestone, milestonesRefetch }) {
         <UpdateMilestoneBody
           milestone={milestone}
           toggleIsEditing={toggleIsEditing}
-          milestonesRefetch={milestonesRefetch}
         />
       ) : (
         <MilestoneTableCellItem
           milestone={milestone}
           toggleIsEditing={toggleIsEditing}
-          milestonesRefetch={milestonesRefetch}
         />
       )}
     </CellContainer>

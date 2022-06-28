@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 import CreateMilestoneBody from '@components/CreateMilestoneBox/CreateMilestoneBody';
 
-export default function CreateMilestoneBox({ milestonesRefetch }) {
+export default function CreateMilestoneBox() {
   return (
     <Wrapper>
-      <CreateMilestoneBody milestonesRefetch={milestonesRefetch} />
+      <CreateMilestoneBody />
     </Wrapper>
   );
 }

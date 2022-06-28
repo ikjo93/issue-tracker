@@ -8,6 +8,7 @@ import Button from '@components/Button';
 import Container from '@components/Container';
 import InputBox from '@components/inputs/InputBox';
 import { fontSize } from '@constants/fonts';
+import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import mixin from '@style/mixin';
 
 interface IFormEventTarget extends EventTarget {
@@ -16,11 +17,9 @@ interface IFormEventTarget extends EventTarget {
   endDate?: HTMLInputElement;
 }
 
-export default function UpdateMilestoneBody({
-  milestone,
-  toggleIsEditing,
-  milestonesRefetch,
-}) {
+export default function UpdateMilestoneBody({ milestone, toggleIsEditing }) {
+  const { refetch: milestonesRefetch } = useMilestoneContext();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;

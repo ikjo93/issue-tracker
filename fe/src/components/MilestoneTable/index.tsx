@@ -1,32 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import MilestoneTableBody from '@components/MilestoneTable/MilestoneTableBody';
 import MilestoneTableHeader from '@components/MilestoneTable/MilestoneTableHeader';
-import { ResponseState } from '@hooks/useAxios';
-import { IMilestoneResponse } from '@type/types';
 
-export default function MilestoneTable({
-  state,
-  milestonesRefetch,
-}: {
-  state: ResponseState<IMilestoneResponse>;
-  milestonesRefetch: () => void;
-}) {
-  const {
-    data: { milestones, countOfOpenMilestones, countOfClosedMilestones } = {},
-  } = state;
-
+export default function MilestoneTable() {
   return (
     <MilestoneTableContainer>
-      <MilestoneTableHeader
-        countOfOpenMilestones={countOfOpenMilestones}
-        countOfClosedMilestones={countOfClosedMilestones}
-      />
-      <MilestoneTableBody
-        milestones={milestones}
-        milestonesRefetch={milestonesRefetch}
-      />
+      <MilestoneTableHeader />
+      <MilestoneTableBody />
     </MilestoneTableContainer>
   );
 }

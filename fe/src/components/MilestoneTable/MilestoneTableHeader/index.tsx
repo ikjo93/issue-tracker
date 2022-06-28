@@ -3,16 +3,10 @@ import styled from 'styled-components';
 import MilestoneStatusTabs from '@components/MilestoneTable/MilestoneTableHeader/MilestoneStatusTabs';
 import mixin from '@style/mixin';
 
-export default function MilestoneTableHeader({
-  countOfOpenMilestones,
-  countOfClosedMilestones,
-}) {
+export default function MilestoneTableHeader() {
   return (
     <MilestoneTableHeaderContainer>
-      <MilestoneStatusTabs
-        countOfOpenMilestones={countOfOpenMilestones}
-        countOfClosedMilestones={countOfClosedMilestones}
-      />
+      <MilestoneStatusTabs />
     </MilestoneTableHeaderContainer>
   );
 }

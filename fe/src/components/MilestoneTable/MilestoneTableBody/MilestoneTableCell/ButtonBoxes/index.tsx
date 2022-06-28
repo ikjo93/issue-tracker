@@ -6,13 +6,11 @@ import styled, { useTheme } from 'styled-components';
 
 import AlertDialog from '@components/AlertDialog';
 import IconTextBox from '@components/IconTextBox';
+import { useMilestoneContext } from '@contexts/MilestoneProvider';
 
-export default function ButtonBoxes({
-  milestoneId,
-  toggleIsEditing,
-  milestonesRefetch,
-}) {
+export default function ButtonBoxes({ milestoneId, toggleIsEditing }) {
   const theme = useTheme();
+  const { refetch: milestonesRefetch } = useMilestoneContext();
 
   const handleClickCloseButton = async () => {
     await axios.patch(`/api/milestones/${milestoneId}/status/update`, {

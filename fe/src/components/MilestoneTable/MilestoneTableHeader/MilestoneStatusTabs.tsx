@@ -10,17 +10,12 @@ import { fontWeight } from '@constants/fonts';
 import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import { makeUrlQuery } from '@util/queryParser';
 
-interface StatusTabsProps {
-  countOfOpenMilestones?: number;
-  countOfClosedMilestones?: number;
-}
-
-export default function MilestoneStatusTabs({
-  countOfOpenMilestones,
-  countOfClosedMilestones,
-}: StatusTabsProps) {
+export default function MilestoneStatusTabs() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { data: { countOfOpenMilestones, countOfClosedMilestones } = {} } =
+    useMilestoneContext();
+
   const searchParams = new URLSearchParams(window.location.search);
   const clickedStatus = searchParams.get('status') || 'OPEN';
 

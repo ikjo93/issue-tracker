@@ -37,8 +37,10 @@ const postMilestones = (req, res, ctx) => {
     countOfClosedIssues: 0,
   };
   lastMilestoneId += 1;
-  fakeMilestones.countOfOpenMilestones += 1;
   fakeMilestones.milestones.push(newMilestone);
+  fakeMilestones.countOfOpenMilestones = fakeMilestones.milestones.filter(
+    (milestone) => milestone.status === 'OPEN',
+  ).length;
   return res(ctx.status(200), ctx.json(newMilestone));
 };
 
@@ -122,6 +124,14 @@ const deleteMilestone = (req, res, ctx) => {
   fakeMilestones.milestones = fakeMilestones.milestones.filter(
     (fMilestone) => fMilestone.id !== Number(id),
   );
+
+  fakeMilestones.countOfOpenMilestones = fakeMilestones.milestones.filter(
+    (fMilestone) => fMilestone.status === 'OPEN',
+  ).length;
+
+  fakeMilestones.countOfClosedMilestones = fakeMilestones.milestones.filter(
+    (fMilestone) => fMilestone.status === 'CLOSED',
+  ).length;
 
   return res(
     ctx.status(200),

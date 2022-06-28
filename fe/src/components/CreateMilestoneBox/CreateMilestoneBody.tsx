@@ -8,6 +8,7 @@ import Button from '@components/Button';
 import Container from '@components/Container';
 import InputBox from '@components/inputs/InputBox';
 import { fontSize } from '@constants/fonts';
+import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import { OutletContext } from '@pages/LabelMilestoneLayout';
 import mixin from '@style/mixin';
 
@@ -17,8 +18,9 @@ interface IFormEventTarget extends EventTarget {
   endDate?: HTMLInputElement;
 }
 
-export default function CreateMilestoneBody({ milestonesRefetch }) {
+export default function CreateMilestoneBody() {
   const [, setIsAdding] = useOutletContext<OutletContext>();
+  const { refetch: milestonesRefetch } = useMilestoneContext();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

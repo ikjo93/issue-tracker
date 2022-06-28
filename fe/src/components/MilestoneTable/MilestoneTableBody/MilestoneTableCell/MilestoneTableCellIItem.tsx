@@ -8,11 +8,7 @@ import colors from '@constants/colors';
 import { fontSize } from '@constants/fonts';
 import mixin from '@style/mixin';
 
-export default function MilestoneTableCellItem({
-  milestone,
-  toggleIsEditing,
-  milestonesRefetch,
-}) {
+export default function MilestoneTableCellItem({ milestone, toggleIsEditing }) {
   const openIssueCount =
     milestone.totalCountOfIssues - milestone.countOfClosedIssues;
   const progressBarPercent =
@@ -31,7 +27,6 @@ export default function MilestoneTableCellItem({
         <ButtonBoxes
           milestoneId={milestone.id}
           toggleIsEditing={toggleIsEditing}
-          milestonesRefetch={milestonesRefetch}
         />
         <ProgressBar percent={progressBarPercent} />
         <MilestoneProgressStatus>

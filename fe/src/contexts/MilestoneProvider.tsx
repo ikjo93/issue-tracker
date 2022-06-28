@@ -1,4 +1,5 @@
 import { useContext, createContext, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import useAxios from '@hooks/useAxios';
 import { IMilestoneResponse } from '@type/types';
@@ -9,7 +10,9 @@ const MilestoneContext = createContext<{
 } | null>(null);
 
 export function MilestoneProvider({ children }) {
-  const { state, refetch } = useAxios<IMilestoneResponse>('/api/milestones');
+  const { state, refetch } = useAxios<IMilestoneResponse>(
+    `/api/milestones/${useLocation().search}`,
+  );
 
   const milestoneContextValue = useMemo(
     () => ({ data: state.data, refetch }),
