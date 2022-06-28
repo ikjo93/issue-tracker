@@ -176,8 +176,8 @@ const updateReply: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
 export default function issueHandlers() {
   return [
     rest.get('/api/issues', getIssues),
-    rest.get('/api/issue/:id', getIssue),
-    rest.post('/api/createIssue', postCreateIssue),
+    rest.get('/api/issues/:id', getIssue),
+    rest.post('/api/issues', postCreateIssue),
     rest.post('/api/issues/:id/replies', addReply),
     rest.patch('/api/issues/status/update', updateStatus),
     rest.patch('/api/issues/:id/subject/update', updateSubject),

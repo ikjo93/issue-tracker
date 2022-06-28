@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
+import MilestoneStatusTabs from '@components/MilestoneTable/MilestoneTableHeader/MilestoneStatusTabs';
 import mixin from '@style/mixin';
 
 export default function MilestoneTableHeader() {
   return (
     <MilestoneTableHeaderContainer>
-      <span>하이 헤더</span>
+      <MilestoneStatusTabs />
     </MilestoneTableHeaderContainer>
   );
 }

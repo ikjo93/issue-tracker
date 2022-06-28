@@ -1,36 +1,45 @@
-import styled from 'styled-components';
+import { useState } from 'react';
+import styled, { css } from 'styled-components';
 
-import mixin from '@style/mixin';
+import MilestoneTableCellItem from '@components/MilestoneTable/MilestoneTableBody/MilestoneTableCell/MilestoneTableCellIItem';
+import UpdateMilestoneBody from '@components/MilestoneTable/MilestoneTableBody/MilestoneTableCell/UpdateMilestoneBody';
 
-export default function MilestoneTableCell() {
+export default function MilestoneTableCell({ milestone }) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const toggleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
-    <CellContainer>
-      <MilestoneInfoContainer>
-        <span>무무야야호호</span>
-      </MilestoneInfoContainer>
-      <AssigneeIconContainer>
-        <span>여기 아마 삭제버튼</span>
-      </AssigneeIconContainer>
+    <CellContainer isEditing={isEditing}>
+      {isEditing ? (
+        <UpdateMilestoneBody
+          milestone={milestone}
+          toggleIsEditing={toggleIsEditing}
+        />
+      ) : (
+        <MilestoneTableCellItem
+          milestone={milestone}
+          toggleIsEditing={toggleIsEditing}
+        />
+      )}
     </CellContainer>
   );
 }
 
-const CellContainer = styled.div`
+const CellContainer = styled.div<{ isEditing: boolean }>`
   display: grid;
-  grid-template-columns: 5fr 1fr;
   padding: 0 2rem;
-  height: 6.25rem;
+  min-height: 6.25rem;
   border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
   background-color: ${({ theme }) => theme.palette.contentColor};
-  :hover {
-    background-color: ${({ theme }) => theme.palette.lighterBgColor};
-  }
-`;
-
-const MilestoneInfoContainer = styled.div`
-  ${mixin.flexMixin({ align: 'center' })};
-`;
-
-const AssigneeIconContainer = styled.div`
-  ${mixin.flexMixin({ align: 'center' })};
+  ${({ isEditing }) =>
+    !isEditing &&
+    css`
+      grid-template-columns: 5fr 2fr;
+      :hover {
+        background-color: ${({ theme }) => theme.palette.lighterBgColor};
+      }
+    `}
 `;
