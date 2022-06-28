@@ -44,7 +44,7 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
         {status === 'OPEN' ? (
           <IssueStatusBadge
             color={theme.palette.primary}
-            backgroundColor={theme.palette.primaryBgColor}
+            backgroundColor={theme.palette.secondary}
             borderLineColor={theme.palette.primary}
             width={6.25}
             height={2.5}
