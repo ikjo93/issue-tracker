@@ -19,12 +19,12 @@ const getMilestones = (req, res, ctx) => {
 };
 
 const postMilestones = (req, res, ctx) => {
-  const { subject, description, endTime } = req.body;
+  const { subject, description, endDate } = req.body;
   const newMilestone = {
     id: lastMilestoneId,
     subject,
     description,
-    endTime,
+    endDate,
     status: 'OPEN',
     totalCountOfIssues: 0,
     countOfClosedIssues: 0,
