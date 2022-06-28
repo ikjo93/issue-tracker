@@ -52,7 +52,7 @@ const patchLabel = (req, res, ctx) => {
 export default function labelHandlers() {
   return [
     rest.get('/api/labels', getLabels),
-    rest.post('/api/labels/create', postCreateLabel),
+    rest.post('/api/labels', postCreateLabel),
     rest.delete('/api/labels/:id', deleteLabel),
     rest.patch('/api/labels/:id', patchLabel),
   ];

@@ -41,7 +41,7 @@ export default function CreateLabelBody() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
-    await axios.post('/api/labels/create', {
+    await axios.post('/api/labels', {
       name: formData.name?.value,
       description: formData.description?.value,
       color: formData.color?.value,
