@@ -19,6 +19,7 @@ export default function TextAreaBox({
 }) {
   const timeRef = useRef<{ timeout: NodeJS.Timeout | null }>({ timeout: null });
   const textCountRef = useRef<HTMLSpanElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const theme = useTheme();
   const [isTextCountVisible, setIsTextCountVisible] = useState(false);
 
@@ -48,6 +49,7 @@ export default function TextAreaBox({
       unit="%"
     >
       <MyTextArea
+        ref={textAreaRef}
         name="description"
         placeholder="본문"
         onChange={handleChangeTextArea}
@@ -59,7 +61,7 @@ export default function TextAreaBox({
         <span>자</span>
       </TextCountBox>
       <Divider margin="" lineStyle="dashed" />
-      <FileInputBox />
+      <FileInputBox textAreaRef={textAreaRef} />
     </TextAreaSquircle>
   );
 }
