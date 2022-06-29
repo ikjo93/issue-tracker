@@ -23,6 +23,11 @@ const getPublicUrl = () => {
   return '/';
 };
 
+const API_URL = {
+  DEV: 'http://localhost:8111',
+  PROD: 'https://3.38.208.189',
+};
+
 process.env = { ...process.env, PUBLIC_URL: getPublicUrl() };
 
 module.exports = {
@@ -47,7 +52,18 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx|js|jsx)$/,
-        use: 'babel-loader',
+        use: [
+          'babel-loader',
+          {
+            loader: 'string-replace-loader',
+            options: {
+              search: '__API_END_POINT__',
+              replace:
+                process.env.NODE_ENV === 'dev' ? API_URL.DEV : API_URL.PROD,
+              flags: 'g',
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
