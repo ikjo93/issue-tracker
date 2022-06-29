@@ -31,13 +31,12 @@ export default function CreateIssuePage() {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
     await axios.post('/api/issues', {
-      writer: userInfo?.identity,
-      profileUrl: userInfo?.profileUrl,
       subject: formData.subject?.value,
-      description: formData.description?.value,
-      labels: menuState.labels,
-      assignees: menuState.assignees,
-      milestone: menuState.milestone,
+      writerId: userInfo?.id,
+      assigneeIds: menuState.assignees.map((assignee) => assignee.id),
+      labelIds: menuState.labels.map((label) => label.id),
+      milestoneId: menuState.milestone?.id,
+      comment: formData.description?.value,
     });
     navigate('/');
   };
