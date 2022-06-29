@@ -41,10 +41,7 @@ public class Issue extends BaseTimeEntity {
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
 
-    @OneToMany(mappedBy = "issue")
-    private List<Image> images = new ArrayList<>();
-
-    @OneToMany(mappedBy = "issue")
+    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
@@ -54,10 +51,20 @@ public class Issue extends BaseTimeEntity {
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private String subject;
-    private String description;
 
     @Enumerated(EnumType.STRING)
     private IssueStatus status;
+
+    private Issue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+        this.writer = writer;
+        this.milestone = milestone;
+        this.subject = subject;
+        this.status = status;
+    }
+
+    public static Issue createIssue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+        return new Issue(writer, milestone, subject, IssueStatus.OPEN);
+    }
 
     public boolean hasSameStatus(IssueStatus status) {
         return this.status.equals(status);
@@ -75,5 +82,28 @@ public class Issue extends BaseTimeEntity {
             .stream()
             .map(IssueLabel::getLabel)
             .collect(Collectors.toList());
+    }
+
+    public void addReply(Reply reply) {
+        this.replies.add(reply);
+    }
+
+    public void addAssignee(Assignee assignee) {
+        this.assignees.add(assignee);
+    }
+
+    public void addIssueLabel(IssueLabel issueLabel) {
+        this.issueLabels.add(issueLabel);
+    }
+
+    public void updateStatus(IssueStatus status) {
+        this.status = status;
+    }
+
+    public void updateSubject(String subject) {
+        this.subject = subject;
+    }
+    public void updateMilestone(Milestone milestone) {
+        this.milestone = milestone;
     }
 }

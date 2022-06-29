@@ -1,5 +1,6 @@
 package codesquad.issuetracker.domain;
 
+import codesquad.issuetracker.dto.label.LabelForm;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -34,4 +35,22 @@ public class Label {
 
     @Column(name = "dark_text_flag")
     private boolean isDarkText;
+
+    private Label(String name, String description, String color, boolean isDarkText) {
+        this.name = name;
+        this.description = description;
+        this.color = color;
+        this.isDarkText = isDarkText;
+    }
+
+    public void updateInfo(LabelForm form) {
+        this.name = form.getName();
+        this.description = form.getDescription();
+        this.color = form.getColor();
+        this.isDarkText = form.isDarkText();
+    }
+
+    public static Label createLabel(LabelForm form) {
+        return new Label(form.getName(), form.getDescription(), form.getColor(), form.isDarkText());
+    }
 }

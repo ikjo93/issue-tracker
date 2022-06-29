@@ -1,11 +1,13 @@
 package codesquad.issuetracker.domain;
 
-import codesquad.issuetracker.dto.milestone.MilestoneDto;
+import codesquad.issuetracker.dto.milestone.MilestoneForm;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +35,32 @@ public class Milestone {
     private String description;
     private LocalDate endDate;
 
-    public MilestoneDto convertToDto() {
-        return new MilestoneDto(id, subject, description);
+    @Enumerated(EnumType.STRING)
+    private MilestoneStatus status;
+
+    private Milestone(String subject, String description, LocalDate endDate,
+        MilestoneStatus status) {
+        this.subject = subject;
+        this.description = description;
+        this.endDate = endDate;
+        this.status = status;
+    }
+
+    public static Milestone createMilestone(MilestoneForm form) {
+        return new Milestone(form.getSubject(), form.getDescription(), form.getEndDate(), MilestoneStatus.OPEN);
+    }
+
+    public void updateInfo(MilestoneForm form) {
+        this.subject = form.getSubject();
+        this.description = form.getDescription();
+        this.endDate = form.getEndDate();
+    }
+
+    public void updateStatus(MilestoneStatus status) {
+        this.status = status;
+    }
+
+    public boolean hasSameStatus(MilestoneStatus status) {
+        return this.status.equals(status);
     }
 }

@@ -1,7 +1,6 @@
 package codesquad.issuetracker.domain;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "reply")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Reply {
+public class Reply extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +35,19 @@ public class Reply {
     @NotNull
     private Member member;
 
-    private String content;
+    private String comment;
 
-    @Column(name = "created_datetime")
-    private LocalDateTime createdDateTime;
-    @Column(name = "updated_datetime")
-    private LocalDateTime updatedDateTime;
+    private Reply(Issue issue, Member member, String comment) {
+        this.issue = issue;
+        this.member = member;
+        this.comment = comment;
+    }
 
+    public static Reply createReply(Issue issue, Member member, String comment) {
+        return new Reply(issue, member, comment);
+    }
+
+    public void updateComment(String comment) {
+        this.comment = comment;
+    }
 }

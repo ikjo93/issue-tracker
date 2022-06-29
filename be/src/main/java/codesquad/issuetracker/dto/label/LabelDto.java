@@ -15,7 +15,6 @@ public class LabelDto {
 
     private LabelDto() {}
 
-    @QueryProjection
     public LabelDto(Long id, String name, String description, String color, boolean isDarkText) {
         this.id = id;
         this.name = name;
@@ -24,12 +23,8 @@ public class LabelDto {
         this.isDarkText = isDarkText;
     }
 
-    public static LabelDto convertToDto(Label label) {
-        if (label != null) {
-            return new LabelDto(label.getId(), label.getName(), label.getDescription(),
+    public static LabelDto from(Label label) {
+        return new LabelDto(label.getId(), label.getName(), label.getDescription(),
                 label.getColor(), label.isDarkText());
-        }
-
-        return null;
     }
 }

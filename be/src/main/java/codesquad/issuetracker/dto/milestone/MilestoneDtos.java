@@ -6,11 +6,16 @@ import lombok.Getter;
 @Getter
 public class MilestoneDtos {
 
+    private Long countOfOpenMilestones;
+    private Long countOfClosedMilestones;
+
     private List<MilestoneDto> milestones;
 
     private MilestoneDtos() {}
 
-    public MilestoneDtos(List<MilestoneDto> milestones) {
+    public MilestoneDtos(Long countOfOpenMilestones, Long countOfClosedMilestones, List<MilestoneDto> milestones) {
+        this.countOfOpenMilestones = countOfOpenMilestones;
+        this.countOfClosedMilestones = countOfClosedMilestones;
         this.milestones = milestones;
     }
 }

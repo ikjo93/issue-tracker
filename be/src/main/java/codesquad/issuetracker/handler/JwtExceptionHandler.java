@@ -1,4 +1,4 @@
-package codesquad.issuetracker.controller;
+package codesquad.issuetracker.handler;
 
 import codesquad.issuetracker.dto.ResponseMessage;
 import codesquad.issuetracker.exception.InvalidTokenException;
@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 @ResponseBody
-public class ExceptionControllerAdvice {
+public class JwtExceptionHandler {
 
     @ExceptionHandler(InvalidTokenException.class)
     public ResponseEntity<ResponseMessage> handleJwtException(InvalidTokenException exception) {
         ResponseMessage message = new ResponseMessage(HttpStatus.UNAUTHORIZED, exception.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
     }
+
 }
