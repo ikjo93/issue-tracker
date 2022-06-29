@@ -1,7 +1,10 @@
+import githubMarkdownDark from 'github-markdown-css/github-markdown-dark.css';
+import githubMarkdownLight from 'github-markdown-css/github-markdown-light.css';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{ isDarkMode: boolean }>`
+  ${({ isDarkMode }) => (isDarkMode ? githubMarkdownDark : githubMarkdownLight)}
   ${reset}
   *{
     box-sizing: border-box;
@@ -51,6 +54,20 @@ const GlobalStyle = createGlobalStyle`
   body{
     background-color: ${({ theme }) => theme.palette.bgColor};
     color: ${({ theme }) => theme.palette.fontColor};
+  }
+  // custom github-markdown-css
+  .markdown-body {
+    background-color: inherit;
+    color: inherit;
+  }
+  .markdown-body pre {
+    background-color: ${({ theme }) => theme.palette.darkerBgColor};
+  }
+  .markdown-body [type=checkbox] {
+    margin-right: 1rem;
+  }
+  .markdown-body ul {
+    list-style: revert;
   }
 `;
 

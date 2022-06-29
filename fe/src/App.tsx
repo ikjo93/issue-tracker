@@ -16,7 +16,7 @@ export default function App() {
       <LabelProvider>
         <MilestoneProvider>
           <MemberProvider>
-            <GlobalStyle />
+            <GlobalStyle isDarkMode={isDarkMode} />
             <Routes />
           </MemberProvider>
         </MilestoneProvider>
