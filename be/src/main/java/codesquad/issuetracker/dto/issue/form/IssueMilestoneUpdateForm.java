@@ -9,7 +9,6 @@ import lombok.Getter;
 public class IssueMilestoneUpdateForm {
 
     @JsonFormat(shape = Shape.NUMBER_INT)
-    @NotNull
     private Long milestoneId;
 
 }
