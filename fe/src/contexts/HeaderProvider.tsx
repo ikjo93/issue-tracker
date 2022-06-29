@@ -6,11 +6,10 @@ interface IHeaderState {
   isLogin: boolean;
   isDarkMode: boolean;
   userInfo: MemberType | null;
-  accessToken: string | null;
 }
 
 type Action =
-  | { type: 'LOGIN'; userInfo: MemberType; accessToken: string }
+  | { type: 'LOGIN'; userInfo: MemberType }
   | { type: 'LOGOUT' }
   | { type: 'THEME_TOGGLE' }
   | { type: 'REFRESH_TOKEN'; accessToken: string };
@@ -21,7 +20,6 @@ const initHeaderState: IHeaderState = {
   isLogin: false,
   isDarkMode: Boolean(localStorage.getItem('isDarkMode')) || false,
   userInfo: null,
-  accessToken: null,
 };
 
 /*
@@ -36,7 +34,6 @@ const initHeaderStateForDefaultPage: IHeaderState = {
     name: '익조',
     profileUrl: 'https://avatars.githubusercontent.com/u/82401504?v=4',
   },
-  accessToken: 'fakeToken',
 };
 //
 
@@ -50,7 +47,6 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
         ...state,
         isLogin: true,
         userInfo: action.userInfo,
-        accessToken: action.accessToken,
       };
     case 'LOGOUT':
       return {
@@ -64,12 +60,6 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
       return {
         ...state,
         isDarkMode: toggleData,
-      };
-    }
-    case 'REFRESH_TOKEN': {
-      return {
-        ...state,
-        accessToken: action.accessToken,
       };
     }
     default:
