@@ -41,7 +41,7 @@ export default function LoginPage() {
     const queryConfig = {
       scope: 'user',
       client_id: process.env.CLIENT_ID,
-      redirect_uri: 'http://localhost:8111/callback',
+      redirect_uri: 'http://3.38.208.189/callback',
     };
 
     const searchParamsObj = new URLSearchParams(queryConfig);
@@ -57,7 +57,7 @@ export default function LoginPage() {
         <Logo page="login" />
         <InputBox name="email" placeholder="아이디(이메일)" />
         <InputBox name="password" type="password" placeholder="비밀번호" />
-        <Button width="100%" type="submit">
+        <Button disabled width="100%" type="submit">
           아이디로 로그인
         </Button>
         <Button width="100%" variant="github" onClick={handleClickGithubLogin}>
