@@ -20,7 +20,7 @@ export default function OauthCallbackPage() {
 
   const refreshCachedAccessToken = async () => {
     const res = await axios.post('/api/access-token/reissue');
-    if (res.status === 403) {
+    if (res.status === 401) {
       logOut();
     }
     accessToken = res.headers['access-token'];
