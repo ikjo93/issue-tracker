@@ -37,3 +37,100 @@
 #### 도메인 및 테이블 설계
 + ERD
 > ![image](https://user-images.githubusercontent.com/82401504/174156926-30c45c19-01ab-441b-994b-7a7714fa058e.PNG)
+
+## 2주차 수요일 리뷰 요청
+
+### 진행 내용
+#### 애플리케이션
+##### 완료
++ 이슈 목록 조회 API 기능 개선 및 보완
+  + status 파라미터의 기본 값을 'OPEN'으로 설정
+  + 응답 데이터 상에 assignee 관련 데이터 추가
+  + 응답 데이터 상에 이슈 상태별 개수 데이터 추가
+  + 제외 조건 및 여러 개의 라벨로 이슈 목록 검생 가능
++ Github OAuth 연동 로그인 기능 구현
++ JWT 활용 로그인 검증 기능 구현
+  + access 및 refresh token 발행, refresh token redis에 저장
+  + access 토큰 재발급 및 로그아웃 기능 구현
++ 이슈 상태(OPEN, CLOSE) 변경 API 기능 구현
++ 로그인 상태 정보 조회 API 기능 구현
+
+##### Github OAuth 연동 로그인 흐름도
+> ![image](https://user-images.githubusercontent.com/82401504/174836244-fc48ced7-2d43-40d5-b2a7-7d3998b4ffff.png)
+
+##### JWT 로그인 검증 흐름도
+> ![image](https://user-images.githubusercontent.com/82401504/174836367-4dd4d730-5b21-45b6-a6ff-f988e9eae83a.png)
+
+##### 진행 예정
++ S3 이미지 업로드 기능 구현
+
+#### API 명세서
++ <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
+
+#### 인프라
++ Nginx, redis 도커 컨테이너 생성(완료)
++ 깃허브 액션 및 도커 활용 스프링 부트 웹 앱 배포(완료)
++ 깃허브 액션 및 도커 활용 리액트 웹 앱 배포(진행 예정)
+
+#### 도메인 및 테이블 설계
++ ERD
+> ![image](https://user-images.githubusercontent.com/82401504/174830795-b4674c2b-1faa-4f00-b189-64d9805d64d8.png)
+
+## 2주차 금요일 리뷰 요청
+
+### 진행 내용
+#### 애플리케이션
+##### 완료
++ JWT 활용 로그인 검증 관련 로직 오류 개선 및 리팩토링
++ 이슈 목록 검색(동적 검색) 관련 서비스 로직 리팩토링
++ API 명세서
+  + <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
+
+##### 진행 예정
++ S3 이미지 업로드 기능 구현
+
+#### 인프라
+##### 완료
++ (없음)
+
+##### 진행 예정
++ 깃허브 액션 및 도커 활용 리액트 웹 앱 배포
+
+#### 도메인 및 테이블 설계
++ ERD
+> ![image](https://user-images.githubusercontent.com/82401504/175385258-7085046f-a541-48c2-9dbe-e0b8e1b700d1.png)
+
+## 3주차 수요일 리뷰 요청
+
+### 진행 내용
+#### 애플리케이션
+##### 완료
++ 2주차 금요일 리뷰 피드백 반영(리팩토링)
++ S3 이미지 업로드 기능 구현
++ 마일스톤/레이블/이슈 관련 API 구현
+  + 마일스톤 API
+    + 마일스톤 목록 조회(기능 보완)
+    + 마일스톤 생성, 마일스톤 삭제, 마일스톤 수정, 마일스톤 상태 수정
+  + 레이블 API
+    + 레이블 생성, 레이블 삭제, 레이블 수정
+  + 이슈 API
+    + 이슈 상세 조회
+    + 이슈 생성 및 이슈 댓글 생성
+    + 이슈 상태/제목/담당자/마일스톤/레이블 수정
+    + 이슈 삭제
++ 깃허브 OAuth 인증 관련 로직 RestTemplate -> WebClient 변경
+  + 변경 사유 : To be deprecated RestTemplate
++ 기존 Repository Spring Data JPA 적용
++ API 명세서
+  + <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
+
+#### 인프라
+##### 완료
++ (없음)
+
+##### 진행 예정
++ 깃허브 액션 및 도커 활용 리액트 웹 앱 배포
+
+#### 도메인 및 테이블 설계
++ ERD
+> ![image](https://user-images.githubusercontent.com/82401504/175858983-7a13c86e-7def-44d7-a0c3-4bbb741925db.png)

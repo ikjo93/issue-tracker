@@ -35,4 +35,12 @@ public class IssueLabel {
     @NotNull
     private Label label;
 
+    private IssueLabel(Issue issue, Label label) {
+        this.issue = issue;
+        this.label = label;
+    }
+
+    public static IssueLabel createIssueLabel(Issue issue, Label label) {
+        return new IssueLabel(issue, label);
+    }
 }

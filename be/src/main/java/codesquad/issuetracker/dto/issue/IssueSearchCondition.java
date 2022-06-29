@@ -1,15 +1,47 @@
 package codesquad.issuetracker.dto.issue;
 
+import codesquad.issuetracker.domain.IssueStatus;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class IssueSearchCondition {
 
-    private String status;
-    private Long writerId;
-    private Long assigneeId;
-    private Long replierId;
-    private Long labelId;
-    private Long milestoneId;
+    private IssueStatus status = IssueStatus.OPEN;
+    private String writer;
+    private String assignee;
+    private String replier;
+    private String labels;
+    private String milestone;
+    private String exclusions;
+
+    public Set<String> parseLabelConditions() {
+        return parse(labels);
+    }
+
+
+    public Set<String> parseExclusionConditions() {
+        return parse(exclusions);
+    }
+
+    private Set<String> parse(String conditions) {
+        Set<String> exclusionConditions = new HashSet<>();
+        if (conditions == null) {
+            return exclusionConditions;
+        }
+
+        String[] params = conditions.split(",");
+        for (String param : params) {
+            exclusionConditions.add(param.replaceAll(" ", ""));
+        }
+
+        return exclusionConditions;
+    }
+
+    public boolean isOpenStatus() {
+        return status.equals(IssueStatus.OPEN);
+    }
 }

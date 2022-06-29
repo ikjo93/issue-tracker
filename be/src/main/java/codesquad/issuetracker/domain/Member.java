@@ -1,5 +1,6 @@
 package codesquad.issuetracker.domain;
 
+import codesquad.issuetracker.dto.auth.AuthMemberInformation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -32,10 +33,10 @@ public class Member {
     private String identity;
     private String password;
     private String email;
-    private String nickname;
+    private String name;
     private String profileUrl;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "writer")
     private List<Issue> issues = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
@@ -44,4 +45,17 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Assignee> assignees = new ArrayList<>();
 
+    private Member(MemberType type, String identity, String email, String name,
+        String profileUrl) {
+        this.type = type;
+        this.identity = identity;
+        this.email = email;
+        this.name = name;
+        this.profileUrl = profileUrl;
+    }
+
+    public static Member createGithubMember(AuthMemberInformation info) {
+        return new Member(MemberType.GITHUB, info.getIdentity(), info.getEmail(),
+            info.getName(), info.getProfileUrl());
+    }
 }

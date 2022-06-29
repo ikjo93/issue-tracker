@@ -1,9 +1,19 @@
 package codesquad.issuetracker.controller;
 
-import codesquad.issuetracker.dto.label.LabelDtoList;
+import codesquad.issuetracker.dto.ResponseMessage;
+import codesquad.issuetracker.dto.label.LabelForm;
+import codesquad.issuetracker.dto.label.LabelDto;
+import codesquad.issuetracker.dto.label.LabelDtos;
 import codesquad.issuetracker.service.LabelService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,8 +23,23 @@ public class LabelController {
     private final LabelService labelService;
 
     @GetMapping("/api/labels")
-    public LabelDtoList labels() {
+    public LabelDtos labels() {
         return labelService.getLabels();
     }
 
+    @PostMapping("/api/labels")
+    public LabelDto create(@Valid @RequestBody LabelForm form) {
+        return labelService.save(form);
+    }
+
+    @DeleteMapping("/api/labels/{id}")
+    public ResponseMessage delete(@PathVariable Long id) {
+        labelService.delete(id);
+        return new ResponseMessage(HttpStatus.OK, "정상적으로 삭제 처리되었습니다.");
+    }
+
+    @PatchMapping("/api/labels/{id}")
+    public LabelDto update(@PathVariable Long id, @Valid @RequestBody LabelForm form) {
+        return labelService.update(id, form);
+    }
 }

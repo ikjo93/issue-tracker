@@ -1,10 +1,8 @@
 package codesquad.issuetracker.domain;
 
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -27,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "issue")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Issue {
+public class Issue extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,33 +35,75 @@ public class Issue {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @NotNull
-    private Member member;
+    private Member writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "milestone_id")
-    private MileStone mileStone;
+    private Milestone milestone;
 
-    @OneToMany(mappedBy = "issue")
-    private List<Image> images = new ArrayList<>();
-
-    @OneToMany(mappedBy = "issue")
+    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issue")
+    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private List<Assignee> assignees = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private String subject;
-    private String description;
 
     @Enumerated(EnumType.STRING)
     private IssueStatus status;
 
-    @Column(name = "created_datetime")
-    private LocalDateTime createdDateTime;
-    @Column(name = "updated_datetime")
-    private LocalDateTime updatedDateTime;
+    private Issue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+        this.writer = writer;
+        this.milestone = milestone;
+        this.subject = subject;
+        this.status = status;
+    }
 
+    public static Issue createIssue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+        return new Issue(writer, milestone, subject, IssueStatus.OPEN);
+    }
+
+    public boolean hasSameStatus(IssueStatus status) {
+        return this.status.equals(status);
+    }
+
+    public List<Member> assignees() {
+        return assignees
+            .stream()
+            .map(Assignee::getMember)
+            .collect(Collectors.toList());
+    }
+
+    public List<Label> labels() {
+        return issueLabels
+            .stream()
+            .map(IssueLabel::getLabel)
+            .collect(Collectors.toList());
+    }
+
+    public void addReply(Reply reply) {
+        this.replies.add(reply);
+    }
+
+    public void addAssignee(Assignee assignee) {
+        this.assignees.add(assignee);
+    }
+
+    public void addIssueLabel(IssueLabel issueLabel) {
+        this.issueLabels.add(issueLabel);
+    }
+
+    public void updateStatus(IssueStatus status) {
+        this.status = status;
+    }
+
+    public void updateSubject(String subject) {
+        this.subject = subject;
+    }
+    public void updateMilestone(Milestone milestone) {
+        this.milestone = milestone;
+    }
 }
