@@ -34,7 +34,7 @@ export default function FileInputBox({ textAreaRef }) {
     setIsUploading(true);
     const {
       data: { imageLink },
-    } = await axios.post('http://3.38.208.189/api/images', formData);
+    } = await axios.post('/api/images', formData);
     const markDownString = `\n![${files[0].name}](${imageLink})`;
     textAreaRef.current.value += markDownString;
     setIsUploading(false);
