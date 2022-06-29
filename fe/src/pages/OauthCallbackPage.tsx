@@ -31,18 +31,16 @@ export default function OauthCallbackPage() {
   };
 
   const refreshCachedAccessToken = async () => {
-    console.log(document.cookie);
     try {
       const res = await axios.post('/api/access-token/reissue');
       accessToken = res.headers['access-token'];
       setAccessTokenOnHeader();
     } catch (err) {
-      console.log(err);
       const error = err as Error | AxiosError;
       if (!axios.isAxiosError(error)) {
         throw err;
       }
-      if (error.response?.status === 403) {
+      if (error.response?.status === 401) {
         logOut();
       } else {
         throw new Error(
