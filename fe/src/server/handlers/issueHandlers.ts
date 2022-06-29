@@ -21,20 +21,72 @@ const getIssues = (req, res, ctx) => {
 };
 
 const postCreateIssue = (req, res, ctx) => {
-  const { subject, replies, labels, milestone, assignees, writer, profileUrl } =
+  const { subject, writerId, assigneeIds, labelIds, milestoneId, comment } =
     req.body;
+
+  const writerInfo = fakeMembers.find((m) => m.id === writerId);
+  if (!writerInfo) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 회원입니다',
+      }),
+    );
+  }
+  const milestone = fakeMileStones.find((m) => m.id === milestoneId);
+  if (!milestone) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 마일스톤입니다.',
+      }),
+    );
+  }
+
+  const assignees = fakeMembers.filter((m) => assigneeIds.includes(m.id));
+  if (assigneeIds.length !== assignees.length) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 회원입니다.',
+      }),
+    );
+  }
+
+  const labels = fakeLabels.filter((l) => labelIds.includes(l.id));
+  if (labelIds.length !== labels.length) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 라벨입니다.',
+      }),
+    );
+  }
+
   const newIssueId = fakeIssues[fakeIssues.length - 1].id + 1;
   const newIssue: IssueType = {
     id: newIssueId,
-    subject,
-    replies,
-    writer,
-    profileUrl,
     status: 'OPEN',
+    subject,
+    writer: writerInfo.identity,
+    profileUrl: writerInfo.profileUrl,
     createdDateTime: new Date().toISOString(),
-    labels,
     milestone,
     assignees,
+    labels,
+    replies: [
+      {
+        id: new Date().getTime(),
+        writer: writerInfo.identity,
+        comment,
+        profileUrl: writerInfo.profileUrl,
+        createdDateTime: new Date().toISOString(),
+      },
+    ],
   };
   fakeIssues.push(newIssue);
   return res(ctx.status(201));

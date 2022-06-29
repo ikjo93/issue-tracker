@@ -17,7 +17,7 @@ import { ReplyType } from '@type/types';
 interface IReplyWritingArea {
   type: 'NEW' | 'EDIT';
   originalData?: ReplyType;
-  finishEdit: () => void;
+  finishEdit?: () => void;
 }
 
 interface IFormEventTarget extends EventTarget {
@@ -45,6 +45,7 @@ export default function ReplyWritingArea({
       await axios.patch(`/api/issues/replies/${originalData?.id}/update`, {
         comment: formData.description.value,
       });
+      if (!finishEdit) throw new Error('Cannot handle finishing edit');
       finishEdit();
     }
     formData.description.value = '';

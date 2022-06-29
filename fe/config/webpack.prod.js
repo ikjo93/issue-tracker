@@ -2,22 +2,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
 const { merge } = require('webpack-merge');
+
 const common = require('./webpack.common');
 
 module.exports = merge(common, {
   mode: 'production',
-  //   optimization: {
-  //     usedExports: true,
-  //     minimize: true,
-  //     minimizer: [
-  //       new TerserPlugin({ terserOptions: { compress: { drop_console: true } } }),
-  //       new CssMinimizerPlugin(),
-  //     ],
-  //     splitChunks: { chunks: 'all' },
-  //   },
-  //   performance: {
-  //     hints: false,
-  //     maxEntrypointSize: 512000,
-  //     maxAssetSize: 512000,
-  //   },
+  // TODO: 디버깅용. 최송 배포떄는 제거할 것
+  devtool: 'source-map',
 });

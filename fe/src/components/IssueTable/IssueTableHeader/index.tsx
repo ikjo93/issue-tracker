@@ -186,7 +186,7 @@ function getFormattedMenus(type, menus) {
     case 'LABEL':
       return menus?.map((menu) => ({
         ...menu,
-        queryKey: 'label',
+        queryKey: 'labels',
         queryValue: menu.name,
       }));
     case 'MILESTONE':
