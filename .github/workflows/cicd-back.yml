@@ -69,4 +69,4 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/issue-be:${GITHUB_SHA::7}
             docker tag ${{ secrets.DOCKER_USERNAME }}/issue-be:${GITHUB_SHA::7} issue-be
             docker stop spring-container
-            docker run -d --rm --name spring-container -e CLIENT_ID=${{ secrets.CLIENT_ID }} -e CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -p 8080:8080 --net mynet --ip 172.19.0.3 issue-be
+            docker run -d --rm --name spring-container -e CLIENT_ID=${{ secrets.CLIENT_ID }} -e CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -e TZ=Asia/Seoul -p 8080:8080 --net mynet --ip 172.19.0.3 issue-be
