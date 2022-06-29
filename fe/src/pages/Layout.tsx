@@ -6,9 +6,6 @@ import styled from 'styled-components';
 import Container from '@components/Container';
 import Header from '@components/Header';
 import { useHeaderDispatch, useHeaderState } from '@contexts/HeaderProvider';
-import { LabelProvider } from '@contexts/LabelProvider';
-import { MemberProvider } from '@contexts/MemberProvider';
-import { MilestoneProvider } from '@contexts/MilestoneProvider';
 
 export default function Layout() {
   const { isDarkMode } = useHeaderState();
@@ -19,19 +16,15 @@ export default function Layout() {
   };
 
   return (
-    <LabelProvider>
-      <MilestoneProvider>
-        <MemberProvider>
-          <Header />
-          <Container padding="0 2rem">
-            <Outlet />
-            <ThemeToggleButton onClick={handleClickToggleButton}>
-              {isDarkMode ? <WbSunnyIcon /> : <NightlightIcon />}
-            </ThemeToggleButton>
-          </Container>
-        </MemberProvider>
-      </MilestoneProvider>
-    </LabelProvider>
+    <>
+      <Header />
+      <Container padding="0 2rem">
+        <Outlet />
+        <ThemeToggleButton onClick={handleClickToggleButton}>
+          {isDarkMode ? <WbSunnyIcon /> : <NightlightIcon />}
+        </ThemeToggleButton>
+      </Container>
+    </>
   );
 }
 
