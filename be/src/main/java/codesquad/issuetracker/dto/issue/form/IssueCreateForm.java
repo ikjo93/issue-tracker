@@ -13,12 +13,16 @@ public class IssueCreateForm {
     @NotBlank
     private String subject;
     @JsonFormat(shape = Shape.NUMBER_INT)
+    @NotNull
     private Long writerId;
     @JsonFormat(shape = Shape.ARRAY)
+    @NotNull
     private List<Long> assigneeIds;
     @JsonFormat(shape = Shape.ARRAY)
+    @NotNull
     private List<Long> labelIds;
     @JsonFormat(shape = Shape.NUMBER_INT)
+    @NotNull
     private Long milestoneId;
     @NotBlank
     private String comment;
