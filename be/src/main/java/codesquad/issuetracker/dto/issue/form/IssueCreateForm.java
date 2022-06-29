@@ -22,7 +22,6 @@ public class IssueCreateForm {
     @NotNull
     private List<Long> labelIds;
     @JsonFormat(shape = Shape.NUMBER_INT)
-    @NotNull
     private Long milestoneId;
     @NotBlank
     private String comment;
