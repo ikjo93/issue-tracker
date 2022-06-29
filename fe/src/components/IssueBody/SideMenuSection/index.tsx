@@ -53,7 +53,7 @@ export default function SideMenuSection() {
     if (!id) return;
     (async () => {
       await axios.patch(`/api/issues/${id}/milestone/update`, {
-        milestone: newMileStoneId,
+        milestoneId: newMileStoneId,
       });
     })();
   }, [menuState.milestone]);
