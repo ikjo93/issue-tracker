@@ -10,7 +10,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <GlobalStyle />
+      <GlobalStyle isDarkMode={isDarkMode} />
       <Routes />
     </ThemeProvider>
   );
