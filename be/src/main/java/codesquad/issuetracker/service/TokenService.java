@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
     private static final String LOGOUT_FLAG = "LOGOUT";
-    private static final long REFRESH_TOKEN_DURATION_MINUTE = 2l;
+    private static final long REFRESH_TOKEN_DURATION_MINUTE = 10l;
 
     private final RedisRepository redisRepository;
     private final AccessTokenProvider accessTokenProvider;
