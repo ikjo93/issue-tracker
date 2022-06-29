@@ -37,6 +37,7 @@ export default function OauthCallbackPage() {
       accessToken = res.headers['access-token'];
       setAccessTokenOnHeader();
     } catch (err) {
+      console.log(err);
       const error = err as Error | AxiosError;
       if (!axios.isAxiosError(error)) {
         throw err;
