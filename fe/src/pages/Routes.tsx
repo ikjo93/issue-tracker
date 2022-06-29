@@ -18,7 +18,7 @@ export default function Routes() {
     <RouterRoutes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/join" element={<JoinPage />} />
-      <Route path="callback" element={<OauthCallbackPage />} />
+      <Route path="/callback" element={<OauthCallbackPage />} />
       <Route path="/" element={isLogin ? <Layout /> : <Navigate to="/login" />}>
         <Route index element={<DefaultPage />} />
         <Route path="createIssue" element={<CreateIssuePage />} />
