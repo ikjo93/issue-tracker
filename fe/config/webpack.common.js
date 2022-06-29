@@ -25,7 +25,7 @@ const getPublicUrl = () => {
 
 const API_URL = {
   DEV: 'http://localhost:8111',
-  PROD: 'https://3.38.208.189',
+  PROD: 'http://3.38.208.189',
 };
 
 process.env = { ...process.env, PUBLIC_URL: getPublicUrl() };

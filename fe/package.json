@@ -4,10 +4,10 @@
   "description": "Boilerplate for React project with TypeScript",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --config config/webpack.dev.js --env NODE_ENV=dev",
-    "build:dev": "webpack --config config/webpack.dev.js --env NODE_ENV=dev",
-    "build": "webpack --config config/webpack.prod.js --env NODE_ENV=prod",
-    "deploy:dev": "npm run build:dev && netlify deploy --env NODE_ENV=dev"
+    "dev": "cross-env NODE_ENV=prod webpack serve --config config/webpack.dev.js",
+    "build:dev": "cross-env NODE_ENV=prod webpack --config config/webpack.dev.js",
+    "build": "cross-env NODE_ENV=prod webpack --config config/webpack.prod.js",
+    "deploy:dev": "npm run build:dev && netlify deploy"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "@typescript-eslint/parser": "^5.28.0",
     "babel-loader": "^8.2.5",
     "core-js": "^3.23.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "dotenv": "^16.0.1",
     "eslint-config-airbnb": "^19.0.4",
