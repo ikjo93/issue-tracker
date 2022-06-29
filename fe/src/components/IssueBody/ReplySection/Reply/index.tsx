@@ -1,9 +1,7 @@
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import javascript from 'highlight.js/lib/languages/javascript';
 import Markdown from 'marked-react';
 import { useState } from 'react';
-import Lowlight from 'react-lowlight';
 import styled from 'styled-components';
 
 import Container from '@components/Container';
@@ -15,18 +13,11 @@ import { useHeaderState } from '@contexts/HeaderProvider';
 import mixin from '@style/mixin';
 import { ReplyType } from '@type/types';
 import { calTimePassed } from '@util/dateHandler';
-
-Lowlight.registerLanguage('js', javascript);
+import lowlightRenderer from '@util/lowlightRenderer';
 
 interface IReplyProps {
   replyData: ReplyType;
 }
-
-const renderer = {
-  code(snippet, lang) {
-    return <Lowlight language={lang} value={snippet} />;
-  },
-};
 
 export default function Reply({ replyData }: IReplyProps) {
   const { userInfo } = useHeaderState();
@@ -64,7 +55,7 @@ export default function Reply({ replyData }: IReplyProps) {
         </ReplyHeader>
         <ReplyBody>
           <article className="markdown-body">
-            <Markdown renderer={renderer}>{replyData.comment}</Markdown>
+            <Markdown value={replyData.comment} renderer={lowlightRenderer} />
           </article>
         </ReplyBody>
       </ReplyContainer>
