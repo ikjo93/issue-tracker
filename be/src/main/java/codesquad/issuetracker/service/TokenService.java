@@ -3,7 +3,7 @@ package codesquad.issuetracker.service;
 import codesquad.issuetracker.exception.InvalidTokenException;
 import codesquad.issuetracker.jwt.AccessToken;
 import codesquad.issuetracker.jwt.AccessTokenProvider;
-import codesquad.issuetracker.jwt.RedisRepository;
+import codesquad.issuetracker.repository.RedisRepository;
 import codesquad.issuetracker.jwt.RefreshToken;
 import codesquad.issuetracker.jwt.RefreshTokenProvider;
 import codesquad.issuetracker.jwt.Token;
