@@ -43,14 +43,14 @@ public class Label {
         this.isDarkText = isDarkText;
     }
 
+    public static Label of(LabelForm form) {
+        return new Label(form.getName(), form.getDescription(), form.getColor(), form.isDarkText());
+    }
+
     public void updateInfo(LabelForm form) {
         this.name = form.getName();
         this.description = form.getDescription();
         this.color = form.getColor();
         this.isDarkText = form.isDarkText();
-    }
-
-    public static Label createLabel(LabelForm form) {
-        return new Label(form.getName(), form.getDescription(), form.getColor(), form.isDarkText());
     }
 }

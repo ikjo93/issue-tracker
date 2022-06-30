@@ -40,7 +40,7 @@ public class IssueLabel {
         this.label = label;
     }
 
-    public static IssueLabel createIssueLabel(Issue issue, Label label) {
+    public static IssueLabel of(Issue issue, Label label) {
         return new IssueLabel(issue, label);
     }
 }
