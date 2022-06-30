@@ -7,6 +7,7 @@ import Button from '@components/input/Button';
 import InputBox from '@components/input/InputBox';
 import Container from '@components/layout/Container';
 import { useHeaderDispatch } from '@contexts/HeaderProvider';
+import useLogin from '@hooks/useLogin';
 import Logo from '@pages/common/layouts/Header/Logo';
 
 interface IFormEventTarget extends EventTarget {
@@ -17,6 +18,9 @@ interface IFormEventTarget extends EventTarget {
 export default function LoginPage() {
   const navigate = useNavigate();
   const headerDispatch = useHeaderDispatch();
+  const { reLogin } = useLogin();
+
+  reLogin();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -41,7 +45,7 @@ export default function LoginPage() {
     const queryConfig = {
       scope: 'user',
       client_id: process.env.CLIENT_ID,
-      redirect_uri: '__API_END__POINT__/callback',
+      redirect_uri: '__API_END_POINT__/callback',
     };
 
     const searchParamsObj = new URLSearchParams(queryConfig);

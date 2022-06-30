@@ -10,7 +10,7 @@ import JoinPage from '@pages/JoinPage';
 import LabelPage from '@pages/LabelPage';
 import LoginPage from '@pages/LoginPage';
 import MilestonePage from '@pages/MilestonePage';
-import OauthCallbackPage from '@pages/OautbCallbackPage/OauthCallbackPage';
+import OauthCallbackPage from '@pages/OautbCallbackPage';
 
 export default function Routes() {
   const { isLogin } = useHeaderState();

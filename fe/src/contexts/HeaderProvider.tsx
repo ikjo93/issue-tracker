@@ -11,8 +11,7 @@ interface IHeaderState {
 type Action =
   | { type: 'LOGIN'; userInfo: MemberType }
   | { type: 'LOGOUT' }
-  | { type: 'THEME_TOGGLE' }
-  | { type: 'REFRESH_TOKEN'; accessToken: string };
+  | { type: 'THEME_TOGGLE' };
 
 type HeaderDispatch = Dispatch<Action>;
 

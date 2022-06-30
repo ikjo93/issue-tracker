@@ -17,7 +17,7 @@ interface PopoverMenusProps<M extends { id?: number }>
   onClickPopoverItem?: (item: M) => void;
 }
 
-export default function PopoverMenus<M extends { id?: number }>({
+export default function PopoverMenus<M extends { id?: number; name: string }>({
   left,
   top,
   unit,
@@ -31,7 +31,7 @@ export default function PopoverMenus<M extends { id?: number }>({
         <PopoverHeader>{title}</PopoverHeader>
         {menus?.map((menu) => (
           <PopoverMenu
-            key={menu.id}
+            key={menu.name}
             menu={menu}
             onClickPopoverItem={onClickPopoverItem}
           />
