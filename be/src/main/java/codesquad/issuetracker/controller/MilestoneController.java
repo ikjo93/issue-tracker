@@ -46,7 +46,7 @@ public class MilestoneController {
         return milestoneService.update(id, form);
     }
 
-    @PatchMapping("/api/milestones/{id}/status/update")
+    @PatchMapping("/api/milestones/{id}/status")
     public ResponseMessage updateStatus(@PathVariable Long id, @Valid @RequestBody MilestoneStatusUpdateForm form) {
         milestoneService.updateStatus(id, form.getUpdatedStatus());
         return new ResponseMessage(HttpStatus.OK, "마일스톤의 상태 변경이 정상적으로 처리되었습니다.");
