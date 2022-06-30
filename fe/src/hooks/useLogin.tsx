@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { useHeaderDispatch } from '@contexts/HeaderProvider';
@@ -14,30 +14,24 @@ export default function useLogin() {
 
   const setRefreshInterval = () => {
     const intervalTime = Number(process.env.TOKEN_REFRESH_INTERVAL) ?? 50000;
-    refreshIntervalId = setInterval(reissueAccessToken, intervalTime);
+    refreshIntervalId = setInterval(() => {
+      reissueAccessToken().catch(() => {
+        logOut();
+        clearInterval(refreshIntervalId);
+      });
+    }, intervalTime);
   };
 
   const reissueAccessToken = async () => {
-    try {
-      const res = await axios.post('/api/access-token/reissue');
-      const accessToken = res.headers['access-token'];
-      setAccessTokenOnHeader(accessToken);
-    } catch (err) {
-      const error = err as Error | AxiosError;
-      if (!axios.isAxiosError(error)) {
-        throw err;
-      }
-      //  logOut();
-      clearInterval(refreshIntervalId);
-      console.error(
-        `access-token 재발급에 실패했습니다. 에러코드 ${error.response?.status}`,
-      );
-    }
+    const res = await axios.post('/api/access-token/reissue');
+    const accessToken = res.headers['access-token'];
+    setAccessTokenOnHeader(accessToken);
   };
 
   const logOut = () => {
     headerDispatch({ type: 'LOGOUT' });
     document.cookie = `refresh-token=expires. ${new Date().toISOString()}`;
+    navigate('/');
   };
 
   const getAndStoreUserInfo = async () => {
