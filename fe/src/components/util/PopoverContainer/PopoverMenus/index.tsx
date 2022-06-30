@@ -10,14 +10,14 @@ interface IPopoverContainer {
   unit?: string;
 }
 
-interface PopoverMenusProps<M extends { id?: number; name: string }>
+interface PopoverMenusProps<M extends { id?: number }>
   extends IPopoverContainer {
   title: string;
   menus?: M[];
   onClickPopoverItem?: (item: M) => void;
 }
 
-export default function PopoverMenus<M extends { id?: number }>({
+export default function PopoverMenus<M extends { id?: number; name: string }>({
   left,
   top,
   unit,
