@@ -10,7 +10,7 @@ interface IPopoverContainer {
   unit?: string;
 }
 
-interface PopoverMenusProps<M extends { id?: number }>
+interface PopoverMenusProps<M extends { id?: number; name: string }>
   extends IPopoverContainer {
   title: string;
   menus?: M[];
@@ -31,7 +31,7 @@ export default function PopoverMenus<M extends { id?: number }>({
         <PopoverHeader>{title}</PopoverHeader>
         {menus?.map((menu) => (
           <PopoverMenu
-            key={menu.id}
+            key={menu.name}
             menu={menu}
             onClickPopoverItem={onClickPopoverItem}
           />

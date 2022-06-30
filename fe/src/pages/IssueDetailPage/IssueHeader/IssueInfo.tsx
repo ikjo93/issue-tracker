@@ -28,7 +28,7 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
   } = useIssueContext();
   const theme = useTheme();
 
-  return (
+  return id ? (
     <Container>
       <Container flexInfo={{ align: 'center' }} gap={1}>
         {isTitleEditing ? (
@@ -86,6 +86,8 @@ export default function IssueInfo({ isTitleEditing, titleRef }: IIssueInfo) {
         />
       </Container>
     </Container>
+  ) : (
+    <div />
   );
 }
 
