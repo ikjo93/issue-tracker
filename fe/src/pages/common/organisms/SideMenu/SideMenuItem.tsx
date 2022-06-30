@@ -62,7 +62,7 @@ export default function SideMenuItem({
           <AddIcon sx={{ cursor: 'pointer' }} />
         </PopoverContainer>
       </Container>
-      {getSubBoxByType(type, state)}
+      {state && getSubBoxByType(type, state)}
     </Container>
   );
 }
