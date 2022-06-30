@@ -8,6 +8,7 @@ import codesquad.issuetracker.jwt.RefreshToken;
 import codesquad.issuetracker.jwt.RefreshTokenProvider;
 import codesquad.issuetracker.jwt.Token;
 import java.time.Duration;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
     private static final String LOGOUT_FLAG = "LOGOUT";
-    private static final long REFRESH_TOKEN_DURATION_MINUTE = 5l;
+    private static final long REFRESH_TOKEN_DURATION_MINUTE = 1L;
 
     private final RedisRepository redisRepository;
     private final AccessTokenProvider accessTokenProvider;
@@ -44,7 +45,7 @@ public class TokenService {
     }
 
     public boolean validateLogInStatusOfAccessToken(String accessToken) {
-        return redisRepository.findByKey(accessToken) != LOGOUT_FLAG;
+        return !Objects.equals(redisRepository.findByKey(accessToken), LOGOUT_FLAG);
     }
 
     public void invalidateToken(String accessTokenString, String refreshTokenString) {
