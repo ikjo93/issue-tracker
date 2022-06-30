@@ -1,16 +1,16 @@
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom';
 
 import { useHeaderState } from '@contexts/HeaderProvider';
+import LabelMilestoneLayout from '@pages/common/layouts/LabelMilestoneLayout';
+import Layout from '@pages/common/layouts/Layout';
 import CreateIssuePage from '@pages/CreateIssuePage';
 import DefaultPage from '@pages/DefaultPage';
 import IssueDetailPage from '@pages/IssueDetailPage';
 import JoinPage from '@pages/JoinPage';
-import LabelMilestoneLayout from '@pages/LabelMilestoneLayout';
 import LabelPage from '@pages/LabelPage';
-import Layout from '@pages/Layout';
 import LoginPage from '@pages/LoginPage';
 import MilestonePage from '@pages/MilestonePage';
-import OauthCallbackPage from '@pages/OauthCallbackPage';
+import OauthCallbackPage from '@pages/OautbCallbackPage/OauthCallbackPage';
 
 export default function Routes() {
   const { isLogin } = useHeaderState();
