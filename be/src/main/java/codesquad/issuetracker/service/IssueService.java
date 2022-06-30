@@ -4,7 +4,6 @@ import codesquad.issuetracker.domain.Assignee;
 import codesquad.issuetracker.domain.Issue;
 import codesquad.issuetracker.domain.IssueLabel;
 import codesquad.issuetracker.domain.IssueStatus;
-import codesquad.issuetracker.domain.Label;
 import codesquad.issuetracker.domain.Member;
 import codesquad.issuetracker.domain.Milestone;
 import codesquad.issuetracker.domain.Reply;
@@ -18,7 +17,6 @@ import codesquad.issuetracker.repository.IssueLabelRepository;
 import codesquad.issuetracker.repository.IssueRepository;
 import codesquad.issuetracker.repository.LabelRepository;
 import codesquad.issuetracker.repository.MemberRepository;
-import codesquad.issuetracker.repository.MilestoneRepository;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class IssueService {
 
+    private final MilestoneService milestoneService;
+    private final LabelService labelService;
+    private final MemberService memberService;
+
     private final IssueRepository issueRepository;
     private final MemberRepository memberRepository;
-    private final MilestoneRepository milestoneRepository;
     private final LabelRepository labelRepository;
     private final IssueLabelRepository issueLabelRepository;
     private final AssigneeRepository assigneeRepository;
@@ -65,15 +66,23 @@ public class IssueService {
     }
 
     public IssueDto getIssueDtoById(Long id) {
-        Issue issue = getIssueById(id);
+        Issue issue = getIssueByIdOrThrow(id);
 
         return IssueDto.from(issue);
     }
 
+    public Issue getIssueByIdOrThrow(Long id) {
+        return issueRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 이슈입니다.");
+        });
+    }
+
     @Transactional
     public IssueDto createIssue(IssueCreateForm form) {
-        Member writer = getMemberById(form.getWriterId());
-        Milestone milestone = getMilestoneById(form.getMilestoneId());
+        Member writer = memberService.getMemberByIdOrThrow(form.getWriterId());
+
+        Long milestoneId = form.getMilestoneId();
+        Milestone milestone = milestoneId == null ? null : milestoneService.getMilestoneByIdOrThrow(milestoneId);
         Issue issue = Issue.of(writer, milestone, form.getSubject(), IssueStatus.OPEN);
 
         Reply reply = Reply.of(issue, writer, form.getComment());
@@ -81,12 +90,12 @@ public class IssueService {
 
         List<Long> assigneeIds = form.getAssigneeIds();
         for (Long assigneeId : assigneeIds) {
-            issue.addAssignee(Assignee.of(issue, getMemberById(assigneeId)));
+            issue.addAssignee(Assignee.of(issue, memberService.getMemberByIdOrThrow(assigneeId)));
         }
 
         List<Long> labelIds = form.getLabelIds();
         for (Long labelId : labelIds) {
-            issue.addIssueLabel(IssueLabel.of(issue, getLabelById(labelId)));
+            issue.addIssueLabel(IssueLabel.of(issue, labelService.getLabelByIdOrThrow(labelId)));
         }
 
         issueRepository.save(issue);
@@ -103,28 +112,28 @@ public class IssueService {
 
     @Transactional
     public void updateSubjectOfIssue(Long id, String subject) {
-        Issue issue = getIssueById(id);
+        Issue issue = getIssueByIdOrThrow(id);
 
         issue.updateSubject(subject);
     }
 
     @Transactional
     public void updateMilestoneOfIssue(Long id, Long milestoneId) {
-        Issue issue = getIssueById(id);
+        Issue issue = getIssueByIdOrThrow(id);
 
         if (milestoneId == null) {
             issue.updateMilestone(null);
             return;
         }
 
-        Milestone milestone = getMilestoneById(milestoneId);
+        Milestone milestone = milestoneService.getMilestoneByIdOrThrow(milestoneId);
 
         issue.updateMilestone(milestone);
     }
 
     @Transactional
     public void updateLabelsOfIssue(Long id, List<Long> ids) {
-        Issue issue = getIssueById(id);
+        Issue issue = getIssueByIdOrThrow(id);
         issueLabelRepository.deleteByIssueId(issue.getId());
 
         if (ids.size() == 0) {
@@ -137,7 +146,7 @@ public class IssueService {
 
     @Transactional
     public void updateAssigneeOfIssue(Long id, List<Long> ids) {
-        Issue issue = getIssueById(id);
+        Issue issue = getIssueByIdOrThrow(id);
         assigneeRepository.deleteByIssueId(issue.getId());
 
         if (ids.size() == 0) {
@@ -151,33 +160,5 @@ public class IssueService {
     @Transactional
     public void delete(Long id) {
         issueRepository.deleteById(id);
-    }
-
-    private Issue getIssueById(Long id) {
-        return issueRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 이슈입니다.");
-        });
-    }
-
-    private Member getMemberById(Long id) {
-        return memberRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 회원입니다.");
-        });
-    }
-
-    private Milestone getMilestoneById(Long id) {
-        if (id == null) {
-            return null;
-        }
-
-        return milestoneRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
-        });
-    }
-
-    private Label getLabelById(Long id) {
-        return labelRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 라벨입니다.");
-        });
     }
 }

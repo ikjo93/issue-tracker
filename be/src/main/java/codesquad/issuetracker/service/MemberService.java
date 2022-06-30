@@ -23,11 +23,15 @@ public class MemberService {
             .collect(Collectors.toList()));
     }
 
-    public MemberDto getMemberById(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 회원입니다.");
-        });
+    public MemberDto getMemberDtoById(Long id) {
+        Member member = getMemberByIdOrThrow(id);
 
         return MemberDto.from(member);
+    }
+
+    public Member getMemberByIdOrThrow(Long id) {
+        return memberRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 회원입니다.");
+        });
     }
 }

@@ -27,6 +27,6 @@ public class MemberController {
     public MemberDto getMyStatus(HttpServletRequest request) {
         String accessToken = TokenUtils.getAccessToken(request);
         AccessToken token = accessTokenProvider.convertToObject(accessToken);
-        return memberService.getMemberById(Long.parseLong(token.getMemberId()));
+        return memberService.getMemberDtoById(Long.parseLong(token.getMemberId()));
     }
 }
