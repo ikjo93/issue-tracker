@@ -1,5 +1,6 @@
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import Markdown from 'marked-react';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -12,16 +13,16 @@ import { useHeaderState } from '@contexts/HeaderProvider';
 import mixin from '@style/mixin';
 import { ReplyType } from '@type/types';
 import { calTimePassed } from '@util/dateHandler';
-
+import lowlightRenderer from '@util/lowlightRenderer';
 
 interface IReplyProps {
   replyData: ReplyType;
 }
 
 export default function Reply({ replyData }: IReplyProps) {
-  const headerState = useHeaderState();
+  const { userInfo } = useHeaderState();
   const [isEditingReply, setIsEditingReply] = useState(false);
-  const isMyReply = () => replyData.writer === headerState.userInfo?.identity;
+  const isMyReply = () => replyData.writer === userInfo?.identity;
 
   return isEditingReply ? (
     <ReplyWritingArea
@@ -53,7 +54,9 @@ export default function Reply({ replyData }: IReplyProps) {
           )}
         </ReplyHeader>
         <ReplyBody>
-          <div>{replyData.comment}</div>
+          <article className="markdown-body">
+            <Markdown value={replyData.comment} renderer={lowlightRenderer} />
+          </article>
         </ReplyBody>
       </ReplyContainer>
     </Container>

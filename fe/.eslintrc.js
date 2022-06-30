@@ -57,7 +57,10 @@ module.exports = {
     'react/require-default-props': 'off',
     'no-param-reassign': [
       'error',
-      { props: true, ignorePropertyModificationsFor: ['target'] },
+      {
+        props: true,
+        ignorePropertyModificationsFor: ['target', 'current', 'textAreaRef'],
+      },
     ],
   },
   settings: {
