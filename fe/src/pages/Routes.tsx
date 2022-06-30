@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom';
 
-import useLogin from '@hooks/useLogin';
+import { useHeaderState } from '@contexts/HeaderProvider';
 import LabelMilestoneLayout from '@pages/common/layouts/LabelMilestoneLayout';
 import Layout from '@pages/common/layouts/Layout';
 import CreateIssuePage from '@pages/CreateIssuePage';
@@ -13,7 +13,7 @@ import MilestonePage from '@pages/MilestonePage';
 import OauthCallbackPage from '@pages/OautbCallbackPage';
 
 export default function Routes() {
-  const { isLogin } = useLogin();
+  const { isLogin } = useHeaderState();
   return (
     <RouterRoutes>
       <Route path="/login" element={<LoginPage />} />

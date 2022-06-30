@@ -54,10 +54,10 @@ export default function useLogin() {
     getAndStoreUserInfo();
   };
 
-  const reLogin = () => {
+  const reLogin = async () => {
     try {
-      reissueAccessToken();
-      getAndStoreUserInfo();
+      await reissueAccessToken();
+      await getAndStoreUserInfo();
     } catch (err) {
       console.error('재로그인이 불가합니다.');
     }
