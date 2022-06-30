@@ -13,15 +13,12 @@ import codesquad.issuetracker.dto.issue.IssueDto;
 import codesquad.issuetracker.dto.issue.IssueDtos;
 import codesquad.issuetracker.dto.issue.IssueSearchCondition;
 import codesquad.issuetracker.dto.issue.form.IssueStatusUpdateForm;
-import codesquad.issuetracker.dto.reply.ReplyDto;
-import codesquad.issuetracker.dto.reply.ReplyForm;
 import codesquad.issuetracker.repository.AssigneeRepository;
 import codesquad.issuetracker.repository.IssueLabelRepository;
 import codesquad.issuetracker.repository.IssueRepository;
 import codesquad.issuetracker.repository.LabelRepository;
 import codesquad.issuetracker.repository.MemberRepository;
 import codesquad.issuetracker.repository.MilestoneRepository;
-import codesquad.issuetracker.repository.ReplyRepository;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -77,19 +74,19 @@ public class IssueService {
     public IssueDto createIssue(IssueCreateForm form) {
         Member writer = getMemberById(form.getWriterId());
         Milestone milestone = getMilestoneById(form.getMilestoneId());
-        Issue issue = Issue.createIssue(writer, milestone, form.getSubject(), IssueStatus.OPEN);
+        Issue issue = Issue.of(writer, milestone, form.getSubject(), IssueStatus.OPEN);
 
-        Reply reply = Reply.createReply(issue, writer, form.getComment());
+        Reply reply = Reply.of(issue, writer, form.getComment());
         issue.addReply(reply);
 
         List<Long> assigneeIds = form.getAssigneeIds();
         for (Long assigneeId : assigneeIds) {
-            issue.addAssignee(Assignee.createAssignee(issue, getMemberById(assigneeId)));
+            issue.addAssignee(Assignee.of(issue, getMemberById(assigneeId)));
         }
 
         List<Long> labelIds = form.getLabelIds();
         for (Long labelId : labelIds) {
-            issue.addIssueLabel(IssueLabel.createIssueLabel(issue, getLabelById(labelId)));
+            issue.addIssueLabel(IssueLabel.of(issue, getLabelById(labelId)));
         }
 
         issueRepository.save(issue);
@@ -135,7 +132,7 @@ public class IssueService {
         }
 
         labelRepository.findAllById(ids)
-            .forEach(label -> issue.addIssueLabel(IssueLabel.createIssueLabel(issue, label)));
+            .forEach(label -> issue.addIssueLabel(IssueLabel.of(issue, label)));
     }
 
     @Transactional
@@ -148,7 +145,7 @@ public class IssueService {
         }
 
         memberRepository.findAllById(ids)
-            .forEach(member -> issue.addAssignee(Assignee.createAssignee(issue, member)));
+            .forEach(member -> issue.addAssignee(Assignee.of(issue, member)));
     }
 
     @Transactional

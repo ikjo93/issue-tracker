@@ -26,7 +26,7 @@ public class LabelService {
 
     @Transactional
     public LabelDto save(LabelForm form) {
-        return LabelDto.from(labelRepository.save(Label.createLabel(form)));
+        return LabelDto.from(labelRepository.save(Label.of(form)));
     }
 
     @Transactional

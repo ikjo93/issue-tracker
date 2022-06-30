@@ -46,7 +46,7 @@ public class Milestone {
         this.status = status;
     }
 
-    public static Milestone createMilestone(MilestoneForm form) {
+    public static Milestone of(MilestoneForm form) {
         return new Milestone(form.getSubject(), form.getDescription(), form.getEndDate(), MilestoneStatus.OPEN);
     }
 

@@ -43,7 +43,7 @@ public class MilestoneService {
 
     @Transactional
     public MilestoneDto save(MilestoneForm form) {
-        return MilestoneDto.from(milestoneRepository.save(Milestone.createMilestone(form)));
+        return MilestoneDto.from(milestoneRepository.save(Milestone.of(form)));
     }
 
     @Transactional

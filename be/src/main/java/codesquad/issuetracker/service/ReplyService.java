@@ -25,7 +25,7 @@ public class ReplyService {
     public ReplyDto createReply(Long issueId, ReplyForm form) {
         Issue issue = getIssueById(issueId);
         Member member = getMemberById(form.getWriterId());
-        Reply reply = Reply.createReply(issue, member, form.getComment());
+        Reply reply = Reply.of(issue, member, form.getComment());
 
         replyRepository.save(reply);
 

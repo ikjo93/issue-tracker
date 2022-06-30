@@ -54,7 +54,7 @@ public class Member {
         this.profileUrl = profileUrl;
     }
 
-    public static Member createGithubMember(AuthMemberInformation info) {
+    public static Member of(AuthMemberInformation info) {
         return new Member(MemberType.GITHUB, info.getIdentity(), info.getEmail(),
             info.getName(), info.getProfileUrl());
     }
