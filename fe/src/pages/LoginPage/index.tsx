@@ -7,6 +7,7 @@ import Button from '@components/input/Button';
 import InputBox from '@components/input/InputBox';
 import Container from '@components/layout/Container';
 import { useHeaderDispatch } from '@contexts/HeaderProvider';
+import useLogin from '@hooks/useLogin';
 import Logo from '@pages/common/layouts/Header/Logo';
 
 interface IFormEventTarget extends EventTarget {
@@ -17,6 +18,9 @@ interface IFormEventTarget extends EventTarget {
 export default function LoginPage() {
   const navigate = useNavigate();
   const headerDispatch = useHeaderDispatch();
+  const { reLogin } = useLogin();
+
+  reLogin();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -29,7 +33,7 @@ export default function LoginPage() {
       email,
       password,
     });
-    headerDispatch({ type: 'STORE_USER_INFO', userInfo });
+    headerDispatch({ type: 'LOGIN', userInfo });
     navigate('/');
   };
 
