@@ -26,7 +26,7 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @GetMapping("/api/milestones")
-    public MilestoneDtos milestones(@RequestParam(defaultValue = "OPEN") MilestoneStatus status) {
+    public MilestoneDtos getMilestones(@RequestParam(defaultValue = "OPEN") MilestoneStatus status) {
         return milestoneService.getMilestones(status);
     }
 

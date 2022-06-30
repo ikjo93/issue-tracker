@@ -19,12 +19,12 @@ public class MemberController {
     private final AccessTokenProvider accessTokenProvider;
 
     @GetMapping("/api/members")
-    public MemberDtos members() {
+    public MemberDtos getMembers() {
         return memberService.getMembers();
     }
 
     @GetMapping("/api/mine")
-    public MemberDto mine(HttpServletRequest request) {
+    public MemberDto getMyStatus(HttpServletRequest request) {
         String accessToken = TokenUtils.getAccessToken(request);
         AccessToken token = accessTokenProvider.convertToObject(accessToken);
         return memberService.getMemberById(Long.parseLong(token.getMemberId()));
