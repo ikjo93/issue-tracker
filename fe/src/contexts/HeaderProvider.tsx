@@ -3,21 +3,18 @@ import React, { useReducer, useContext, createContext, Dispatch } from 'react';
 import { MemberType } from '@type/types';
 
 interface IHeaderState {
-  isLogin: boolean;
   isDarkMode: boolean;
   userInfo: MemberType | null;
 }
 
 type Action =
-  | { type: 'LOGIN'; userInfo: MemberType }
-  | { type: 'LOGOUT' }
-  | { type: 'THEME_TOGGLE' }
-  | { type: 'REFRESH_TOKEN'; accessToken: string };
+  | { type: 'STORE_USER_INFO'; userInfo: MemberType }
+  | { type: 'DELETE_USER_INFO' }
+  | { type: 'THEME_TOGGLE' };
 
 type HeaderDispatch = Dispatch<Action>;
 
 const initHeaderState: IHeaderState = {
-  isLogin: false,
   isDarkMode: Boolean(localStorage.getItem('isDarkMode')) || false,
   userInfo: null,
 };
@@ -26,7 +23,6 @@ const initHeaderState: IHeaderState = {
   Default Page 작업용 init state
 */
 const initHeaderStateForDefaultPage: IHeaderState = {
-  isLogin: true,
   isDarkMode: JSON.parse(localStorage.getItem('isDarkMode') || 'false'),
   userInfo: {
     id: 1,
@@ -42,16 +38,14 @@ const HeaderDispatchContext = createContext<HeaderDispatch | null>(null);
 
 function reducer(state: IHeaderState, action: Action): IHeaderState {
   switch (action.type) {
-    case 'LOGIN':
+    case 'STORE_USER_INFO':
       return {
         ...state,
-        isLogin: true,
         userInfo: action.userInfo,
       };
-    case 'LOGOUT':
+    case 'DELETE_USER_INFO':
       return {
         ...state,
-        isLogin: false,
         userInfo: null,
       };
     case 'THEME_TOGGLE': {
