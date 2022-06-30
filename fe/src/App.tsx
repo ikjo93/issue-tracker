@@ -8,10 +8,6 @@ import { darkTheme, lightTheme } from '@style/theme';
 export default function App() {
   const { isDarkMode } = useHeaderState();
 
-  if (!isLogin) {
-    reissueAccessToken();
-  }
-
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
