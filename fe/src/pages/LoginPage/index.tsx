@@ -29,7 +29,7 @@ export default function LoginPage() {
       email,
       password,
     });
-    headerDispatch({ type: 'LOGIN', userInfo });
+    headerDispatch({ type: 'STORE_USER_INFO', userInfo });
     navigate('/');
   };
 

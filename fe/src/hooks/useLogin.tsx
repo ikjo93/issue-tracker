@@ -1,9 +1,11 @@
 import axios, { AxiosError } from 'axios';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useHeaderDispatch } from '@contexts/HeaderProvider';
 
 export default function useLogin() {
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const headerDispatch = useHeaderDispatch();
   let refreshIntervalId: NodeJS.Timer;
@@ -22,7 +24,6 @@ export default function useLogin() {
       const res = await axios.post('/api/access-token/reissue');
       const accessToken = res.headers['access-token'];
       setAccessTokenOnHeader(accessToken);
-      headerDispatch({ type: 'REFRESH_TOKEN', accessToken });
     } catch (err) {
       const error = err as Error | AxiosError;
       if (!axios.isAxiosError(error)) {
@@ -38,7 +39,8 @@ export default function useLogin() {
   };
 
   const logOut = () => {
-    headerDispatch({ type: 'LOGOUT' });
+    setIsLogin(false);
+    headerDispatch({ type: 'DELETE_USER_INFO' });
     document.cookie = `refresh-token=expires. ${new Date().toISOString()}`;
     navigate('/');
   };
@@ -46,14 +48,15 @@ export default function useLogin() {
   const login = async (loginUrl) => {
     const jwtResponse = await axios.get(loginUrl);
     const accessToken = jwtResponse.headers['access-token'];
+    setIsLogin(true);
     setAccessTokenOnHeader(accessToken);
 
     const { data: userInfo } = await axios.get(`/api/mine`);
-    headerDispatch({ type: 'LOGIN', userInfo, accessToken });
+    headerDispatch({ type: 'STORE_USER_INFO', userInfo });
 
     setRefreshInterval();
     navigate('/');
   };
 
-  return { login, reissueAccessToken };
+  return { isLogin, login, reissueAccessToken };
 }
