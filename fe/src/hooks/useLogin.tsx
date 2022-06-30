@@ -1,11 +1,9 @@
 import axios, { AxiosError } from 'axios';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useHeaderDispatch } from '@contexts/HeaderProvider';
 
 export default function useLogin() {
-  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const headerDispatch = useHeaderDispatch();
   let refreshIntervalId: NodeJS.Timer;
@@ -29,34 +27,41 @@ export default function useLogin() {
       if (!axios.isAxiosError(error)) {
         throw err;
       }
-
-      logOut();
+      //  logOut();
       clearInterval(refreshIntervalId);
-      throw new Error(
+      console.error(
         `access-token 재발급에 실패했습니다. 에러코드 ${error.response?.status}`,
       );
     }
   };
 
   const logOut = () => {
-    setIsLogin(false);
-    headerDispatch({ type: 'DELETE_USER_INFO' });
+    headerDispatch({ type: 'LOGOUT' });
     document.cookie = `refresh-token=expires. ${new Date().toISOString()}`;
+  };
+
+  const getAndStoreUserInfo = async () => {
+    const { data: userInfo } = await axios.get(`/api/mine`);
+    headerDispatch({ type: 'LOGIN', userInfo });
+    setRefreshInterval();
     navigate('/');
   };
 
   const login = async (loginUrl) => {
     const jwtResponse = await axios.get(loginUrl);
     const accessToken = jwtResponse.headers['access-token'];
-    setIsLogin(true);
     setAccessTokenOnHeader(accessToken);
-
-    const { data: userInfo } = await axios.get(`/api/mine`);
-    headerDispatch({ type: 'STORE_USER_INFO', userInfo });
-
-    setRefreshInterval();
-    navigate('/');
+    getAndStoreUserInfo();
   };
 
-  return { isLogin, login, reissueAccessToken };
+  const reLogin = () => {
+    try {
+      reissueAccessToken();
+      getAndStoreUserInfo();
+    } catch (err) {
+      console.error('재로그인이 불가합니다.');
+    }
+  };
+
+  return { login, reLogin };
 }
