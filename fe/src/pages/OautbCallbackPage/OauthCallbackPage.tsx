@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -18,15 +18,6 @@ export default function OauthCallbackPage() {
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   };
 
-  const refreshCachedAccessToken = async () => {
-    const res = await axios.post('/api/access-token/reissue');
-    if (res.status === 401) {
-      logOut();
-    }
-    accessToken = res.headers['access-token'];
-    setAccessTokenOnHeader();
-  };
-
   const setRefreshInterval = () => {
     const intervalTime = Number(process.env.TOKEN_REFRESH_INTERVAL) ?? 50000;
     setInterval(refreshCachedAccessToken, intervalTime);
@@ -37,6 +28,27 @@ export default function OauthCallbackPage() {
     accessToken = '';
     document.cookie = `refresh-token=expires. ${new Date().toISOString()}`;
     navigate('/');
+  };
+
+  const refreshCachedAccessToken = async () => {
+    console.log(document.cookie);
+    try {
+      const res = await axios.post('/api/access-token/reissue');
+      accessToken = res.headers['access-token'];
+      setAccessTokenOnHeader();
+    } catch (err) {
+      const error = err as Error | AxiosError;
+      if (!axios.isAxiosError(error)) {
+        throw err;
+      }
+      if (error.response?.status === 403) {
+        logOut();
+      } else {
+        throw new Error(
+          `access-token 재발급에 실패했습니다. 에러코드 ${error.response?.status}`,
+        );
+      }
+    }
   };
 
   useEffect(() => {

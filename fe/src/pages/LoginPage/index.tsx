@@ -41,7 +41,7 @@ export default function LoginPage() {
     const queryConfig = {
       scope: 'user',
       client_id: process.env.CLIENT_ID,
-      redirect_uri: '__API_END__POINT__/callback',
+      redirect_uri: '__API_END_POINT__/callback',
     };
 
     const searchParamsObj = new URLSearchParams(queryConfig);
