@@ -18,8 +18,9 @@ type HeaderDispatch = Dispatch<Action>;
 /*
   Production Header
 */
+const isLoginInBrowser = localStorage.getItem('isLogin');
 const initHeaderStateForProd: IHeaderState = {
-  isLogin: false,
+  isLogin: isLoginInBrowser ? JSON.parse(isLoginInBrowser) : false,
   isDarkMode: JSON.parse(
     localStorage.getItem('isDarkMode') ||
       String(window.matchMedia('(prefers-color-scheme: dark)').matches),
