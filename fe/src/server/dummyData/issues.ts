@@ -1,13 +1,23 @@
+import { IssueType } from '@type/types';
+
 const alanProfileURL = 'https://avatars.githubusercontent.com/u/95538993?v=4';
 const ikjoProfileURL = 'https://avatars.githubusercontent.com/u/82401504?v=4';
 const parkProfileURL = 'https://avatars.githubusercontent.com/u/58503584?v=4';
 
-const issues = [
+const issues: IssueType[] = [
   {
     id: 1,
     status: 'OPEN',
     subject: '백엔드 기능 구현',
-    description: '백엔드',
+    replies: [
+      {
+        id: 1,
+        writer: 'Alan',
+        profileUrl: alanProfileURL,
+        createdDateTime: '2022-06-18T21:23:00',
+        comment: '우하하하 열심히 해보세요!',
+      },
+    ],
     writer: 'ikjo',
     profileUrl: ikjoProfileURL,
     createdDateTime: '2022-06-18T21:23:00',
@@ -43,7 +53,15 @@ const issues = [
     id: 2,
     status: 'OPEN',
     subject: '프론트엔드 기능 구현',
-    description: '프론트엔드',
+    replies: [
+      {
+        id: 2,
+        writer: 'ikjo',
+        createdDateTime: '2022-06-20T05:23:00',
+        comment: '우하하하 열심히 해보세요!!!!',
+        profileUrl: ikjoProfileURL,
+      },
+    ],
     writer: 'Alan',
     profileUrl: alanProfileURL,
     createdDateTime: '2022-06-20T05:23:00',
@@ -66,11 +84,26 @@ const issues = [
     id: 3,
     status: 'OPEN',
     subject: '배포',
-    description: '배포',
+    replies: [
+      {
+        id: 3,
+        writer: 'Alan',
+        createdDateTime: '2022-06-20T05:23:00',
+        comment: '우하하하 열심히 해보세요!!!!',
+        profileUrl: alanProfileURL,
+      },
+      {
+        id: 4,
+        writer: 'Park',
+        createdDateTime: '2022-06-21T05:23:00',
+        comment: '우하하하 열심히 해보세요~~!!!!',
+        profileUrl: parkProfileURL,
+      },
+    ],
     writer: 'Park',
     profileUrl: parkProfileURL,
     createdDateTime: '2022-06-20T21:23:00',
-    milestone: null,
+    milestone: undefined,
     assignees: [],
     labels: [],
   },
@@ -78,7 +111,7 @@ const issues = [
     id: 4,
     status: 'CLOSED',
     subject: '이슈 4번 제목',
-    description: 'ㅇㅇㅇㅇ',
+    replies: [],
     writer: 'ikjo',
     profileUrl: ikjoProfileURL,
     createdDateTime: '2022-06-21T18:23:00',
@@ -114,7 +147,7 @@ const issues = [
     id: 5,
     status: 'CLOSED',
     subject: '이슈 5번 제목',
-    description: 'ㅇㅇㅇㅇ',
+    replies: [],
     writer: 'Alan',
     profileUrl: alanProfileURL,
     createdDateTime: '2022-06-21T21:23:00',

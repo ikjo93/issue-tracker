@@ -1,6 +1,14 @@
 import { IPalette } from '@style/theme';
 
-export type ModalFilterType = {
+export type ReplyType = {
+  id: number;
+  writer: string;
+  comment: string;
+  profileUrl: string;
+  createdDateTime: string;
+};
+
+export type PopoverFilterType = {
   queryKey: string;
   queryValue: string;
 };
@@ -10,7 +18,7 @@ export type MemberType = {
   id: number;
   identity: string;
   name: string;
-  profileUrl: string | null;
+  profileUrl: string | undefined;
 };
 
 export type LabelType = {
@@ -18,31 +26,42 @@ export type LabelType = {
   name: string;
   description?: string;
   color: string;
+  darkText?: boolean;
 };
 
 export type MilestoneType = {
   id: number;
   subject: string;
   description?: string;
+  endDate?: string;
+  status: string;
+  totalCountOfIssues: number;
+  countOfClosedIssues: number;
 };
 
-export type ModalContentType =
-  | (MemberType & ModalFilterType)
-  | (LabelType & ModalFilterType)
-  | (MilestoneType & ModalFilterType);
+export type PopoverContentType =
+  | (MemberType & PopoverFilterType)
+  | (LabelType & PopoverFilterType)
+  | (MilestoneType & PopoverFilterType);
 
 export type IssueType = {
   id: number;
   status: string;
   subject: string;
-  description: string;
+  replies: ReplyType[];
   writer: string;
   profileUrl: string;
   createdDateTime: string;
-  milestone: MilestoneType | null;
+  milestone?: MilestoneType;
   labels: LabelType[];
   assignees: MemberType[];
 };
+
+export interface IMilestoneResponse {
+  countOfOpenMilestones: number;
+  countOfClosedMilestones: number;
+  milestones: MilestoneType[];
+}
 
 declare module 'styled-components' {
   interface DefaultTheme {

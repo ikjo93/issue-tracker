@@ -11,9 +11,11 @@ import OpenAndCloseFilter from '@components/IssueTable/IssueTableHeader/OpenAndC
 import PopoverContainer from '@components/PopoverContainer';
 import colors from '@constants/colors';
 import modalStatic, { ModalStatusChangeType } from '@constants/modalStatic';
-import useAxiosAll from '@hooks/useAxiosAll';
+import { useLabelContext } from '@contexts/LabelProvider';
+import { useMemberContext } from '@contexts/MemberProvider';
+import { useMilestoneContext } from '@contexts/MilestoneProvider';
 import mixin from '@style/mixin';
-import { ModalContentType, IssueType } from '@type/types';
+import { PopoverContentType, IssueType } from '@type/types';
 import { checkIfUrlHasQuery, makeUrlQuery } from '@util/queryParser';
 
 interface IIssueTableData {
@@ -53,22 +55,39 @@ export default function IssueTableHeader({
   toggleAllIssues,
 }: IIssueTableHeaderProps) {
   const navigate = useNavigate();
-  const { data: menuDatas } = useAxiosAll<ModalContentType[]>(
-    ['/api/members', '/api/labels', '/api/milestones', '/api/members'],
-    'get',
-  );
+  const { members } = useMemberContext();
+  const { labels } = useLabelContext();
+  const { data: { milestones } = {} } = useMilestoneContext();
 
-  if (!menuDatas) return <div />;
-  const filterDropdownDatas = headerItems?.map((headerItem, idx) => ({
-    ...headerItem,
-    menus: menuDatas[idx],
-  }));
   const { countOfOpenIssues, countOfClosedIssues, issues } = issueTableData;
 
   const isAllIssueChecked =
     checkedIssueIds.length === issues.length && issues.length !== 0;
 
   const isAnyIssueChecked = checkedIssueIds.length >= 1;
+
+  const filterDropdownDatas = headerItems.map((item) => {
+    switch (item.type) {
+      case 'ASSIGNEE':
+      case 'WRITER':
+        return {
+          ...item,
+          menus: members,
+        };
+      case 'MILESTONE':
+        return {
+          ...item,
+          menus: milestones,
+        };
+      case 'LABEL':
+        return {
+          ...item,
+          menus: labels,
+        };
+      default:
+        throw Error('unexpected item type');
+    }
+  });
 
   const handleCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
     toggleAllIssues(e.target.checked);
@@ -111,7 +130,7 @@ export default function IssueTableHeader({
           <PopoverContainer<ModalStatusChangeType>
             title="상태수정"
             menus={modalStatic.STATUS_CHANGE}
-            onClickModalItem={handleClickStatusChangeItem}
+            onClickPopoverItem={handleClickStatusChangeItem}
           >
             <IconTextBox
               Icon={<KeyboardArrowDownIcon />}
@@ -121,11 +140,11 @@ export default function IssueTableHeader({
           </PopoverContainer>
         ) : (
           filterDropdownDatas?.map(({ title, type, menus }) => (
-            <PopoverContainer<ModalContentType>
+            <PopoverContainer<PopoverContentType>
               key={type}
               title={title}
-              menus={getFormattedMenus(menus, type)}
-              onClickModalItem={handleClickFilterItem}
+              menus={getFormattedMenus(type, menus)}
+              onClickPopoverItem={handleClickFilterItem}
             >
               <IconTextBox
                 Icon={<KeyboardArrowDownIcon />}
@@ -148,30 +167,30 @@ const IssueTableHeaderContainer = styled.div`
   border-radius: 1rem 1rem 0 0;
 `;
 
-function getFormattedMenus(menus, type) {
+function getFormattedMenus(type, menus) {
   switch (type) {
     case 'ASSIGNEE':
-      return menus.map((menu) => ({
+      return menus?.map((menu) => ({
         ...menu,
         name: menu.identity,
         queryKey: 'assignee',
         queryValue: menu.identity,
       }));
     case 'WRITER':
-      return menus.map((menu) => ({
+      return menus?.map((menu) => ({
         ...menu,
         name: menu.identity,
         queryKey: 'writer',
         queryValue: menu.identity,
       }));
     case 'LABEL':
-      return menus.map((menu) => ({
+      return menus?.map((menu) => ({
         ...menu,
         queryKey: 'label',
         queryValue: menu.name,
       }));
     case 'MILESTONE':
-      return menus.map((menu) => ({
+      return menus?.map((menu) => ({
         ...menu,
         name: menu.subject,
         queryKey: 'milestone',

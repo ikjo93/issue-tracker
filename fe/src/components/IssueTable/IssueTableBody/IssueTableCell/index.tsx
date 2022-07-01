@@ -1,13 +1,13 @@
 import { Checkbox } from '@mui/material';
 import styled from 'styled-components';
 
+import IssueDescription from '@components/IssueTable/IssueTableBody/IssueTableCell/IssueDescription';
+import IssueTitle from '@components/IssueTable/IssueTableBody/IssueTableCell/IssueTitle';
 import UserIcon from '@components/UserIcon';
 import colors from '@constants/colors';
 import mixin from '@style/mixin';
 import { IssueType } from '@type/types';
 
-import IssueDescription from './IssueDescription';
-import IssueTitle from './IssueTitle';
 
 interface IIssueTableCell {
   issue: IssueType;
@@ -30,7 +30,11 @@ export default function IssueTableCell({
         />
       </CheckboxContainer>
       <IssueInfoContainer>
-        <IssueTitle title={issue.subject} labels={issue.labels} />
+        <IssueTitle
+          title={issue.subject}
+          labels={issue.labels}
+          issueId={issue.id}
+        />
         <IssueDescription
           issueNum={issue.id}
           writer={issue.writer}
@@ -40,7 +44,11 @@ export default function IssueTableCell({
       </IssueInfoContainer>
       <AssigneeIconContainer>
         {issue.assignees.map((assignee) => (
-          <UserIcon size="SMALL" imgUrl={assignee.profileUrl} />
+          <UserIcon
+            key={assignee.id}
+            size="SMALL"
+            imgUrl={assignee.profileUrl}
+          />
         ))}
       </AssigneeIconContainer>
     </CellContainer>

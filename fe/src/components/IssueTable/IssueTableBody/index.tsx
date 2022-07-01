@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
+import IssueTableCell from '@components/IssueTable/IssueTableBody/IssueTableCell';
 import mixin from '@style/mixin';
 import { IssueType } from '@type/types';
 
-import IssueTableCell from './IssueTableCell';
 
 interface IIssueTableBodyProps {
   issues: IssueType[];

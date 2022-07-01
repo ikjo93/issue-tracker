@@ -7,10 +7,13 @@ export interface IPaletteOptions {
   primary: string;
   warning: string;
   github: string;
+  outlined: string;
+  secondary: string;
 }
 
 export interface IPalette extends IPaletteOptions {
   bgColor: string;
+  secondary: string;
   fontColor: string;
   borderColor: string;
   contentColor: string;
@@ -29,7 +32,9 @@ const darkPalette: IPalette = {
   primary: colors.blue,
   warning: colors.red,
   github: colors.black2,
+  outlined: colors.black,
   bgColor: colors.black,
+  secondary: colors.skyBlue,
   fontColor: colors.white1,
   borderColor: colors.grey2,
   reverseBgColor: colors.white1,
@@ -44,7 +49,9 @@ const lightPalette: IPalette = {
   primary: colors.blue,
   warning: colors.red,
   github: colors.black2,
+  outlined: colors.white1,
   bgColor: colors.white1,
+  secondary: colors.skyBlue,
   fontColor: colors.black,
   borderColor: colors.grey1,
   reverseBgColor: colors.black,

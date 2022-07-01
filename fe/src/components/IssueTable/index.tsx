@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import IssueTableBody from '@components/IssueTable/IssueTableBody';
+import IssueTableHeader from '@components/IssueTable/IssueTableHeader';
 import useAxios from '@hooks/useAxios';
 import { IssueType } from '@type/types';
 
-import IssueTableBody from './IssueTableBody';
-import IssueTableHeader from './IssueTableHeader';
 
 type IssueTableDataType = {
   issues: IssueType[];
@@ -17,7 +17,8 @@ type IssueTableDataType = {
 export default function IssueTable() {
   const [checkedIssueIds, setCheckedIssueIds] = useState<number[]>([]);
   const fetchUrl = `/api/issues/${useLocation().search}`;
-  const { data: issueTableData } = useAxios<IssueTableDataType>(fetchUrl);
+  const { state: issueState } = useAxios<IssueTableDataType>(fetchUrl);
+  const { data: issueTableData } = issueState;
 
   const toggleAllIssues = (isChecked: boolean) => {
     if (!issueTableData) return;

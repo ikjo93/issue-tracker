@@ -1,22 +1,27 @@
 import React, { useReducer, useContext, createContext, Dispatch } from 'react';
 
+import { MemberType } from '@type/types';
+
 interface IHeaderState {
   isLogin: boolean;
   isDarkMode: boolean;
-  profileUrl: string;
+  userInfo: MemberType | null;
+  accessToken: string | null;
 }
 
 type Action =
-  | { type: 'LOGIN'; profileUrl: string }
+  | { type: 'LOGIN'; userInfo: MemberType; accessToken: string }
   | { type: 'LOGOUT' }
-  | { type: 'THEME_TOGGLE' };
+  | { type: 'THEME_TOGGLE' }
+  | { type: 'REFRESH_TOKEN'; accessToken: string };
 
 type HeaderDispatch = Dispatch<Action>;
 
 const initHeaderState: IHeaderState = {
   isLogin: false,
   isDarkMode: Boolean(localStorage.getItem('isDarkMode')) || false,
-  profileUrl: '',
+  userInfo: null,
+  accessToken: null,
 };
 
 /*
@@ -25,7 +30,13 @@ const initHeaderState: IHeaderState = {
 const initHeaderStateForDefaultPage: IHeaderState = {
   isLogin: true,
   isDarkMode: JSON.parse(localStorage.getItem('isDarkMode') || 'false'),
-  profileUrl: 'https://avatars.githubusercontent.com/u/95538993?v=4',
+  userInfo: {
+    id: 1,
+    identity: 'ikjo',
+    name: '익조',
+    profileUrl: 'https://avatars.githubusercontent.com/u/82401504?v=4',
+  },
+  accessToken: 'fakeToken',
 };
 //
 
@@ -38,13 +49,14 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
       return {
         ...state,
         isLogin: true,
-        profileUrl: action.profileUrl,
+        userInfo: action.userInfo,
+        accessToken: action.accessToken,
       };
     case 'LOGOUT':
       return {
         ...state,
         isLogin: false,
-        profileUrl: '',
+        userInfo: null,
       };
     case 'THEME_TOGGLE': {
       const toggleData = !state.isDarkMode;
@@ -52,6 +64,12 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
       return {
         ...state,
         isDarkMode: toggleData,
+      };
+    }
+    case 'REFRESH_TOKEN': {
+      return {
+        ...state,
+        accessToken: action.accessToken,
       };
     }
     default:

@@ -6,13 +6,14 @@ import styled from 'styled-components';
 import Button from '@components/Button';
 import Container from '@components/Container';
 import Divider from '@components/Divider';
-import Header from '@components/Header';
 import InputBox from '@components/inputs/InputBox';
 import TextAreaBox from '@components/inputs/TextAreaBox';
 import SideMenu from '@components/SideMenu';
-import { ActionType, MenuStateType } from '@components/SideMenu/type';
+import sideMenuReducer from '@components/SideMenu/sideMenuReducer';
+import { MenuStateType } from '@components/SideMenu/type';
 import TitleBar from '@components/TitleBar';
 import UserIcon from '@components/UserIcon';
+import { useHeaderState } from '@contexts/HeaderProvider';
 
 interface IFormEventTarget extends EventTarget {
   subject?: HTMLInputElement;
@@ -20,14 +21,18 @@ interface IFormEventTarget extends EventTarget {
 }
 
 export default function CreateIssuePage() {
-  const [menuState, menuDispatch] = useReducer(reducer, initState);
+  const [menuState, menuDispatch] = useReducer(sideMenuReducer, initState);
+  const { userInfo } = useHeaderState();
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
+  // Todo: desciprtion 부분 CommentType에 맞게 바꿔서 넣어줘야함
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData: IFormEventTarget = e.target;
-    await axios.post('/api/createIssue', {
+    await axios.post('/api/issues', {
+      writer: userInfo?.identity,
+      profileUrl: userInfo?.profileUrl,
       subject: formData.subject?.value,
       description: formData.description?.value,
       labels: menuState.labels,
@@ -50,38 +55,35 @@ export default function CreateIssuePage() {
   };
 
   return (
-    <>
-      <Header />
-      <Body onSubmit={handleSubmit}>
-        <TitleBar title="새로운 이슈 작성" />
-        <GridContainer>
-          <UserIcon size="BIG" />
-          <Container flexInfo={{ direction: 'column' }} gap={1}>
-            <InputBox
-              name="subject"
-              onChange={handleChangeTitleInput}
-              placeholder="제목"
-            />
-            <TextAreaBox />
-          </Container>
-          <SideMenu menuState={menuState} menuDispatch={menuDispatch} />
-        </GridContainer>
-        <Divider margin="2rem" />
-        <Container
-          flexInfo={{ direction: 'row' }}
-          position="absolute"
-          right="0"
-          gap={1}
-        >
-          <Button variant="warning" onClick={handleClickCancleButton}>
-            작성 취소
-          </Button>
-          <Button type="submit" disabled={isSubmitButtonDisabled}>
-            완료
-          </Button>
+    <Body onSubmit={handleSubmit}>
+      <TitleBar title="새로운 이슈 작성" />
+      <GridContainer>
+        <UserIcon size="BIG" imgUrl={userInfo?.profileUrl} />
+        <Container flexInfo={{ direction: 'column' }} gap={1}>
+          <InputBox
+            name="subject"
+            onChange={handleChangeTitleInput}
+            placeholder="제목"
+          />
+          <TextAreaBox />
         </Container>
-      </Body>
-    </>
+        <SideMenu menuState={menuState} menuDispatch={menuDispatch} />
+      </GridContainer>
+      <Divider margin="2rem" />
+      <Container
+        flexInfo={{ direction: 'row' }}
+        position="absolute"
+        right="0"
+        gap={1}
+      >
+        <Button variant="warning" onClick={handleClickCancleButton}>
+          작성 취소
+        </Button>
+        <Button type="submit" disabled={isSubmitButtonDisabled}>
+          완료
+        </Button>
+      </Container>
+    </Body>
   );
 }
 
@@ -89,36 +91,6 @@ const initState: MenuStateType = {
   assignees: [],
   labels: [],
   milestone: undefined,
-};
-
-const reducer = (state: MenuStateType, action: ActionType) => {
-  switch (action.type) {
-    case 'ASSIGNEE': {
-      if (state.assignees.some(({ id }) => id === action.data.id)) {
-        return state;
-      }
-      return {
-        ...state,
-        assignees: [...state.assignees, action.data],
-      };
-    }
-    case 'LABEL': {
-      if (state.labels.some(({ id }) => id === action.data.id)) {
-        return state;
-      }
-      return {
-        ...state,
-        labels: [...state.labels, action.data],
-      };
-    }
-    case 'MILESTONE':
-      return {
-        ...state,
-        milestone: action.data,
-      };
-    default:
-      throw Error('Unexpected action type on side menu');
-  }
 };
 
 const GridContainer = styled.div`

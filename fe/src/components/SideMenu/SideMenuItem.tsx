@@ -7,26 +7,13 @@ import PopoverContainer from '@components/PopoverContainer';
 import Assignees from '@components/SideMenu/Assignees';
 import Labels from '@components/SideMenu/Labels';
 import Milestone from '@components/SideMenu/Milestone';
-import useAxios from '@hooks/useAxios';
-import {
-  LabelType,
-  MemberType,
-  MilestoneType,
-  ModalContentType,
-} from '@type/types';
-
-import { MenuDispatchType, ModalTypes } from './type';
+import { MenuDispatchType, ModalTypes } from '@components/SideMenu/type';
+import { LabelType, MemberType, MilestoneType } from '@type/types';
 
 enum KoType {
   ASSIGNEE = '담당자',
   LABEL = '레이블',
   MILESTONE = '마일스톤',
-}
-
-enum TypeEndPoint {
-  ASSIGNEE = 'members',
-  LABEL = 'labels',
-  MILESTONE = 'milestones',
 }
 
 const getSubBoxByType = (type, state) => {
@@ -45,16 +32,13 @@ const getSubBoxByType = (type, state) => {
 export default function SideMenuItem({
   type,
   state,
+  menus,
   menuDispatch,
 }): React.ReactElement<{
   type: ModalTypes;
   state: MemberType[] | LabelType[] | MilestoneType;
   menuDispatch: MenuDispatchType;
 }> {
-  const { data: menus } = useAxios<ModalContentType[]>(
-    `/api/${TypeEndPoint[type]}`,
-    'get',
-  );
   const title = `${KoType[type]} 추가`;
 
   const handleClickItemAddBtn = (menu) => {
@@ -74,7 +58,7 @@ export default function SideMenuItem({
           top={2}
           title={title}
           menus={getFormattedMenus(menus, type)}
-          onClickModalItem={handleClickItemAddBtn}
+          onClickPopoverItem={handleClickItemAddBtn}
         >
           <AddIcon sx={{ cursor: 'pointer' }} />
         </PopoverContainer>
@@ -91,7 +75,6 @@ function getFormattedMenus(menus, type) {
     case 'ASSIGNEE':
       return menus?.map((menu) => ({
         ...menu,
-        nickname: menu.name,
         name: menu.identity,
       }));
     case 'MILESTONE':
