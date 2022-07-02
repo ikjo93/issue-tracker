@@ -36,7 +36,7 @@ public class ReplyController {
         return replyService.createReply(id, form);
     }
 
-    @PatchMapping("/api/issues/replies/{id}/update")
+    @PatchMapping("/api/issues/replies/{id}")
     public ResponseMessage update(@PathVariable("id") Long replyId, @Valid @RequestBody ReplyUpdateForm form) {
         replyService.updateReply(replyId, form);
         return new ResponseMessage(HttpStatus.OK, "댓글 편집이 정상적으로 처리되었습니다.");

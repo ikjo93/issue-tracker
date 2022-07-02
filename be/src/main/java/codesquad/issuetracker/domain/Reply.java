@@ -43,7 +43,7 @@ public class Reply extends BaseTimeEntity {
         this.comment = comment;
     }
 
-    public static Reply createReply(Issue issue, Member member, String comment) {
+    public static Reply of(Issue issue, Member member, String comment) {
         return new Reply(issue, member, comment);
     }
 

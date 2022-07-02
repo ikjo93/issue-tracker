@@ -40,7 +40,7 @@ public class Assignee {
         this.member = member;
     }
 
-    public static Assignee createAssignee(Issue issue, Member member) {
+    public static Assignee of(Issue issue, Member member) {
         return new Assignee(issue, member);
     }
 }

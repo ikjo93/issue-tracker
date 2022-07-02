@@ -1,4 +1,4 @@
-package codesquad.issuetracker.jwt;
+package codesquad.issuetracker.repository;
 
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;

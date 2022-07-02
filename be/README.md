@@ -32,7 +32,7 @@
 + Github OAuth 및 JWT 활용 인증 방식 설계(진행 중)
 
 #### API 명세서
-+ <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
++ <a href="https://near-snipe-0de.notion.site/API-Description-af9d87b7d6e44244b1cea1c798d36db0">API 명세서 확인하기(클릭)</a><br/>
 
 #### 도메인 및 테이블 설계
 + ERD
@@ -65,7 +65,7 @@
 + S3 이미지 업로드 기능 구현
 
 #### API 명세서
-+ <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
++ <a href="https://near-snipe-0de.notion.site/API-Description-af9d87b7d6e44244b1cea1c798d36db0">API 명세서 확인하기(클릭)</a><br/>
 
 #### 인프라
 + Nginx, redis 도커 컨테이너 생성(완료)
@@ -84,7 +84,7 @@
 + JWT 활용 로그인 검증 관련 로직 오류 개선 및 리팩토링
 + 이슈 목록 검색(동적 검색) 관련 서비스 로직 리팩토링
 + API 명세서
-  + <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
+  + <a href="https://near-snipe-0de.notion.site/API-Description-af9d87b7d6e44244b1cea1c798d36db0">API 명세서 확인하기(클릭)</a><br/>
 
 ##### 진행 예정
 + S3 이미지 업로드 기능 구현
@@ -125,7 +125,7 @@
   + 변경 사유 : To be deprecated RestTemplate
 + 기존 Repository Spring Data JPA 적용
 + API 명세서
-  + <a href="https://near-snipe-0de.notion.site/API-Description-be8af8c4d6b44f668f3a8f03368ea978">API 명세서 확인하기(클릭)</a><br/>
+  + <a href="https://near-snipe-0de.notion.site/API-Description-af9d87b7d6e44244b1cea1c798d36db0">API 명세서 확인하기(클릭)</a><br/>
 
 #### 인프라
 ##### 완료
@@ -134,3 +134,15 @@
 #### 도메인 및 테이블 설계
 + ERD
 > ![image](https://user-images.githubusercontent.com/82401504/175858983-7a13c86e-7def-44d7-a0c3-4bbb741925db.png)
+
+## 3주차 금요일 리뷰 요청
+
+### 진행 내용
+#### 애플리케이션
+##### 완료
++ 3주차 수요일 리뷰 피드백 반영(리팩토링)
+  + 서비스 로직 중복 메서드 제거
++ 이미지 파일 S3 업로드 시 저장 파일명 난수화 
++ Access 및 Refresh Token 아큐먼트 리졸버 구현
++ API 명세서
+  + <a href="https://near-snipe-0de.notion.site/API-Description-af9d87b7d6e44244b1cea1c798d36db0">API 명세서 확인하기(클릭)</a><br/>

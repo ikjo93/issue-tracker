@@ -3,11 +3,12 @@ package codesquad.issuetracker.service;
 import codesquad.issuetracker.exception.InvalidTokenException;
 import codesquad.issuetracker.jwt.AccessToken;
 import codesquad.issuetracker.jwt.AccessTokenProvider;
-import codesquad.issuetracker.jwt.RedisRepository;
+import codesquad.issuetracker.repository.RedisRepository;
 import codesquad.issuetracker.jwt.RefreshToken;
 import codesquad.issuetracker.jwt.RefreshTokenProvider;
 import codesquad.issuetracker.jwt.Token;
 import java.time.Duration;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
     private static final String LOGOUT_FLAG = "LOGOUT";
-    private static final long REFRESH_TOKEN_DURATION_MINUTE = 2l;
+    private static final long REFRESH_TOKEN_DURATION_MINUTE = 10L;
 
     private final RedisRepository redisRepository;
     private final AccessTokenProvider accessTokenProvider;
@@ -32,8 +33,7 @@ public class TokenService {
         return refreshToken;
     }
 
-    public String validateDurationOfRefreshToken(String refreshTokenString) {
-        RefreshToken refreshToken = refreshTokenProvider.convertToObject(refreshTokenString);
+    public String validateDurationOfRefreshToken(RefreshToken refreshToken) {
         String memberId = refreshToken.getMemberId();
 
         if (redisRepository.findByKey(memberId) == null) {
@@ -44,13 +44,10 @@ public class TokenService {
     }
 
     public boolean validateLogInStatusOfAccessToken(String accessToken) {
-        return redisRepository.findByKey(accessToken) != LOGOUT_FLAG;
+        return !Objects.equals(redisRepository.findByKey(accessToken), LOGOUT_FLAG);
     }
 
-    public void invalidateToken(String accessTokenString, String refreshTokenString) {
-        AccessToken accessToken = accessTokenProvider.convertToObject(accessTokenString);
-        RefreshToken refreshToken = refreshTokenProvider.convertToObject(refreshTokenString);
-
+    public void invalidateToken(AccessToken accessToken, RefreshToken refreshToken) {
         redisRepository.save(accessToken.getToken(), LOGOUT_FLAG, Duration.ofMillis(accessToken.getRestOfExpiration()));
         redisRepository.deleteByKey(refreshToken.getMemberId());
     }

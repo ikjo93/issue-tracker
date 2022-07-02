@@ -31,7 +31,7 @@ public class GithubOAuthService {
                 memberRepository.findByIdentityAndType(info.getIdentity(), MemberType.GITHUB)
             )
             .orElseGet(() ->
-                memberRepository.save(Member.createGithubMember(info))
+                memberRepository.save(Member.of(info))
             );
 
         return member.getId();

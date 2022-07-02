@@ -62,7 +62,7 @@ public class Issue extends BaseTimeEntity {
         this.status = status;
     }
 
-    public static Issue createIssue(Member writer, Milestone milestone, String subject, IssueStatus status) {
+    public static Issue of(Member writer, Milestone milestone, String subject, IssueStatus status) {
         return new Issue(writer, milestone, subject, IssueStatus.OPEN);
     }
 

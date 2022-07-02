@@ -41,23 +41,25 @@ public class MilestoneService {
         return totalCount - countOfSelectedMilestones;
     }
 
+    public Milestone getMilestoneByIdOrThrow(Long id) {
+        return milestoneRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
+        });
+    }
+
     @Transactional
     public MilestoneDto save(MilestoneForm form) {
-        return MilestoneDto.from(milestoneRepository.save(Milestone.createMilestone(form)));
+        return MilestoneDto.from(milestoneRepository.save(Milestone.of(form)));
     }
 
     @Transactional
     public void delete(Long id) {
-        Milestone milestone = getMilestone(id);
-
-        milestone.getIssues().forEach(issue -> issue.updateMilestone(null));
-
         milestoneRepository.deleteById(id);
     }
 
     @Transactional
     public MilestoneDto update(Long id, MilestoneForm form) {
-        Milestone milestone = getMilestone(id);
+        Milestone milestone = getMilestoneByIdOrThrow(id);
 
         milestone.updateInfo(form);
 
@@ -66,14 +68,8 @@ public class MilestoneService {
 
     @Transactional
     public void updateStatus(Long id, MilestoneStatus status) {
-        Milestone milestone = getMilestone(id);
+        Milestone milestone = getMilestoneByIdOrThrow(id);
 
         milestone.updateStatus(status);
-    }
-
-    private Milestone getMilestone(Long id) {
-        return milestoneRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("존재하지 않는 마일스톤입니다.");
-        });
     }
 }

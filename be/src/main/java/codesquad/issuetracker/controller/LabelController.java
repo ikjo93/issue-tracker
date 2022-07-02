@@ -23,7 +23,7 @@ public class LabelController {
     private final LabelService labelService;
 
     @GetMapping("/api/labels")
-    public LabelDtos labels() {
+    public LabelDtos getLabels() {
         return labelService.getLabels();
     }
 

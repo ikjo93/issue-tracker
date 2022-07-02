@@ -1,11 +1,12 @@
 package codesquad.issuetracker.controller;
 
+import codesquad.issuetracker.argumentresolver.Login;
 import codesquad.issuetracker.dto.ResponseMessage;
+import codesquad.issuetracker.jwt.AccessToken;
+import codesquad.issuetracker.jwt.RefreshToken;
 import codesquad.issuetracker.jwt.Token;
 import codesquad.issuetracker.service.TokenService;
-import codesquad.issuetracker.jwt.TokenUtils;
 import codesquad.issuetracker.service.GithubOAuthService;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,8 +40,8 @@ public class AuthController {
     }
 
     @PostMapping("/api/access-token/reissue")
-    public ResponseMessage reissue(HttpServletRequest request, HttpServletResponse response) {
-        String memberId = tokenService.validateDurationOfRefreshToken(TokenUtils.getRefreshToken(request));
+    public ResponseMessage reissue(@Login RefreshToken token, HttpServletResponse response) {
+        String memberId = tokenService.validateDurationOfRefreshToken(token);
         Token renewedAccessToken = tokenService.createAccessToken(memberId);
         response.addHeader("access-token", renewedAccessToken.getToken());
 
@@ -48,8 +49,8 @@ public class AuthController {
     }
 
     @GetMapping("/api/logout")
-    public ResponseMessage logout(HttpServletRequest request) {
-        tokenService.invalidateToken(TokenUtils.getAccessToken(request), TokenUtils.getRefreshToken(request));
+    public ResponseMessage logout(@Login AccessToken accessToken, @Login RefreshToken refreshToken) {
+        tokenService.invalidateToken(accessToken, refreshToken);
 
         return new ResponseMessage(HttpStatus.OK, "로그아웃이 처리되었습니다.");
     }
