@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
+import 'github-markdown-css/github-markdown.css';
+import 'highlight.js/styles/github-dark.css';
+import colors from '@constants/colors';
+
 const GlobalStyle = createGlobalStyle`
   ${reset}
   *{
@@ -51,6 +55,20 @@ const GlobalStyle = createGlobalStyle`
   body{
     background-color: ${({ theme }) => theme.palette.bgColor};
     color: ${({ theme }) => theme.palette.fontColor};
+  }
+  // custom github-markdown-css
+  .markdown-body {
+    background-color: inherit;
+    color: inherit;
+  }
+  .markdown-body pre {
+    background-color: ${colors.black3};
+  }
+  .markdown-body [type=checkbox] {
+    margin-right: 1rem;
+  }
+  .markdown-body ul {
+    list-style: revert;
   }
 `;
 

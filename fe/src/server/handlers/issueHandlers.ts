@@ -21,20 +21,72 @@ const getIssues = (req, res, ctx) => {
 };
 
 const postCreateIssue = (req, res, ctx) => {
-  const { subject, replies, labels, milestone, assignees, writer, profileUrl } =
+  const { subject, writerId, assigneeIds, labelIds, milestoneId, comment } =
     req.body;
+
+  const writerInfo = fakeMembers.find((m) => m.id === writerId);
+  if (!writerInfo) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 회원입니다',
+      }),
+    );
+  }
+  const milestone = fakeMileStones.milestones.find((m) => m.id === milestoneId);
+  if (milestoneId && !milestone) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 마일스톤입니다.',
+      }),
+    );
+  }
+
+  const assignees = fakeMembers.filter((m) => assigneeIds.includes(m.id));
+  if (assigneeIds.length !== assignees.length) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 회원입니다.',
+      }),
+    );
+  }
+
+  const labels = fakeLabels.filter((l) => labelIds.includes(l.id));
+  if (labelIds.length !== labels.length) {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        status: 'NOT_FOUND',
+        message: '존재하지 않는 라벨입니다.',
+      }),
+    );
+  }
+
   const newIssueId = fakeIssues[fakeIssues.length - 1].id + 1;
   const newIssue: IssueType = {
     id: newIssueId,
-    subject,
-    replies,
-    writer,
-    profileUrl,
     status: 'OPEN',
+    subject,
+    writer: writerInfo.identity,
+    profileUrl: writerInfo.profileUrl,
     createdDateTime: new Date().toISOString(),
-    labels,
     milestone,
     assignees,
+    labels,
+    replies: [
+      {
+        id: new Date().getTime(),
+        writer: writerInfo.identity,
+        comment,
+        profileUrl: writerInfo.profileUrl,
+        createdDateTime: new Date().toISOString(),
+      },
+    ],
   };
   fakeIssues.push(newIssue);
   return res(ctx.status(201));
@@ -86,8 +138,8 @@ const updateLabels: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
 };
 
 const updateMilestone: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
-  const { milestoneId }: { milestoneId: number } = req.body;
-  const milestoneData = fakeMileStones.find(
+  const { milestoneId }: { milestoneId: number | null } = req.body;
+  const milestoneData = fakeMileStones.milestones.find(
     (milestone) => milestone.id === milestoneId,
   );
   const { id: targetId } = req.params;
@@ -179,12 +231,12 @@ export default function issueHandlers() {
     rest.get('/api/issues/:id', getIssue),
     rest.post('/api/issues', postCreateIssue),
     rest.post('/api/issues/:id/replies', addReply),
-    rest.patch('/api/issues/status/update', updateStatus),
-    rest.patch('/api/issues/:id/subject/update', updateSubject),
-    rest.patch('/api/issues/:id/labels/update', updateLabels),
-    rest.patch('/api/issues/:id/milestone/update', updateMilestone),
-    rest.patch('/api/issues/:id/assignees/update', updateAssignees),
-    rest.patch('/api/issues/replies/:id/update', updateReply),
+    rest.patch('/api/issues/status', updateStatus),
+    rest.patch('/api/issues/:id/subject', updateSubject),
+    rest.patch('/api/issues/:id/labels', updateLabels),
+    rest.patch('/api/issues/:id/milestone', updateMilestone),
+    rest.patch('/api/issues/:id/assignees', updateAssignees),
+    rest.patch('/api/issues/replies/:id', updateReply),
     rest.delete('/api/issues/:id', deleteIssue),
   ];
 }

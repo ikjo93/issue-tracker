@@ -6,39 +6,49 @@ interface IHeaderState {
   isLogin: boolean;
   isDarkMode: boolean;
   userInfo: MemberType | null;
-  accessToken: string | null;
 }
 
 type Action =
-  | { type: 'LOGIN'; userInfo: MemberType; accessToken: string }
+  | { type: 'LOGIN'; userInfo: MemberType }
   | { type: 'LOGOUT' }
-  | { type: 'THEME_TOGGLE' }
-  | { type: 'REFRESH_TOKEN'; accessToken: string };
+  | { type: 'THEME_TOGGLE' };
 
 type HeaderDispatch = Dispatch<Action>;
 
-const initHeaderState: IHeaderState = {
+/*
+  Production Header
+*/
+const initHeaderStateForProd: IHeaderState = {
   isLogin: false,
-  isDarkMode: Boolean(localStorage.getItem('isDarkMode')) || false,
+  isDarkMode: JSON.parse(
+    localStorage.getItem('isDarkMode') ||
+      String(window.matchMedia('(prefers-color-scheme: dark)').matches),
+  ),
   userInfo: null,
-  accessToken: null,
 };
 
 /*
-  Default Page 작업용 init state
+  Development Header
 */
-const initHeaderStateForDefaultPage: IHeaderState = {
+const initHeaderStateForDev: IHeaderState = {
   isLogin: true,
-  isDarkMode: JSON.parse(localStorage.getItem('isDarkMode') || 'false'),
+  isDarkMode: JSON.parse(
+    localStorage.getItem('isDarkMode') ||
+      String(window.matchMedia('(prefers-color-scheme: dark)').matches),
+  ),
   userInfo: {
     id: 1,
     identity: 'ikjo',
     name: '익조',
     profileUrl: 'https://avatars.githubusercontent.com/u/82401504?v=4',
   },
-  accessToken: 'fakeToken',
 };
 //
+
+const initHeaderState =
+  process.env.NODE_ENV === 'production'
+    ? initHeaderStateForProd
+    : initHeaderStateForDev;
 
 const HeaderStateContext = createContext<IHeaderState | null>(null);
 const HeaderDispatchContext = createContext<HeaderDispatch | null>(null);
@@ -50,7 +60,6 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
         ...state,
         isLogin: true,
         userInfo: action.userInfo,
-        accessToken: action.accessToken,
       };
     case 'LOGOUT':
       return {
@@ -66,20 +75,13 @@ function reducer(state: IHeaderState, action: Action): IHeaderState {
         isDarkMode: toggleData,
       };
     }
-    case 'REFRESH_TOKEN': {
-      return {
-        ...state,
-        accessToken: action.accessToken,
-      };
-    }
     default:
       throw new Error('Unhandled action');
   }
 }
 
 export function HeaderProvider({ children }: { children: React.ReactNode }) {
-  // TODO: init state 작업에 따라 바꿔서 사용하세요
-  const [state, dispatch] = useReducer(reducer, initHeaderStateForDefaultPage);
+  const [state, dispatch] = useReducer(reducer, initHeaderState);
 
   return (
     <HeaderStateContext.Provider value={state}>
