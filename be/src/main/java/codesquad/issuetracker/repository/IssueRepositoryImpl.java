@@ -32,9 +32,9 @@ public class IssueRepositoryImpl implements IssueRepositoryCustom {
         return queryFactory.selectFrom(issue).distinct()
             .join(issue.writer, member).fetchJoin()
             .leftJoin(issue.milestone, milestone).fetchJoin()
-            .leftJoin(issue.assignees, assignee)
-            .leftJoin(issue.replies, reply)
-            .leftJoin(issue.issueLabels, issueLabel)
+            .leftJoin(issue.assignees, assignee).fetchJoin()
+            .leftJoin(issue.replies, reply).fetchJoin()
+            .leftJoin(issue.issueLabels, issueLabel).fetchJoin()
             .where(
                 writerIdentityEq(condition.getWriter()),
                 milestoneSubjectEq(condition.getMilestone()),

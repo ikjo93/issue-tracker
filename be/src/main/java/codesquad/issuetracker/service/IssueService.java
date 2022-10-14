@@ -83,7 +83,7 @@ public class IssueService {
 
         Long milestoneId = form.getMilestoneId();
         Milestone milestone = milestoneId == null ? null : milestoneService.getMilestoneByIdOrThrow(milestoneId);
-        Issue issue = Issue.of(writer, milestone, form.getSubject(), IssueStatus.OPEN);
+        Issue issue = Issue.of(writer, milestone, form.getSubject());
 
         Reply reply = Reply.of(issue, writer, form.getComment());
         issue.addReply(reply);

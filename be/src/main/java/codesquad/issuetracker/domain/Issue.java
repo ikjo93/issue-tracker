@@ -1,5 +1,7 @@
 package codesquad.issuetracker.domain;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.validation.constraints.NotNull;
@@ -42,13 +44,13 @@ public class Issue extends BaseTimeEntity {
     private Milestone milestone;
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
-    private List<Reply> replies = new ArrayList<>();
+    private Set<Reply> replies = new HashSet<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
-    private List<Assignee> assignees = new ArrayList<>();
+    private Set<Assignee> assignees = new HashSet<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
-    private List<IssueLabel> issueLabels = new ArrayList<>();
+    private Set<IssueLabel> issueLabels = new HashSet<>();
 
     private String subject;
 
@@ -62,7 +64,7 @@ public class Issue extends BaseTimeEntity {
         this.status = status;
     }
 
-    public static Issue of(Member writer, Milestone milestone, String subject, IssueStatus status) {
+    public static Issue of(Member writer, Milestone milestone, String subject) {
         return new Issue(writer, milestone, subject, IssueStatus.OPEN);
     }
 
@@ -103,6 +105,7 @@ public class Issue extends BaseTimeEntity {
     public void updateSubject(String subject) {
         this.subject = subject;
     }
+
     public void updateMilestone(Milestone milestone) {
         this.milestone = milestone;
     }
