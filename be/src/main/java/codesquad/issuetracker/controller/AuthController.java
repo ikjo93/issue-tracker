@@ -33,6 +33,9 @@ public class AuthController {
         response.setHeader("Set-Cookie", ResponseCookie
             .from("refresh-token", refreshToken.getToken())
             .path("/api")
+            .httpOnly(true)
+            .secure(true)
+            .sameSite("Strict")
             .build()
             .toString());
 
