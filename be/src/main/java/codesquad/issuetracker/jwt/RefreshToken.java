@@ -22,8 +22,8 @@ public class RefreshToken extends Token {
     private String compactToken(String memberId, SignatureAlgorithm signatureAlgorithm, Date expiration) {
         return Jwts.builder()
             .setClaims(makeClaims(memberId))
-            .signWith(secretKey, signatureAlgorithm)
             .setExpiration(expiration)
+            .signWith(secretKey, signatureAlgorithm)
             .compact();
     }
 
