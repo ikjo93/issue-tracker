@@ -54,16 +54,4 @@ public abstract class Token {
             throw new InvalidTokenException("유효하지 않은 토큰입니다.");
         }
     }
-
-    public long getRestOfExpiration() {
-        try {
-            return getClaims(token)
-                .getExpiration()
-                .getTime() - (new Date().getTime());
-        } catch (ExpiredJwtException e) {
-            return 0;
-        } catch (JwtException e) {
-            throw new InvalidTokenException("유효하지 않은 토큰입니다.");
-        }
-    }
 }
