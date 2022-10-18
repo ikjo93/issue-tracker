@@ -1,5 +1,5 @@
 package codesquad.issuetracker.domain;
 
 public enum MemberType {
-    NORMAL, GITHUB
+    GITHUB, GOOGLE, META
 }

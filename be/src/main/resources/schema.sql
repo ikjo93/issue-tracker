@@ -11,7 +11,6 @@ CREATE TABLE member
     member_id   BIGINT NOT NULL AUTO_INCREMENT,
     type        VARCHAR(32),
     identity    VARCHAR(255),
-    password    VARCHAR(255),
     email       VARCHAR(255),
     name    VARCHAR(32),
     profile_url VARCHAR(255),

@@ -31,7 +31,6 @@ public class Member {
     private MemberType type;
 
     private String identity;
-    private String password;
     private String email;
     private String name;
     private String profileUrl;
