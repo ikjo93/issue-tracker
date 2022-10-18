@@ -3,7 +3,6 @@ package codesquad.issuetracker.interceptor;
 import codesquad.issuetracker.dto.ResponseMessage;
 import codesquad.issuetracker.jwt.AccessTokenProvider;
 import codesquad.issuetracker.jwt.Token;
-import codesquad.issuetracker.service.TokenService;
 import codesquad.issuetracker.jwt.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class AuthInterceptor implements HandlerInterceptor {
 
     private final AccessTokenProvider accessTokenProvider;
-    private final TokenService tokenService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -29,8 +27,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         String accessTokenString = TokenUtils.getAccessToken(request);
         Token accessToken = accessTokenProvider.convertToObject(accessTokenString);
 
-        if (accessToken.validateExpirationOfToken() &&
-            tokenService.validateLogInStatusOfAccessToken(accessTokenString)) {
+        if (accessToken.validateExpirationOfToken()) {
             return true;
         }
 

@@ -2,7 +2,6 @@ package codesquad.issuetracker.controller;
 
 import codesquad.issuetracker.argumentresolver.Login;
 import codesquad.issuetracker.dto.ResponseMessage;
-import codesquad.issuetracker.jwt.AccessToken;
 import codesquad.issuetracker.jwt.RefreshToken;
 import codesquad.issuetracker.jwt.Token;
 import codesquad.issuetracker.service.TokenService;
@@ -49,12 +48,5 @@ public class AuthController {
         response.addHeader("access-token", renewedAccessToken.getToken());
 
         return new ResponseMessage(HttpStatus.OK, "access 토큰이 갱신되었습니다.");
-    }
-
-    @GetMapping("/api/logout")
-    public ResponseMessage logout(@Login AccessToken accessToken, @Login RefreshToken refreshToken) {
-        tokenService.invalidateToken(accessToken, refreshToken);
-
-        return new ResponseMessage(HttpStatus.OK, "로그아웃이 처리되었습니다.");
     }
 }

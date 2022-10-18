@@ -1,14 +1,12 @@
 package codesquad.issuetracker.service;
 
 import codesquad.issuetracker.exception.InvalidTokenException;
-import codesquad.issuetracker.jwt.AccessToken;
 import codesquad.issuetracker.jwt.AccessTokenProvider;
 import codesquad.issuetracker.repository.RedisRepository;
 import codesquad.issuetracker.jwt.RefreshToken;
 import codesquad.issuetracker.jwt.RefreshTokenProvider;
 import codesquad.issuetracker.jwt.Token;
 import java.time.Duration;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TokenService {
 
-    private static final String LOGOUT_FLAG = "LOGOUT";
     private static final long REFRESH_TOKEN_DURATION_MINUTE = 10L;
 
     private final RedisRepository redisRepository;
@@ -41,14 +38,5 @@ public class TokenService {
         }
 
         return memberId;
-    }
-
-    public boolean validateLogInStatusOfAccessToken(String accessToken) {
-        return !Objects.equals(redisRepository.findByKey(accessToken), LOGOUT_FLAG);
-    }
-
-    public void invalidateToken(AccessToken accessToken, RefreshToken refreshToken) {
-        redisRepository.save(accessToken.getToken(), LOGOUT_FLAG, Duration.ofMillis(accessToken.getRestOfExpiration()));
-        redisRepository.deleteByKey(refreshToken.getMemberId());
     }
 }
