@@ -26,7 +26,7 @@ public class Label {
     @Column(name = "label_id")
     private Long id;
 
-    @OneToMany(mappedBy = "label", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "label")
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private String name;

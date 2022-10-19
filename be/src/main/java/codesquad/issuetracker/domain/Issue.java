@@ -41,13 +41,13 @@ public class Issue extends BaseTimeEntity {
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
 
-    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issue")
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issue")
     private List<Assignee> assignees = new ArrayList<>();
 
-    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issue")
     private List<IssueLabel> issueLabels = new ArrayList<>();
 
     private String subject;
