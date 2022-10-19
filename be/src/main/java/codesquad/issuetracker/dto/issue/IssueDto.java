@@ -11,11 +11,14 @@ import codesquad.issuetracker.dto.reply.ReplyDto;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class IssueDto {
 
     private Long id;
@@ -28,8 +31,6 @@ public class IssueDto {
     private List<MemberDto> assignees;
     private List<LabelDto> labels;
     private List<ReplyDto> replies;
-
-    private IssueDto() {}
 
     public static IssueDto from(Issue issue) {
         Member writer = issue.getWriter();

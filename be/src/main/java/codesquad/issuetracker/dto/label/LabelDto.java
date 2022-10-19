@@ -2,9 +2,12 @@ package codesquad.issuetracker.dto.label;
 
 import codesquad.issuetracker.domain.Label;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LabelDto {
 
     private Long id;
@@ -12,8 +15,6 @@ public class LabelDto {
     private String description;
     private String color;
     private boolean isDarkText;
-
-    private LabelDto() {}
 
     public LabelDto(Long id, String name, String description, String color, boolean isDarkText) {
         this.id = id;

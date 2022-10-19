@@ -1,18 +1,18 @@
 package codesquad.issuetracker.dto.member;
 
 import codesquad.issuetracker.domain.Member;
-import com.querydsl.core.annotations.QueryProjection;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberDto {
 
     private Long id;
     private String identity;
     private String nickname;
     private String profileUrl;
-
-    private MemberDto() {}
 
     public MemberDto(Long id, String identity, String nickname, String profileUrl) {
         this.id = id;

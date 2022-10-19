@@ -6,11 +6,14 @@ import codesquad.issuetracker.domain.Milestone;
 import codesquad.issuetracker.domain.MilestoneStatus;
 import java.time.LocalDate;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MilestoneDto {
 
     private Long id;
@@ -20,8 +23,6 @@ public class MilestoneDto {
     private MilestoneStatus status;
     private Long totalCountOfIssues;
     private Long countOfClosedIssues;
-
-    private MilestoneDto() {}
 
     public static MilestoneDto from(Milestone milestone) {
         List<Issue> issues = milestone.getIssues();
